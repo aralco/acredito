@@ -9,11 +9,15 @@ import javax.persistence.metamodel.Metamodel;
 import bo.com.acredito.domain.Person;
 import bo.com.acredito.ui.BasicCrudView;
 
+import bo.com.acredito.ui.components.PersonUI;
 import com.vaadin.Application;
+import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.Window;
 
@@ -27,7 +31,10 @@ public class MyVaadinApplication extends Application {
 
 	@Override
 	public void init() {
-		setMainWindow(new AutoCrudViews());
+        JPAContainer<Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
+		PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
+        Window w=new Window("Clientes",personUI);
+        setMainWindow(w);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -78,39 +85,6 @@ public class MyVaadinApplication extends Application {
 			// select first entity view
 			navTree.setValue(navTree.getItemIds().iterator().next());
 		}
-	}
-
-	static {
-		EntityManager em = JPAContainerFactory
-				.createEntityManagerForPersistenceUnit(PERSISTENCE_UNIT);
-
-		long size = (Long) em.createQuery("SELECT COUNT(p) FROM Person p").getSingleResult();
-		if (size == 0) {
-			// create two Person objects as test data
-
-			em.getTransaction().begin();
-			Person boss = new Person();
-			boss.setFirstName("John");
-			boss.setLastName("Bigboss");
-			boss.setCity("Turku");
-			boss.setPhoneNumber("+358 02 555 221");
-			boss.setZipCode("20200");
-			boss.setStreet("Ruukinkatu 2-4");
-			em.persist(boss);
-
-			Person p = new Person();
-			p.setFirstName("Marc");
-			p.setLastName("Hardworker");
-			p.setCity("Turku");
-			p.setPhoneNumber("+358 02 555 222");
-			p.setZipCode("20200");
-			p.setStreet("Ruukinkatu 2-4");
-			p.setBoss(boss);
-			em.persist(p);
-
-			em.getTransaction().commit();
-		}
-
 	}
 
 }
