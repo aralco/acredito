@@ -34,7 +34,10 @@ public class PersonForm extends Form {
 
                     Person person = ((BeanItem<Person>) getItemDataSource()).getBean();
                     JPAContainer<Person> container = JPAContainerFactory.make(Person.class, "acreditoPU");
-                    container.addEntity(person);
+                    if(person.getId()==null){
+                        container.addEntity(person);
+                    }
+                    container.commit();
                 }
             });
             commit.setStyleName(Reindeer.BUTTON_DEFAULT);
