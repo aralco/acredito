@@ -1,24 +1,26 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Contact {
-    private long id;
+    private Long id;
     private String name;
     private String phone;
-    private Person personByPersonId;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -49,7 +51,7 @@ public class Contact {
 
         Contact contact = (Contact) o;
 
-        if (id != contact.id) return false;
+        if (id != null ? !id.equals(contact.id) : contact.id != null) return false;
         if (name != null ? !name.equals(contact.name) : contact.name != null) return false;
         if (phone != null ? !phone.equals(contact.phone) : contact.phone != null) return false;
 
@@ -58,19 +60,9 @@ public class Contact {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "personId", referencedColumnName = "id", nullable = false)
-    public Person getPersonByPersonId() {
-        return personByPersonId;
-    }
-
-    public void setPersonByPersonId(Person personByPersonId) {
-        this.personByPersonId = personByPersonId;
     }
 }

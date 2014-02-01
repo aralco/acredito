@@ -1,40 +1,40 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Product {
-    private long id;
-    private long code;
+    private Long id;
+    private Long code;
     private String name;
-    private boolean available;
+    private Boolean available;
     private String notes;
     private byte[] photo;
-    private Collection<Price> pricesById;
-    private Collection<Sale> salesById;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "code")
-    public long getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
@@ -50,11 +50,11 @@ public class Product {
 
     @Basic
     @Column(name = "available")
-    public boolean isAvailable() {
+    public Boolean getAvailable() {
         return available;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(Boolean available) {
         this.available = available;
     }
 
@@ -85,9 +85,9 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (available != product.available) return false;
-        if (code != product.code) return false;
-        if (id != product.id) return false;
+        if (available != null ? !available.equals(product.available) : product.available != null) return false;
+        if (code != null ? !code.equals(product.code) : product.code != null) return false;
+        if (id != null ? !id.equals(product.id) : product.id != null) return false;
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
         if (notes != null ? !notes.equals(product.notes) : product.notes != null) return false;
         if (!Arrays.equals(photo, product.photo)) return false;
@@ -97,30 +97,12 @@ public class Product {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (code ^ (code >>> 32));
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (available ? 1 : 0);
+        result = 31 * result + (available != null ? available.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         result = 31 * result + (photo != null ? Arrays.hashCode(photo) : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<Price> getPricesById() {
-        return pricesById;
-    }
-
-    public void setPricesById(Collection<Price> pricesById) {
-        this.pricesById = pricesById;
-    }
-
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<Sale> getSalesById() {
-        return salesById;
-    }
-
-    public void setSalesById(Collection<Sale> salesById) {
-        this.salesById = salesById;
     }
 }

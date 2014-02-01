@@ -2,6 +2,7 @@ package com.bo.acredito;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.bo.acredito.domain.Person;
 import com.bo.acredito.ui.components.PersonUI;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;

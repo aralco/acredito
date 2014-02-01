@@ -1,48 +1,48 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Employee {
-    private long id;
-    private long code;
-    private boolean active;
+    private Long id;
+    private Long code;
+    private Boolean active;
     private String username;
     private String password;
-    private Person personByPersonId;
-    private Collection<Sale> salesById;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "code")
-    public long getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
     @Basic
     @Column(name = "active")
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -73,9 +73,9 @@ public class Employee {
 
         Employee employee = (Employee) o;
 
-        if (active != employee.active) return false;
-        if (code != employee.code) return false;
-        if (id != employee.id) return false;
+        if (active != null ? !active.equals(employee.active) : employee.active != null) return false;
+        if (code != null ? !code.equals(employee.code) : employee.code != null) return false;
+        if (id != null ? !id.equals(employee.id) : employee.id != null) return false;
         if (password != null ? !password.equals(employee.password) : employee.password != null) return false;
         if (username != null ? !username.equals(employee.username) : employee.username != null) return false;
 
@@ -84,30 +84,11 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (code ^ (code >>> 32));
-        result = 31 * result + (active ? 1 : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = 31 * result + (active != null ? active.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "personId", referencedColumnName = "id", nullable = false)
-    public Person getPersonByPersonId() {
-        return personByPersonId;
-    }
-
-    public void setPersonByPersonId(Person personByPersonId) {
-        this.personByPersonId = personByPersonId;
-    }
-
-    @OneToMany(mappedBy = "employeeByEmployeeId")
-    public Collection<Sale> getSalesById() {
-        return salesById;
-    }
-
-    public void setSalesById(Collection<Sale> salesById) {
-        this.salesById = salesById;
     }
 }

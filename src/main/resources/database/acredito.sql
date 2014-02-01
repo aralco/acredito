@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Product` (
   `notes` TEXT NOT NULL,
   `photo` BLOB NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -31,28 +31,28 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Price` (
   PRIMARY KEY (`id`),
   INDEX `fk_Price_Product1_idx` (`productId` ASC),
   CONSTRAINT `fk_Price_Product1`
-    FOREIGN KEY (`productId`)
-    REFERENCES `acredito`.`Product` (`id`)
+  FOREIGN KEY (`productId`)
+  REFERENCES `acredito`.`Product` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `acredito`.`Occupation`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Occupation` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(250) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `acredito`.`Address`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Address` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `address` VARCHAR(250) NOT NULL,
   `address2` VARCHAR(250) NOT NULL,
   `country` VARCHAR(45) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Address` (
   `mobile` VARCHAR(45) NOT NULL,
   `workPhone` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -80,22 +80,22 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Person` (
   `birthday` DATE NOT NULL,
   `photo` BLOB NULL,
   `notes` TEXT NOT NULL,
-  `occupationId` INT NOT NULL,
-  `addressId` INT NOT NULL,
+  `occupationId` BIGINT NOT NULL,
+  `addressId` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Person_Occupation1_idx` (`occupationId` ASC),
   INDEX `fk_Person_Address1_idx` (`addressId` ASC),
   CONSTRAINT `fk_Person_Occupation1`
-    FOREIGN KEY (`occupationId`)
-    REFERENCES `acredito`.`Occupation` (`id`)
+  FOREIGN KEY (`occupationId`)
+  REFERENCES `acredito`.`Occupation` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Person_Address1`
-    FOREIGN KEY (`addressId`)
-    REFERENCES `acredito`.`Address` (`id`)
+  FOREIGN KEY (`addressId`)
+  REFERENCES `acredito`.`Address` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -108,11 +108,11 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Customer` (
   PRIMARY KEY (`id`),
   INDEX `fk_Customer_Person1_idx` (`personId` ASC),
   CONSTRAINT `fk_Customer_Person1`
-    FOREIGN KEY (`personId`)
-    REFERENCES `acredito`.`Person` (`id`)
+  FOREIGN KEY (`personId`)
+  REFERENCES `acredito`.`Person` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -128,11 +128,11 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Employee` (
   PRIMARY KEY (`id`),
   INDEX `fk_Employee_Person1_idx` (`personId` ASC),
   CONSTRAINT `fk_Employee_Person1`
-    FOREIGN KEY (`personId`)
-    REFERENCES `acredito`.`Person` (`id`)
+  FOREIGN KEY (`personId`)
+  REFERENCES `acredito`.`Person` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -157,21 +157,21 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Sale` (
   INDEX `fk_Sale_Employee1_idx` (`employeeId` ASC),
   INDEX `fk_Sale_Product1_idx` (`productId` ASC),
   CONSTRAINT `fk_Sale_Customer1`
-    FOREIGN KEY (`customerId`)
-    REFERENCES `acredito`.`Customer` (`id`)
+  FOREIGN KEY (`customerId`)
+  REFERENCES `acredito`.`Customer` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Sale_Employee1`
-    FOREIGN KEY (`employeeId`)
-    REFERENCES `acredito`.`Employee` (`id`)
+  FOREIGN KEY (`employeeId`)
+  REFERENCES `acredito`.`Employee` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Sale_Product1`
-    FOREIGN KEY (`productId`)
-    REFERENCES `acredito`.`Product` (`id`)
+  FOREIGN KEY (`productId`)
+  REFERENCES `acredito`.`Product` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -186,11 +186,11 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Payment` (
   PRIMARY KEY (`id`),
   INDEX `fk_Payment_Sale1_idx` (`saleId` ASC),
   CONSTRAINT `fk_Payment_Sale1`
-    FOREIGN KEY (`saleId`)
-    REFERENCES `acredito`.`Sale` (`id`)
+  FOREIGN KEY (`saleId`)
+  REFERENCES `acredito`.`Sale` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -208,11 +208,11 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Charge` (
   PRIMARY KEY (`id`),
   INDEX `fk_Charge_Sale1_idx` (`saleId` ASC),
   CONSTRAINT `fk_Charge_Sale1`
-    FOREIGN KEY (`saleId`)
-    REFERENCES `acredito`.`Sale` (`id`)
+  FOREIGN KEY (`saleId`)
+  REFERENCES `acredito`.`Sale` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -226,11 +226,11 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Contact` (
   PRIMARY KEY (`id`),
   INDEX `fk_Contact_Person1_idx` (`personId` ASC),
   CONSTRAINT `fk_Contact_Person1`
-    FOREIGN KEY (`personId`)
-    REFERENCES `acredito`.`Person` (`id`)
+  FOREIGN KEY (`personId`)
+  REFERENCES `acredito`.`Person` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -1,24 +1,25 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Occupation {
-    private int id;
+    private Integer id;
     private String name;
-    private Collection<Person> personsById;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -39,7 +40,7 @@ public class Occupation {
 
         Occupation that = (Occupation) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -47,17 +48,8 @@ public class Occupation {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "occupationByOccupationId")
-    public Collection<Person> getPersonsById() {
-        return personsById;
-    }
-
-    public void setPersonsById(Collection<Person> personsById) {
-        this.personsById = personsById;
     }
 }

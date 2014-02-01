@@ -1,6 +1,9 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -9,29 +12,28 @@ import java.sql.Timestamp;
  */
 @Entity
 public class Payment {
-    private long id;
-    private int paymentNumber;
+    private Long id;
+    private Integer paymentNumber;
     private Timestamp dueDate;
     private BigDecimal amountDue;
-    private Sale saleBySaleId;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "paymentNumber")
-    public int getPaymentNumber() {
+    public Integer getPaymentNumber() {
         return paymentNumber;
     }
 
-    public void setPaymentNumber(int paymentNumber) {
+    public void setPaymentNumber(Integer paymentNumber) {
         this.paymentNumber = paymentNumber;
     }
 
@@ -62,30 +64,21 @@ public class Payment {
 
         Payment payment = (Payment) o;
 
-        if (id != payment.id) return false;
-        if (paymentNumber != payment.paymentNumber) return false;
         if (amountDue != null ? !amountDue.equals(payment.amountDue) : payment.amountDue != null) return false;
         if (dueDate != null ? !dueDate.equals(payment.dueDate) : payment.dueDate != null) return false;
+        if (id != null ? !id.equals(payment.id) : payment.id != null) return false;
+        if (paymentNumber != null ? !paymentNumber.equals(payment.paymentNumber) : payment.paymentNumber != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + paymentNumber;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (paymentNumber != null ? paymentNumber.hashCode() : 0);
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
         result = 31 * result + (amountDue != null ? amountDue.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "saleId", referencedColumnName = "id", nullable = false)
-    public Sale getSaleBySaleId() {
-        return saleBySaleId;
-    }
-
-    public void setSaleBySaleId(Sale saleBySaleId) {
-        this.saleBySaleId = saleBySaleId;
     }
 }

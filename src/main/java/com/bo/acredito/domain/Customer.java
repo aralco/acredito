@@ -1,35 +1,35 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Customer {
-    private long id;
-    private long code;
-    private Person personByPersonId;
-    private Collection<Sale> salesById;
+    private Long id;
+    private Long code;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "code")
-    public long getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
@@ -40,35 +40,16 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
-        if (code != customer.code) return false;
-        if (id != customer.id) return false;
+        if (code != null ? !code.equals(customer.code) : customer.code != null) return false;
+        if (id != null ? !id.equals(customer.id) : customer.id != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (code ^ (code >>> 32));
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "personId", referencedColumnName = "id", nullable = false)
-    public Person getPersonByPersonId() {
-        return personByPersonId;
-    }
-
-    public void setPersonByPersonId(Person personByPersonId) {
-        this.personByPersonId = personByPersonId;
-    }
-
-    @OneToMany(mappedBy = "customerByCustomerId")
-    public Collection<Sale> getSalesById() {
-        return salesById;
-    }
-
-    public void setSalesById(Collection<Sale> salesById) {
-        this.salesById = salesById;
     }
 }

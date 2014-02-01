@@ -1,14 +1,16 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Address {
-    private int id;
+    private Integer id;
     private String address;
     private String address2;
     private String country;
@@ -17,15 +19,14 @@ public class Address {
     private String phone;
     private String mobile;
     private String workPhone;
-    private Collection<Person> personsById;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -116,11 +117,11 @@ public class Address {
 
         Address address1 = (Address) o;
 
-        if (id != address1.id) return false;
         if (address != null ? !address.equals(address1.address) : address1.address != null) return false;
         if (address2 != null ? !address2.equals(address1.address2) : address1.address2 != null) return false;
         if (city != null ? !city.equals(address1.city) : address1.city != null) return false;
         if (country != null ? !country.equals(address1.country) : address1.country != null) return false;
+        if (id != null ? !id.equals(address1.id) : address1.id != null) return false;
         if (mobile != null ? !mobile.equals(address1.mobile) : address1.mobile != null) return false;
         if (phone != null ? !phone.equals(address1.phone) : address1.phone != null) return false;
         if (province != null ? !province.equals(address1.province) : address1.province != null) return false;
@@ -131,7 +132,7 @@ public class Address {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (address2 != null ? address2.hashCode() : 0);
         result = 31 * result + (country != null ? country.hashCode() : 0);
@@ -141,14 +142,5 @@ public class Address {
         result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
         result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "addressByAddressId")
-    public Collection<Person> getPersonsById() {
-        return personsById;
-    }
-
-    public void setPersonsById(Collection<Person> personsById) {
-        this.personsById = personsById;
     }
 }

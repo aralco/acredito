@@ -3,15 +3,14 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Sale {
-    private long id;
-    private long code;
+    private Long id;
+    private Long code;
     private Timestamp date;
     private BigDecimal subTotal;
     private BigDecimal discountedAmount;
@@ -20,29 +19,27 @@ public class Sale {
     private BigDecimal initialPayment;
     private BigDecimal readidualPayment;
     private String notes;
-    private Collection<Charge> chargesById;
-    private Collection<Payment> paymentsById;
     private Customer customerByCustomerId;
     private Employee employeeByEmployeeId;
     private Product productByProductId;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "code")
-    public long getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
@@ -133,11 +130,11 @@ public class Sale {
 
         Sale sale = (Sale) o;
 
-        if (code != sale.code) return false;
-        if (id != sale.id) return false;
+        if (code != null ? !code.equals(sale.code) : sale.code != null) return false;
         if (date != null ? !date.equals(sale.date) : sale.date != null) return false;
         if (discountedAmount != null ? !discountedAmount.equals(sale.discountedAmount) : sale.discountedAmount != null)
             return false;
+        if (id != null ? !id.equals(sale.id) : sale.id != null) return false;
         if (initialPayment != null ? !initialPayment.equals(sale.initialPayment) : sale.initialPayment != null)
             return false;
         if (notes != null ? !notes.equals(sale.notes) : sale.notes != null) return false;
@@ -152,8 +149,8 @@ public class Sale {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (code ^ (code >>> 32));
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (subTotal != null ? subTotal.hashCode() : 0);
         result = 31 * result + (discountedAmount != null ? discountedAmount.hashCode() : 0);
@@ -163,24 +160,6 @@ public class Sale {
         result = 31 * result + (readidualPayment != null ? readidualPayment.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "saleBySaleId")
-    public Collection<Charge> getChargesById() {
-        return chargesById;
-    }
-
-    public void setChargesById(Collection<Charge> chargesById) {
-        this.chargesById = chargesById;
-    }
-
-    @OneToMany(mappedBy = "saleBySaleId")
-    public Collection<Payment> getPaymentsById() {
-        return paymentsById;
-    }
-
-    public void setPaymentsById(Collection<Payment> paymentsById) {
-        this.paymentsById = paymentsById;
     }
 
     @ManyToOne

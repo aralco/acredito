@@ -1,6 +1,9 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -9,32 +12,31 @@ import java.sql.Timestamp;
  */
 @Entity
 public class Charge {
-    private long id;
-    private long code;
+    private Long id;
+    private Long code;
     private Timestamp date;
     private BigDecimal chargeAmount;
     private BigDecimal defaultingAmount;
     private BigDecimal totalAmount;
     private String notes;
-    private Sale saleBySaleId;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "code")
-    public long getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
@@ -95,13 +97,13 @@ public class Charge {
 
         Charge charge = (Charge) o;
 
-        if (code != charge.code) return false;
-        if (id != charge.id) return false;
         if (chargeAmount != null ? !chargeAmount.equals(charge.chargeAmount) : charge.chargeAmount != null)
             return false;
+        if (code != null ? !code.equals(charge.code) : charge.code != null) return false;
         if (date != null ? !date.equals(charge.date) : charge.date != null) return false;
         if (defaultingAmount != null ? !defaultingAmount.equals(charge.defaultingAmount) : charge.defaultingAmount != null)
             return false;
+        if (id != null ? !id.equals(charge.id) : charge.id != null) return false;
         if (notes != null ? !notes.equals(charge.notes) : charge.notes != null) return false;
         if (totalAmount != null ? !totalAmount.equals(charge.totalAmount) : charge.totalAmount != null) return false;
 
@@ -110,23 +112,13 @@ public class Charge {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (code ^ (code >>> 32));
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (chargeAmount != null ? chargeAmount.hashCode() : 0);
         result = 31 * result + (defaultingAmount != null ? defaultingAmount.hashCode() : 0);
         result = 31 * result + (totalAmount != null ? totalAmount.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "saleId", referencedColumnName = "id", nullable = false)
-    public Sale getSaleBySaleId() {
-        return saleBySaleId;
-    }
-
-    public void setSaleBySaleId(Sale saleBySaleId) {
-        this.saleBySaleId = saleBySaleId;
     }
 }
