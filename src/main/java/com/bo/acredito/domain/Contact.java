@@ -1,17 +1,16 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
-public class Customer {
+public class Contact {
     private long id;
-    private long code;
+    private String name;
+    private String phone;
     private Person personByPersonId;
-    private Collection<Sale> salesById;
 
     @Id
     @Column(name = "id")
@@ -24,13 +23,23 @@ public class Customer {
     }
 
     @Basic
-    @Column(name = "code")
-    public long getCode() {
-        return code;
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setCode(long code) {
-        this.code = code;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "phone")
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -38,10 +47,11 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Customer customer = (Customer) o;
+        Contact contact = (Contact) o;
 
-        if (code != customer.code) return false;
-        if (id != customer.id) return false;
+        if (id != contact.id) return false;
+        if (name != null ? !name.equals(contact.name) : contact.name != null) return false;
+        if (phone != null ? !phone.equals(contact.phone) : contact.phone != null) return false;
 
         return true;
     }
@@ -49,7 +59,8 @@ public class Customer {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (code ^ (code >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
         return result;
     }
 
@@ -61,14 +72,5 @@ public class Customer {
 
     public void setPersonByPersonId(Person personByPersonId) {
         this.personByPersonId = personByPersonId;
-    }
-
-    @OneToMany(mappedBy = "customerByCustomerId")
-    public Collection<Sale> getSalesById() {
-        return salesById;
-    }
-
-    public void setSalesById(Collection<Sale> salesById) {
-        this.salesById = salesById;
     }
 }

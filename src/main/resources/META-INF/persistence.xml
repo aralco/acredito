@@ -6,7 +6,18 @@
 
 	<persistence-unit name="acreditoPU">
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+        <class>com.bo.acredito.domain.Address</class>
+        <class>com.bo.acredito.domain.Charge</class>
+        <class>com.bo.acredito.domain.Contact</class>
+        <class>com.bo.acredito.domain.Customer</class>
+        <class>com.bo.acredito.domain.Employee</class>
+        <class>com.bo.acredito.domain.Occupation</class>
+        <class>com.bo.acredito.domain.Payment</class>
         <class>com.bo.acredito.domain.Person</class>
+        <class>com.bo.acredito.domain.Price</class>
+        <class>com.bo.acredito.domain.Product</class>
+        <class>com.bo.acredito.domain.Sale</class>
+
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3306/acredito"/>
             <property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>

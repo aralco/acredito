@@ -1,9 +1,63 @@
 package com.bo.acredito.domain;
 
+import javax.persistence.*;
+import java.util.Collection;
+
+/**
+ * Created by aralco on 2/1/14.
+ */
+@Entity
 public class Occupation {
+    private int id;
+    private String name;
+    private Collection<Person> personsById;
 
-	private Long occupationId;
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
 
-	private String occupationName;
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Occupation that = (Occupation) o;
+
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @OneToMany(mappedBy = "occupationByOccupationId")
+    public Collection<Person> getPersonsById() {
+        return personsById;
+    }
+
+    public void setPersonsById(Collection<Person> personsById) {
+        this.personsById = personsById;
+    }
 }

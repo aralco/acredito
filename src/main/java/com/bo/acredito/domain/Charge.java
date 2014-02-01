@@ -1,73 +1,132 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
+/**
+ * Created by aralco on 2/1/14.
+ */
 @Entity
 public class Charge {
+    private long id;
+    private long code;
+    private Timestamp date;
+    private BigDecimal chargeAmount;
+    private BigDecimal defaultingAmount;
+    private BigDecimal totalAmount;
+    private String notes;
+    private Sale saleBySaleId;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Double totalAmount;
-
-	private int chargeId;
-
-	private Double amount;
-
-	private Date date;
-
-	private Double defaultingAmount;
-
-	private String invoiceNumber;
-
-    public Double getTotalAmount() {
-        return totalAmount;
+    @Column(name = "id")
+    public long getId() {
+        return id;
     }
 
-    public void setTotalAmount(Double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public int getChargeId() {
-        return chargeId;
+    @Basic
+    @Column(name = "code")
+    public long getCode() {
+        return code;
     }
 
-    public void setChargeId(int chargeId) {
-        this.chargeId = chargeId;
+    public void setCode(long code) {
+        this.code = code;
     }
 
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public Date getDate() {
+    @Basic
+    @Column(name = "date")
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
-    public Double getDefaultingAmount() {
+    @Basic
+    @Column(name = "chargeAmount")
+    public BigDecimal getChargeAmount() {
+        return chargeAmount;
+    }
+
+    public void setChargeAmount(BigDecimal chargeAmount) {
+        this.chargeAmount = chargeAmount;
+    }
+
+    @Basic
+    @Column(name = "defaultingAmount")
+    public BigDecimal getDefaultingAmount() {
         return defaultingAmount;
     }
 
-    public void setDefaultingAmount(Double defaultingAmount) {
+    public void setDefaultingAmount(BigDecimal defaultingAmount) {
         this.defaultingAmount = defaultingAmount;
     }
 
-    public String getInvoiceNumber() {
-        return invoiceNumber;
+    @Basic
+    @Column(name = "totalAmount")
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setInvoiceNumber(String invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    @Basic
+    @Column(name = "notes")
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Charge charge = (Charge) o;
+
+        if (code != charge.code) return false;
+        if (id != charge.id) return false;
+        if (chargeAmount != null ? !chargeAmount.equals(charge.chargeAmount) : charge.chargeAmount != null)
+            return false;
+        if (date != null ? !date.equals(charge.date) : charge.date != null) return false;
+        if (defaultingAmount != null ? !defaultingAmount.equals(charge.defaultingAmount) : charge.defaultingAmount != null)
+            return false;
+        if (notes != null ? !notes.equals(charge.notes) : charge.notes != null) return false;
+        if (totalAmount != null ? !totalAmount.equals(charge.totalAmount) : charge.totalAmount != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (int) (code ^ (code >>> 32));
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (chargeAmount != null ? chargeAmount.hashCode() : 0);
+        result = 31 * result + (defaultingAmount != null ? defaultingAmount.hashCode() : 0);
+        result = 31 * result + (totalAmount != null ? totalAmount.hashCode() : 0);
+        result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "saleId", referencedColumnName = "id", nullable = false)
+    public Sale getSaleBySaleId() {
+        return saleBySaleId;
+    }
+
+    public void setSaleBySaleId(Sale saleBySaleId) {
+        this.saleBySaleId = saleBySaleId;
     }
 }
