@@ -27,6 +27,7 @@ public class MyVaadinUI extends UI
 
     @Override
     protected void init(VaadinRequest request) {
+
         JPAContainer<com.bo.acredito.domain.Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
         PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
         setContent(personUI);
