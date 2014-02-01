@@ -37,6 +37,10 @@ public class MyVaadinUI extends UI
 
         //Clientes
         Label clientesLabel = new Label("Clientes List below");
+        JPAContainer<com.bo.acredito.domain.Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
+        PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
+
+
         //Productos
         Label productosLabel = new Label("Productos List below");
 
@@ -72,7 +76,7 @@ public class MyVaadinUI extends UI
         Label administracionLabel = new Label("Administración List below");
 
 
-        tabSheetMain.addTab(clientesLabel, "Clientes", null);
+        tabSheetMain.addTab(personUI, "Clientes", null);
         tabSheetMain.addTab(productosLabel, "Productos", null);
         tabSheetMain.addTab(salesForm, "Ventas", null);
         tabSheetMain.addTab(cobranzasLabel, "Cobranzas", null);
@@ -82,10 +86,6 @@ public class MyVaadinUI extends UI
 
         layout.addComponent(tabSheetMain);
 
-
-//        JPAContainer<com.bo.acredito.domain.Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
-//        PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
-//        setContent(personUI);
     }
 
 }
