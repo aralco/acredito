@@ -35,7 +35,7 @@ public class PersonUI extends CustomComponent {
         addButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                BoundPersonForm personForm=new BoundPersonForm(new BeanItem<Person>(new Person()));
+                BoundPersonForm personForm=new BoundPersonForm(null);
 
                 Window window = new Window();
                 window.setModal(true);

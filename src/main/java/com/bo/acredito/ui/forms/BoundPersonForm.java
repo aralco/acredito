@@ -52,7 +52,12 @@ public class BoundPersonForm extends FormLayout {
         addComponent(notes);
 
         fieldGroup = new BeanFieldGroup<Person>(Person.class);
-        fieldGroup.setItemDataSource(new BeanItem<Person>(((JPAContainerItem<Person>) item).getEntity()));
+        if(item!=null){
+            fieldGroup.setItemDataSource(new BeanItem<Person>(((JPAContainerItem<Person>) item).getEntity()));
+        }
+        else{
+            fieldGroup.setItemDataSource(new BeanItem<Person>(new Person()));
+        }
         fieldGroup.bindMemberFields(this);
 
         saveButton = new Button("Save", new Button.ClickListener() {

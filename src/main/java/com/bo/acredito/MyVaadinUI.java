@@ -1,19 +1,21 @@
 package com.bo.acredito;
 
-import javax.servlet.annotation.WebServlet;
-
 import com.bo.acredito.domain.Person;
 import com.bo.acredito.ui.components.PersonUI;
 import com.bo.acredito.ui.components.SalesUI;
+import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
-import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+
+import javax.servlet.annotation.WebServlet;
 
 @Theme("mytheme")
 @SuppressWarnings("serial")
@@ -30,7 +32,7 @@ public class MyVaadinUI extends UI
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
-    public static class Servlet extends VaadinServlet {
+    public static class Servlet extends JEE6VaadinServlet {
     }
 
     @Override
