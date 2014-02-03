@@ -4,9 +4,10 @@ import javax.servlet.annotation.WebServlet;
 
 import com.bo.acredito.domain.Person;
 import com.bo.acredito.ui.components.PersonUI;
-import com.bo.acredito.web.JEE6VaadinServlet;
+import com.bo.acredito.ui.components.SalesUI;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.BeanItem;
@@ -19,73 +20,63 @@ import com.vaadin.ui.*;
 public class MyVaadinUI extends UI
 {
     public static final String PERSISTENCE_UNIT = "acreditoPU";
+    public static final String CUSTOMERS = "Clientes";
+    public static final String PRODUCTS = "Productos";
+    public static final String SALES = "Ventas";
+    public static final String CHARGES = "Cobranzas";
+    public static final String EXPENSES = "Egresos";
+    public static final String SUPPORT = "Soporte";
+    public static final String ADMIN = "Administración";
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
-    public static class Servlet extends JEE6VaadinServlet {
+    public static class Servlet extends VaadinServlet {
     }
 
     @Override
     protected void init(VaadinRequest request) {
-        final VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
-        setContent(layout);
+        final VerticalLayout contentLayout = new VerticalLayout();
+        contentLayout.setSizeFull();
+        //contentLayout.setMargin(true);
+        setContent(contentLayout);
 
+        //Tabs Container
         TabSheet tabSheetMain = new TabSheet();
         tabSheetMain.setImmediate(true);
         tabSheetMain.setWidth("100%");
         tabSheetMain.setHeight("100%");
 
-        //Clientes
-        Label clientesLabel = new Label("Clientes List below");
+        //Customers
         JPAContainer<com.bo.acredito.domain.Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
         PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
+        tabSheetMain.addTab(personUI, CUSTOMERS, null);
 
-
-        //Productos
+        //Products
         Label productosLabel = new Label("Productos List below");
-
-        //Ventas
-        Form salesForm = new Form();
-        salesForm.setCaption("Form Caption");
-        salesForm.setDescription("This is a description of the Form that is " +
-                "displayed in the upper part of the form. You normally " +
-                "enter some descriptive text about the form and its " +
-                "use here.");
-        // Add a field directly to the layout. This field will
-        // not be bound to the data source Item of the form.
-        salesForm.getLayout().addComponent(new TextField("A Field"));
-
-        // Add a field and bind it to an named item property.
-        salesForm.addField("another", new TextField("Another Field"));
-
-        Button button = new Button("Click Me");
-        button.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-                layout.addComponent(new Label("Thank you for clicking"));
-            }
-        });
-        salesForm.getFooter().addComponent(button);
-
-        //Cobranzas
-        Label cobranzasLabel = new Label("Cobranzas List below");
-        //Egresos
-        Label egresosLabel = new Label("Egresos List below");
-        //Soporte
-        Label soporteLabel = new Label("Soporte List below");
-        //Administración
-        Label administracionLabel = new Label("Administración List below");
+        tabSheetMain.addTab(productosLabel, PRODUCTS, null);
 
 
-        tabSheetMain.addTab(personUI, "Clientes", null);
-        tabSheetMain.addTab(productosLabel, "Productos", null);
-        tabSheetMain.addTab(salesForm, "Ventas", null);
-        tabSheetMain.addTab(cobranzasLabel, "Cobranzas", null);
-        tabSheetMain.addTab(egresosLabel, "Egresos", null);
-        tabSheetMain.addTab(soporteLabel, "Soporte", null);
-        tabSheetMain.addTab(administracionLabel, "Administración", null);
+        //Sales
+        SalesUI salesUI = new SalesUI();
+        tabSheetMain.addTab(salesUI, SALES, null);
 
-        layout.addComponent(tabSheetMain);
+        //Charges
+        Label chargesLabel = new Label(CHARGES+"... Not Yet Implemented");
+        tabSheetMain.addTab(chargesLabel, CHARGES, null);
+
+        //Expenses
+        Label expensesLabel = new Label(EXPENSES+"... Not Yet Implemented");
+        tabSheetMain.addTab(expensesLabel, EXPENSES, null);
+
+        //Support
+        Label supportLabel = new Label(SUPPORT+"... Not Yet Implemented");
+        tabSheetMain.addTab(supportLabel, SUPPORT, null);
+
+        //Admin
+        Label adminLabel = new Label(ADMIN+"... Not Yet Implemented");
+        tabSheetMain.addTab(adminLabel, ADMIN, null);
+
+        contentLayout.addComponent(tabSheetMain);
 
     }
 
