@@ -1,6 +1,8 @@
 package com.bo.acredito.ui.components;
 
 import com.bo.acredito.domain.SaleTypeEnum;
+import com.vaadin.data.Container;
+import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 
 import java.util.Arrays;
@@ -16,6 +18,8 @@ public class SalesUI extends CustomComponent {
     private TextField discountedAmount   = new TextField("Descuento $us:");
     private TextField total   = new TextField("Total $us:");
     private ComboBox saleType = new ComboBox("Forma de pago:", Arrays.asList(SaleTypeEnum.values()));
+    private TextField initialPayment = new TextField("Cuota inicial $us:");
+    private TextField residualPayment = new TextField("Saldo a crédito $us:");
     private TextArea notes   = new TextArea("Observaciones");
     private final Button saveButton   = new Button("Guardar");
     private final Button cancelButton   = new Button("Cancelar");
@@ -32,14 +36,33 @@ public class SalesUI extends CustomComponent {
         GridLayout gridLayout = new GridLayout(2,1);
         gridLayout.setSizeFull();
 
-        FormLayout leftFormLayout = new FormLayout();
+        final FormLayout leftFormLayout = new FormLayout();
         leftFormLayout.addComponent(customer);
         leftFormLayout.addComponent(product);
         leftFormLayout.addComponent(subTotal);
         leftFormLayout.addComponent(discountedAmount);
         leftFormLayout.addComponent(total);
         leftFormLayout.addComponent(saleType);
+        initialPayment.setVisible(false);
+        leftFormLayout.addComponent(initialPayment);
+        residualPayment.setVisible(false);
+        leftFormLayout.addComponent(residualPayment);
         leftFormLayout.addComponent(notes);
+        saleType.setNullSelectionAllowed(false);
+        saleType.setValue(SaleTypeEnum.CONTADO);
+        saleType.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                if (saleType.getValue().equals(SaleTypeEnum.CREDITO)) {
+                    initialPayment.setVisible(true);
+                    residualPayment.setVisible(true);
+                } else {
+                    initialPayment.setVisible(false);
+                    residualPayment.setVisible(false);
+                }
+            }
+        });
+        saleType.setImmediate(true);
         //leftFormLayout.setSizeFull();
         gridLayout.addComponent(leftFormLayout,0,0);
 
