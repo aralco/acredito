@@ -20,7 +20,8 @@ import com.vaadin.ui.Window;
  * Created by asejas on 1/29/14.
  */
 public class PersonList extends Table{
-    private String[] tablePropertyIds={"firstName","lastName", "salutation", "country", "city", "birthday", "notes"};
+    private String[] tablePropertyIds={"firstName","lastName", "country", "city", "birthday"};
+    private String[] tableHeaders={"Nombre","Apellido", "País", "Ciudad", "Fecha de nacimiento"};
 
     public PersonList() {
         JPAContainer container = JPAContainerFactory.make(Person.class, "acreditoPU");
@@ -30,17 +31,12 @@ public class PersonList extends Table{
         setSelectable(true);
         setImmediate(true);
         setSizeFull();
+        setColumnHeaders(tableHeaders);
         addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
-                System.out.println("*************************AQUIIIIIII");
                 Object itemId = event.getProperty().getValue();
-                Item item = getItem(itemId);
-                //PersonForm personForm = new PersonForm("Persona", new BeanItem<Person>(((JPAContainerItem<Person>) item).getEntity()));
-                BoundPersonForm personForm=new BoundPersonForm();
-                FieldGroup fieldGroup = new BeanFieldGroup<Person>(Person.class);
-                fieldGroup.setItemDataSource(new BeanItem<Person>(((JPAContainerItem<Person>) item).getEntity()));
-                fieldGroup.bindMemberFields(personForm);
+                BoundPersonForm personForm=new BoundPersonForm(getItem(itemId));
 
                 Window window = new Window();
                 window.setModal(true);

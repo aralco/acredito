@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import com.bo.acredito.domain.Person;
 import com.bo.acredito.ui.components.PersonUI;
+import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.annotations.Theme;
@@ -21,7 +22,7 @@ public class MyVaadinUI extends UI
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
-    public static class Servlet extends VaadinServlet {
+    public static class Servlet extends JEE6VaadinServlet {
     }
 
     @Override

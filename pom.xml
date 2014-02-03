@@ -122,6 +122,17 @@
             <version>2.3.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-cdi</artifactId>
+            <version>1.0.0.alpha1</version>
+        </dependency>
 	</dependencies>
 
 	<build>
