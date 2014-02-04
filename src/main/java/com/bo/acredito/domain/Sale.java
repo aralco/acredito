@@ -5,19 +5,19 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/1/14.
+ * Created by aralco on 2/4/14.
  */
 @Entity
 public class Sale {
     private Long id;
-    private Long code;
+    private String code;
     private Timestamp date;
     private BigDecimal subTotal;
     private BigDecimal discountedAmount;
     private BigDecimal total;
     private String saleType;
     private BigDecimal initialPayment;
-    private BigDecimal readidualPayment;
+    private BigDecimal residualPayment;
     private String notes;
     private Customer customerByCustomerId;
     private Employee employeeByEmployeeId;
@@ -35,11 +35,11 @@ public class Sale {
 
     @Basic
     @Column(name = "code")
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -104,13 +104,13 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "readidualPayment")
-    public BigDecimal getReadidualPayment() {
-        return readidualPayment;
+    @Column(name = "residualPayment")
+    public BigDecimal getResidualPayment() {
+        return residualPayment;
     }
 
-    public void setReadidualPayment(BigDecimal readidualPayment) {
-        this.readidualPayment = readidualPayment;
+    public void setResidualPayment(BigDecimal residualPayment) {
+        this.residualPayment = residualPayment;
     }
 
     @Basic
@@ -138,7 +138,7 @@ public class Sale {
         if (initialPayment != null ? !initialPayment.equals(sale.initialPayment) : sale.initialPayment != null)
             return false;
         if (notes != null ? !notes.equals(sale.notes) : sale.notes != null) return false;
-        if (readidualPayment != null ? !readidualPayment.equals(sale.readidualPayment) : sale.readidualPayment != null)
+        if (residualPayment != null ? !residualPayment.equals(sale.residualPayment) : sale.residualPayment != null)
             return false;
         if (saleType != null ? !saleType.equals(sale.saleType) : sale.saleType != null) return false;
         if (subTotal != null ? !subTotal.equals(sale.subTotal) : sale.subTotal != null) return false;
@@ -157,7 +157,7 @@ public class Sale {
         result = 31 * result + (total != null ? total.hashCode() : 0);
         result = 31 * result + (saleType != null ? saleType.hashCode() : 0);
         result = 31 * result + (initialPayment != null ? initialPayment.hashCode() : 0);
-        result = 31 * result + (readidualPayment != null ? readidualPayment.hashCode() : 0);
+        result = 31 * result + (residualPayment != null ? residualPayment.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }

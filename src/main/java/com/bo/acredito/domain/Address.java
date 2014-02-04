@@ -6,12 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by aralco on 2/1/14.
+ * Created by aralco on 2/4/14.
  */
 @Entity
 public class Address {
-    private Integer id;
-    private String address;
+    private Long id;
+    private String address1;
     private String address2;
     private String country;
     private String city;
@@ -22,22 +22,22 @@ public class Address {
 
     @Id
     @Column(name = "id")
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "address")
-    public String getAddress() {
-        return address;
+    @Column(name = "address1")
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 
     @Basic
@@ -115,17 +115,17 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Address address1 = (Address) o;
+        Address address = (Address) o;
 
-        if (address != null ? !address.equals(address1.address) : address1.address != null) return false;
-        if (address2 != null ? !address2.equals(address1.address2) : address1.address2 != null) return false;
-        if (city != null ? !city.equals(address1.city) : address1.city != null) return false;
-        if (country != null ? !country.equals(address1.country) : address1.country != null) return false;
-        if (id != null ? !id.equals(address1.id) : address1.id != null) return false;
-        if (mobile != null ? !mobile.equals(address1.mobile) : address1.mobile != null) return false;
-        if (phone != null ? !phone.equals(address1.phone) : address1.phone != null) return false;
-        if (province != null ? !province.equals(address1.province) : address1.province != null) return false;
-        if (workPhone != null ? !workPhone.equals(address1.workPhone) : address1.workPhone != null) return false;
+        if (address1 != null ? !address1.equals(address.address1) : address.address1 != null) return false;
+        if (address2 != null ? !address2.equals(address.address2) : address.address2 != null) return false;
+        if (city != null ? !city.equals(address.city) : address.city != null) return false;
+        if (country != null ? !country.equals(address.country) : address.country != null) return false;
+        if (id != null ? !id.equals(address.id) : address.id != null) return false;
+        if (mobile != null ? !mobile.equals(address.mobile) : address.mobile != null) return false;
+        if (phone != null ? !phone.equals(address.phone) : address.phone != null) return false;
+        if (province != null ? !province.equals(address.province) : address.province != null) return false;
+        if (workPhone != null ? !workPhone.equals(address.workPhone) : address.workPhone != null) return false;
 
         return true;
     }
@@ -133,7 +133,7 @@ public class Address {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (address1 != null ? address1.hashCode() : 0);
         result = 31 * result + (address2 != null ? address2.hashCode() : 0);
         result = 31 * result + (country != null ? country.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);

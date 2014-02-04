@@ -8,12 +8,12 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/1/14.
+ * Created by aralco on 2/4/14.
  */
 @Entity
 public class Charge {
     private Long id;
-    private Long code;
+    private String code;
     private Timestamp date;
     private BigDecimal chargeAmount;
     private BigDecimal defaultingAmount;
@@ -32,11 +32,11 @@ public class Charge {
 
     @Basic
     @Column(name = "code")
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -14,10 +14,6 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 
-import javax.ejb.EJB;
-import javax.ejb.embeddable.EJBContainer;
-import javax.inject.Inject;
-import javax.naming.NamingException;
 import java.util.Arrays;
 
 /**

@@ -14,7 +14,6 @@
         <class>com.bo.acredito.domain.Occupation</class>
         <class>com.bo.acredito.domain.Payment</class>
         <class>com.bo.acredito.domain.Person</class>
-        <class>com.bo.acredito.domain.Price</class>
         <class>com.bo.acredito.domain.Product</class>
         <class>com.bo.acredito.domain.Sale</class>
 
