@@ -82,6 +82,8 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Person` (
   `notes` TEXT NOT NULL,
   `occupationId` BIGINT NOT NULL,
   `addressId` BIGINT NOT NULL,
+  `customerId` BIGINT,
+  `employeeId` BIGINT,
   PRIMARY KEY (`id`),
   INDEX `fk_Person_Occupation1_idx` (`occupationId` ASC),
   INDEX `fk_Person_Address1_idx` (`addressId` ASC),
@@ -93,6 +95,14 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Person` (
   CONSTRAINT `fk_Person_Address1`
   FOREIGN KEY (`addressId`)
   REFERENCES `acredito`.`Address` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  FOREIGN KEY (`customerId`)
+  REFERENCES `acredito`.`Customer` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  FOREIGN KEY (`employeeId`)
+  REFERENCES `acredito`.`Employee` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
