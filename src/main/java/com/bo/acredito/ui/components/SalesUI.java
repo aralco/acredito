@@ -1,10 +1,15 @@
 package com.bo.acredito.ui.components;
 
+import com.bo.acredito.domain.Product;
 import com.bo.acredito.domain.SaleTypeEnum;
-import com.vaadin.data.Container;
+import com.vaadin.addon.jpacontainer.JPAContainer;
+import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
+import com.vaadin.event.FieldEvents;
 import com.vaadin.ui.*;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Arrays;
 
 /**
@@ -13,7 +18,7 @@ import java.util.Arrays;
 public class SalesUI extends CustomComponent {
 
     private ComboBox customer = new ComboBox("Cliente:");
-    private ComboBox product = new ComboBox("Producto:");
+    private ComboBox product;
     private TextField subTotal   = new TextField("Monto $us:");
     private TextField discountedAmount   = new TextField("Descuento $us:");
     private TextField total   = new TextField("Total $us:");
@@ -38,8 +43,36 @@ public class SalesUI extends CustomComponent {
 
         final FormLayout leftFormLayout = new FormLayout();
         leftFormLayout.addComponent(customer);
+        //Load products
+        final JPAContainer<Product> products = JPAContainerFactory.make(Product.class, "acreditoPU");
+        product = new ComboBox("Producto:", products);
+        product.setItemCaptionPropertyId("name");
+        product.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                String price = products.getItem(product.getValue()).getEntity().getPrice().toString();
+                subTotal.setValue(price);
+                subTotal.setReadOnly(true);
+                total.setValue(price);
+            }
+        });
+        product.setImmediate(true);
         leftFormLayout.addComponent(product);
         leftFormLayout.addComponent(subTotal);
+        discountedAmount.setValue("0.00");
+        discountedAmount.addTextChangeListener(new FieldEvents.TextChangeListener() {
+            @Override
+            public void textChange(FieldEvents.TextChangeEvent textChangeEvent) {
+                total.setReadOnly(false);
+                if (subTotal.getValue() != null) {
+                    BigDecimal st = new BigDecimal(subTotal.getValue());
+                    BigDecimal da = new BigDecimal(textChangeEvent.getText());
+                    total.setValue(st.subtract(da).toString());
+                    total.setReadOnly(true);
+                }
+            }
+        });
+        discountedAmount.setImmediate(true);
         leftFormLayout.addComponent(discountedAmount);
         leftFormLayout.addComponent(total);
         leftFormLayout.addComponent(saleType);
@@ -74,9 +107,9 @@ public class SalesUI extends CustomComponent {
 
 
         HorizontalLayout horizontalLayout = new HorizontalLayout();
-        saveButton.addClickListener(new Button.ClickListener()  {
-            public void buttonClick(Button.ClickEvent event)    {
-                Notification.show("GUARDADO","Venta registrada con éxito", Notification.Type.HUMANIZED_MESSAGE);
+        saveButton.addClickListener(new Button.ClickListener() {
+            public void buttonClick(Button.ClickEvent event) {
+                Notification.show("GUARDADO", "Venta registrada con éxito", Notification.Type.HUMANIZED_MESSAGE);
             }
         });
         horizontalLayout.addComponent(saveButton);

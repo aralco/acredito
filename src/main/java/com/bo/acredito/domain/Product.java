@@ -4,16 +4,18 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 /**
- * Created by aralco on 2/1/14.
+ * Created by aralco on 2/4/14.
  */
 @Entity
 public class Product {
     private Long id;
-    private Long code;
+    private String code;
     private String name;
+    private BigDecimal price;
     private Boolean available;
     private String notes;
     private byte[] photo;
@@ -30,11 +32,11 @@ public class Product {
 
     @Basic
     @Column(name = "code")
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -46,6 +48,16 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "price")
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Basic
@@ -91,6 +103,7 @@ public class Product {
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
         if (notes != null ? !notes.equals(product.notes) : product.notes != null) return false;
         if (!Arrays.equals(photo, product.photo)) return false;
+        if (price != null ? !price.equals(product.price) : product.price != null) return false;
 
         return true;
     }
@@ -100,6 +113,7 @@ public class Product {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (available != null ? available.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         result = 31 * result + (photo != null ? Arrays.hashCode(photo) : 0);

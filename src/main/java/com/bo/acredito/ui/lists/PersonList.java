@@ -2,16 +2,9 @@ package com.bo.acredito.ui.lists;
 
 import com.bo.acredito.domain.Person;
 import com.bo.acredito.ui.forms.BoundPersonForm;
-import com.bo.acredito.ui.forms.PersonForm;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
-import com.vaadin.addon.jpacontainer.JPAContainerItem;
-import com.vaadin.addon.jpacontainer.fieldfactory.FieldFactory;
-import com.vaadin.data.Item;
 import com.vaadin.data.Property;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;

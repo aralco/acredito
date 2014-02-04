@@ -6,12 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by aralco on 2/1/14.
+ * Created by aralco on 2/4/14.
  */
 @Entity
 public class Employee {
     private Long id;
-    private Long code;
+    private String code;
     private Boolean active;
     private String username;
     private String password;
@@ -28,11 +28,11 @@ public class Employee {
 
     @Basic
     @Column(name = "code")
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
