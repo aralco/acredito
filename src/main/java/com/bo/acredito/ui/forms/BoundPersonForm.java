@@ -9,6 +9,7 @@ import com.vaadin.addon.jpacontainer.JPAContainerItem;
 import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
@@ -30,11 +31,12 @@ public class BoundPersonForm extends FormLayout {
     private TextField salutation= new TextField("Saludo: ");
     private ComboBox idType=new ComboBox("Tipo de identificación: ", Arrays.asList(IdTypeEnum.values()));
     private TextField idNumber=new TextField("Identificación: ");
-    private ComboBox country=new ComboBox("País: ", Arrays.asList(CountryEnum.values()));
-    private TextField city=new TextField("Ciudad: ");
+    private ComboBox country=new ComboBox("País de nacimiento: ", Arrays.asList(CountryEnum.values()));
+    private TextField city=new TextField("Ciudad de nacimiento: ");
     private DateField birthday=new DateField("Fecha de nacimiento: ");
     private TextArea notes=new TextArea("Observaciones: ");
     private Button saveButton;
+
 
     private FieldGroup fieldGroup;
 
@@ -53,22 +55,32 @@ public class BoundPersonForm extends FormLayout {
 
         fieldGroup = new BeanFieldGroup<Person>(Person.class);
         if(item!=null){
-            fieldGroup.setItemDataSource(new BeanItem<Person>(((JPAContainerItem<Person>) item).getEntity()));
+            JPAContainerItem<Person> jpaItem=((JPAContainerItem<Person>) item);
+            fieldGroup.setItemDataSource(new BeanItem<Person>(jpaItem.getEntity()));
         }
         else{
-            fieldGroup.setItemDataSource(new BeanItem<Person>(new Person()));
+            BeanItem<Person> beanItem=new BeanItem<Person>(new Person());
+            fieldGroup.setItemDataSource(beanItem);
         }
         fieldGroup.bindMemberFields(this);
 
         saveButton = new Button("Save", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                try {
+                    fieldGroup.commit();
+                } catch (FieldGroup.CommitException e) {
+                    e.printStackTrace();
+                }
                 PersonService personService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getPersonService();
-                System.out.println("*****************************el servicio: "+personService);
-
                 Person person = ((BeanItem<Person>) fieldGroup.getItemDataSource()).getBean();
+                if(person.getId()==null){
+                    personService.savePerson(person);
+                }
+                else{
+                    personService.upatePerson(person);
+                }
 
-                personService.savePerson(person);
             }
         });
         saveButton.setStyleName(Reindeer.BUTTON_DEFAULT);

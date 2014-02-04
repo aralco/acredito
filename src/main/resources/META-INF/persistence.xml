@@ -1,33 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-	version="2.0">
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+<persistence-unit name="acreditoPU">
+    <jta-data-source>acredito</jta-data-source>
+    <non-jta-data-source>acreditoUnmanaged</non-jta-data-source>
+    <class>com.bo.acredito.domain.Address</class>
+    <class>com.bo.acredito.domain.Charge</class>
+    <class>com.bo.acredito.domain.Contact</class>
+    <class>com.bo.acredito.domain.Customer</class>
+    <class>com.bo.acredito.domain.Employee</class>
+    <class>com.bo.acredito.domain.Occupation</class>
+    <class>com.bo.acredito.domain.Payment</class>
+    <class>com.bo.acredito.domain.Person</class>
+    <class>com.bo.acredito.domain.Price</class>
+    <class>com.bo.acredito.domain.Product</class>
+    <class>com.bo.acredito.domain.Sale</class>
 
-	<persistence-unit name="acreditoPU">
-		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
-        <class>com.bo.acredito.domain.Address</class>
-        <class>com.bo.acredito.domain.Charge</class>
-        <class>com.bo.acredito.domain.Contact</class>
-        <class>com.bo.acredito.domain.Customer</class>
-        <class>com.bo.acredito.domain.Employee</class>
-        <class>com.bo.acredito.domain.Occupation</class>
-        <class>com.bo.acredito.domain.Payment</class>
-        <class>com.bo.acredito.domain.Person</class>
-        <class>com.bo.acredito.domain.Price</class>
-        <class>com.bo.acredito.domain.Product</class>
-        <class>com.bo.acredito.domain.Sale</class>
-
-        <properties>
-            <property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3306/acredito"/>
-            <property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
-            <property name="openjpa.ConnectionUserName" value="root"/>
-            <property name="openjpa.ConnectionPassword" value="root"/>
-            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
-            <property name="openjpa.jdbc.DBDictionary"  value="mysql(SimulateLocking=true)"/>
-            <property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO"/>
-
-        </properties>
-	</persistence-unit>
-
+    <properties>
+        <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+        <property name="openjpa.Log" value="DefaultLevel=INFO, Tool=INFO"/>
+        <property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3306/acredito"/>
+        <property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
+        <property name="openjpa.ConnectionUserName" value="root"/>
+        <property name="openjpa.ConnectionPassword" value="root"/>
+    </properties>
+</persistence-unit>
 </persistence>

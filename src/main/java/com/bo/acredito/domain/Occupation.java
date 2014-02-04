@@ -1,20 +1,17 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Occupation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
 
-    @Id
-    @Column(name = "id")
     public Integer getId() {
         return id;
     }
@@ -23,8 +20,6 @@ public class Occupation {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }

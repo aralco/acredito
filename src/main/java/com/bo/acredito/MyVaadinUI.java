@@ -15,6 +15,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import javax.persistence.PersistenceContext;
 import javax.servlet.annotation.WebServlet;
 
 @Theme("mytheme")
@@ -32,6 +33,7 @@ public class MyVaadinUI extends UI
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
+    @PersistenceContext(name="persistence/em",unitName="acreditoPU")
     public static class Servlet extends JEE6VaadinServlet {
     }
 

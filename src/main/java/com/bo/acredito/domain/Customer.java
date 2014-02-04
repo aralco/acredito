@@ -1,20 +1,18 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long code;
 
-    @Id
-    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -23,8 +21,6 @@ public class Customer {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "code")
     public Long getCode() {
         return code;
     }

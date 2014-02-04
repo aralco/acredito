@@ -1,27 +1,25 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by aralco on 2/1/14.
  */
 @Entity
 public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String address;
     private String address2;
-    private String country;
+    @Enumerated(EnumType.STRING)
+    private CountryEnum country;
     private String city;
     private String province;
     private String phone;
     private String mobile;
     private String workPhone;
 
-    @Id
-    @Column(name = "id")
     public Integer getId() {
         return id;
     }
@@ -30,8 +28,7 @@ public class Address {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "address")
+
     public String getAddress() {
         return address;
     }
@@ -40,8 +37,7 @@ public class Address {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "address2")
+
     public String getAddress2() {
         return address2;
     }
@@ -50,18 +46,14 @@ public class Address {
         this.address2 = address2;
     }
 
-    @Basic
-    @Column(name = "country")
-    public String getCountry() {
+    public CountryEnum getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(CountryEnum country) {
         this.country = country;
     }
 
-    @Basic
-    @Column(name = "city")
     public String getCity() {
         return city;
     }
@@ -70,8 +62,6 @@ public class Address {
         this.city = city;
     }
 
-    @Basic
-    @Column(name = "province")
     public String getProvince() {
         return province;
     }
@@ -80,8 +70,6 @@ public class Address {
         this.province = province;
     }
 
-    @Basic
-    @Column(name = "phone")
     public String getPhone() {
         return phone;
     }
@@ -90,8 +78,6 @@ public class Address {
         this.phone = phone;
     }
 
-    @Basic
-    @Column(name = "mobile")
     public String getMobile() {
         return mobile;
     }
@@ -100,8 +86,6 @@ public class Address {
         this.mobile = mobile;
     }
 
-    @Basic
-    @Column(name = "workPhone")
     public String getWorkPhone() {
         return workPhone;
     }

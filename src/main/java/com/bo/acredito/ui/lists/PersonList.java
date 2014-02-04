@@ -20,11 +20,13 @@ import com.vaadin.ui.Window;
  * Created by asejas on 1/29/14.
  */
 public class PersonList extends Table{
-    private String[] tablePropertyIds={"firstName","lastName", "country", "city", "birthday"};
-    private String[] tableHeaders={"Nombre","Apellido", "País", "Ciudad", "Fecha de nacimiento"};
+    private String[] tablePropertyIds={"firstName","lastName", "country", "city", "birthday", "occupation.name","customer.code"};
+    private String[] tableHeaders={"Nombre","Apellido", "País", "Ciudad", "Fecha de nacimiento", "Ocupación","Código de cliente"};
 
     public PersonList() {
         JPAContainer container = JPAContainerFactory.make(Person.class, "acreditoPU");
+        container.addNestedContainerProperty("customer.code");
+        container.addNestedContainerProperty("occupation.name");
         new Table(null, container);
         setContainerDataSource(container);
         setVisibleColumns(tablePropertyIds);

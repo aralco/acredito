@@ -9,22 +9,38 @@ import java.util.Arrays;
  */
 @Entity
 public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
     private String salutation;
-    private String idType;
+    @Enumerated(EnumType.STRING)
+    private IdTypeEnum idType;
+
     private String idNumber;
-    private String country;
+    @Enumerated(EnumType.STRING)
+    private CountryEnum country;
     private String city;
     private Date birthday;
     private byte[] photo;
     private String notes;
-    private Occupation occupationByOccupationId;
-    private Address addressByAddressId;
+    @ManyToOne
+    @JoinColumn(name = "occupationId", referencedColumnName = "id", nullable = false)
+    private Occupation occupation;
+    @ManyToOne
+    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
+    private Address address;
 
-    @Id
-    @Column(name = "id")
+
+    @OneToOne
+    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = true)
+    private Customer customer;
+
+    @OneToOne
+    @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = true)
+    private Employee employee;
+
     public Long getId() {
         return id;
     }
@@ -33,8 +49,6 @@ public class Person {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "firstName")
     public String getFirstName() {
         return firstName;
     }
@@ -43,8 +57,6 @@ public class Person {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "lastName")
     public String getLastName() {
         return lastName;
     }
@@ -53,8 +65,6 @@ public class Person {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "salutation")
     public String getSalutation() {
         return salutation;
     }
@@ -63,18 +73,14 @@ public class Person {
         this.salutation = salutation;
     }
 
-    @Basic
-    @Column(name = "idType")
-    public String getIdType() {
+    public IdTypeEnum getIdType() {
         return idType;
     }
 
-    public void setIdType(String idType) {
+    public void setIdType(IdTypeEnum idType) {
         this.idType = idType;
     }
 
-    @Basic
-    @Column(name = "idNumber")
     public String getIdNumber() {
         return idNumber;
     }
@@ -83,18 +89,14 @@ public class Person {
         this.idNumber = idNumber;
     }
 
-    @Basic
-    @Column(name = "country")
-    public String getCountry() {
+    public CountryEnum getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(CountryEnum country) {
         this.country = country;
     }
 
-    @Basic
-    @Column(name = "city")
     public String getCity() {
         return city;
     }
@@ -103,8 +105,6 @@ public class Person {
         this.city = city;
     }
 
-    @Basic
-    @Column(name = "birthday")
     public Date getBirthday() {
         return birthday;
     }
@@ -113,8 +113,6 @@ public class Person {
         this.birthday = birthday;
     }
 
-    @Basic
-    @Column(name = "photo")
     public byte[] getPhoto() {
         return photo;
     }
@@ -123,14 +121,44 @@ public class Person {
         this.photo = photo;
     }
 
-    @Basic
-    @Column(name = "notes")
     public String getNotes() {
         return notes;
     }
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Occupation getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override
@@ -169,25 +197,5 @@ public class Person {
         result = 31 * result + (photo != null ? Arrays.hashCode(photo) : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "occupationId", referencedColumnName = "id", nullable = false)
-    public Occupation getOccupationByOccupationId() {
-        return occupationByOccupationId;
-    }
-
-    public void setOccupationByOccupationId(Occupation occupationByOccupationId) {
-        this.occupationByOccupationId = occupationByOccupationId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
-    public Address getAddressByAddressId() {
-        return addressByAddressId;
-    }
-
-    public void setAddressByAddressId(Address addressByAddressId) {
-        this.addressByAddressId = addressByAddressId;
     }
 }
