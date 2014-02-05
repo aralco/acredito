@@ -5,26 +5,28 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/4/14.
+ * Created by aralco on 2/5/14.
  */
 @Entity
 public class Sale {
     private Long id;
-    private String code;
+    private String version;
+    private Long code;
     private Timestamp date;
-    private BigDecimal subTotal;
+    private BigDecimal productPrice;
     private BigDecimal discountedAmount;
     private BigDecimal total;
     private String saleType;
     private BigDecimal initialPayment;
     private BigDecimal residualPayment;
+    private Integer paymentQuotes;
     private String notes;
-    private Customer customerByCustomerId;
     private Employee employeeByEmployeeId;
     private Product productByProductId;
+    private Customer customerByCustomerId;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -34,17 +36,27 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "code")
-    public String getCode() {
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 16777215, precision = 0)
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Timestamp getDate() {
         return date;
     }
@@ -54,17 +66,17 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "subTotal")
-    public BigDecimal getSubTotal() {
-        return subTotal;
+    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    public BigDecimal getProductPrice() {
+        return productPrice;
     }
 
-    public void setSubTotal(BigDecimal subTotal) {
-        this.subTotal = subTotal;
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
     }
 
     @Basic
-    @Column(name = "discountedAmount")
+    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getDiscountedAmount() {
         return discountedAmount;
     }
@@ -74,7 +86,7 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "total")
+    @Column(name = "total", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getTotal() {
         return total;
     }
@@ -84,7 +96,7 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "saleType")
+    @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     public String getSaleType() {
         return saleType;
     }
@@ -94,7 +106,7 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "initialPayment")
+    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getInitialPayment() {
         return initialPayment;
     }
@@ -104,7 +116,7 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "residualPayment")
+    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getResidualPayment() {
         return residualPayment;
     }
@@ -114,7 +126,17 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    public Integer getPaymentQuotes() {
+        return paymentQuotes;
+    }
+
+    public void setPaymentQuotes(Integer paymentQuotes) {
+        this.paymentQuotes = paymentQuotes;
+    }
+
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     public String getNotes() {
         return notes;
     }
@@ -138,11 +160,14 @@ public class Sale {
         if (initialPayment != null ? !initialPayment.equals(sale.initialPayment) : sale.initialPayment != null)
             return false;
         if (notes != null ? !notes.equals(sale.notes) : sale.notes != null) return false;
+        if (paymentQuotes != null ? !paymentQuotes.equals(sale.paymentQuotes) : sale.paymentQuotes != null)
+            return false;
+        if (productPrice != null ? !productPrice.equals(sale.productPrice) : sale.productPrice != null) return false;
         if (residualPayment != null ? !residualPayment.equals(sale.residualPayment) : sale.residualPayment != null)
             return false;
         if (saleType != null ? !saleType.equals(sale.saleType) : sale.saleType != null) return false;
-        if (subTotal != null ? !subTotal.equals(sale.subTotal) : sale.subTotal != null) return false;
         if (total != null ? !total.equals(sale.total) : sale.total != null) return false;
+        if (version != null ? !version.equals(sale.version) : sale.version != null) return false;
 
         return true;
     }
@@ -150,26 +175,18 @@ public class Sale {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (subTotal != null ? subTotal.hashCode() : 0);
+        result = 31 * result + (productPrice != null ? productPrice.hashCode() : 0);
         result = 31 * result + (discountedAmount != null ? discountedAmount.hashCode() : 0);
         result = 31 * result + (total != null ? total.hashCode() : 0);
         result = 31 * result + (saleType != null ? saleType.hashCode() : 0);
         result = 31 * result + (initialPayment != null ? initialPayment.hashCode() : 0);
         result = 31 * result + (residualPayment != null ? residualPayment.hashCode() : 0);
+        result = 31 * result + (paymentQuotes != null ? paymentQuotes.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
-    public Customer getCustomerByCustomerId() {
-        return customerByCustomerId;
-    }
-
-    public void setCustomerByCustomerId(Customer customerByCustomerId) {
-        this.customerByCustomerId = customerByCustomerId;
     }
 
     @ManyToOne
@@ -190,5 +207,15 @@ public class Sale {
 
     public void setProductByProductId(Product productByProductId) {
         this.productByProductId = productByProductId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
+    public Customer getCustomerByCustomerId() {
+        return customerByCustomerId;
+    }
+
+    public void setCustomerByCustomerId(Customer customerByCustomerId) {
+        this.customerByCustomerId = customerByCustomerId;
     }
 }

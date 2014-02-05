@@ -8,12 +8,13 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/4/14.
+ * Created by aralco on 2/5/14.
  */
 @Entity
 public class Charge {
     private Long id;
-    private String code;
+    private String version;
+    private Long code;
     private Timestamp date;
     private BigDecimal chargeAmount;
     private BigDecimal defaultingAmount;
@@ -21,7 +22,7 @@ public class Charge {
     private String notes;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -31,17 +32,27 @@ public class Charge {
     }
 
     @Basic
-    @Column(name = "code")
-    public String getCode() {
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 16777215, precision = 0)
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Timestamp getDate() {
         return date;
     }
@@ -51,7 +62,7 @@ public class Charge {
     }
 
     @Basic
-    @Column(name = "chargeAmount")
+    @Column(name = "chargeAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getChargeAmount() {
         return chargeAmount;
     }
@@ -61,7 +72,7 @@ public class Charge {
     }
 
     @Basic
-    @Column(name = "defaultingAmount")
+    @Column(name = "defaultingAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getDefaultingAmount() {
         return defaultingAmount;
     }
@@ -71,7 +82,7 @@ public class Charge {
     }
 
     @Basic
-    @Column(name = "totalAmount")
+    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
@@ -81,7 +92,7 @@ public class Charge {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     public String getNotes() {
         return notes;
     }
@@ -106,6 +117,7 @@ public class Charge {
         if (id != null ? !id.equals(charge.id) : charge.id != null) return false;
         if (notes != null ? !notes.equals(charge.notes) : charge.notes != null) return false;
         if (totalAmount != null ? !totalAmount.equals(charge.totalAmount) : charge.totalAmount != null) return false;
+        if (version != null ? !version.equals(charge.version) : charge.version != null) return false;
 
         return true;
     }
@@ -113,6 +125,7 @@ public class Charge {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (chargeAmount != null ? chargeAmount.hashCode() : 0);

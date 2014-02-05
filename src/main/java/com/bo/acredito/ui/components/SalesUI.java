@@ -50,9 +50,11 @@ public class SalesUI extends CustomComponent {
         product.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                subTotal.setReadOnly(false);
                 String price = products.getItem(product.getValue()).getEntity().getPrice().toString();
                 subTotal.setValue(price);
                 subTotal.setReadOnly(true);
+                total.setReadOnly(false);
                 total.setValue(price);
             }
         });

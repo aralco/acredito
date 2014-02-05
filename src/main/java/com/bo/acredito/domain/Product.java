@@ -8,12 +8,13 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 /**
- * Created by aralco on 2/4/14.
+ * Created by aralco on 2/5/14.
  */
 @Entity
 public class Product {
     private Long id;
-    private String code;
+    private String version;
+    private Long code;
     private String name;
     private BigDecimal price;
     private Boolean available;
@@ -21,7 +22,7 @@ public class Product {
     private byte[] photo;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -31,17 +32,27 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "code")
-    public String getCode() {
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 16777215, precision = 0)
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     public String getName() {
         return name;
     }
@@ -51,7 +62,7 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "price")
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getPrice() {
         return price;
     }
@@ -61,7 +72,7 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "available")
+    @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
     public Boolean getAvailable() {
         return available;
     }
@@ -71,7 +82,7 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     public String getNotes() {
         return notes;
     }
@@ -81,7 +92,7 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "photo")
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     public byte[] getPhoto() {
         return photo;
     }
@@ -104,6 +115,7 @@ public class Product {
         if (notes != null ? !notes.equals(product.notes) : product.notes != null) return false;
         if (!Arrays.equals(photo, product.photo)) return false;
         if (price != null ? !price.equals(product.price) : product.price != null) return false;
+        if (version != null ? !version.equals(product.version) : product.version != null) return false;
 
         return true;
     }
@@ -111,6 +123,7 @@ public class Product {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);

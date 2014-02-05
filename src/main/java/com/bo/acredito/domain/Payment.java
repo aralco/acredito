@@ -8,17 +8,18 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/4/14.
+ * Created by aralco on 2/5/14.
  */
 @Entity
 public class Payment {
     private Long id;
+    private String version;
     private Integer paymentNumber;
     private Timestamp dueDate;
     private BigDecimal amountDue;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -28,7 +29,17 @@ public class Payment {
     }
 
     @Basic
-    @Column(name = "paymentNumber")
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 16777215, precision = 0)
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    @Basic
+    @Column(name = "paymentNumber", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     public Integer getPaymentNumber() {
         return paymentNumber;
     }
@@ -38,7 +49,7 @@ public class Payment {
     }
 
     @Basic
-    @Column(name = "dueDate")
+    @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Timestamp getDueDate() {
         return dueDate;
     }
@@ -48,7 +59,7 @@ public class Payment {
     }
 
     @Basic
-    @Column(name = "amountDue")
+    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getAmountDue() {
         return amountDue;
     }
@@ -69,6 +80,7 @@ public class Payment {
         if (id != null ? !id.equals(payment.id) : payment.id != null) return false;
         if (paymentNumber != null ? !paymentNumber.equals(payment.paymentNumber) : payment.paymentNumber != null)
             return false;
+        if (version != null ? !version.equals(payment.version) : payment.version != null) return false;
 
         return true;
     }
@@ -76,6 +88,7 @@ public class Payment {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (paymentNumber != null ? paymentNumber.hashCode() : 0);
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
         result = 31 * result + (amountDue != null ? amountDue.hashCode() : 0);

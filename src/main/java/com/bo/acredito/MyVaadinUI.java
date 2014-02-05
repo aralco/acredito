@@ -51,7 +51,7 @@ public class MyVaadinUI extends UI
         tabSheetMain.setHeight("100%");
 
         //Customers
-        JPAContainer<com.bo.acredito.domain.Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
+        //JPAContainer<com.bo.acredito.domain.Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
         PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
         tabSheetMain.addTab(personUI, CUSTOMERS, null);
 
