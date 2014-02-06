@@ -11,7 +11,6 @@ import java.util.Arrays;
 public class Customer {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
     @Version
     @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
@@ -30,7 +29,8 @@ public class Customer {
     private String salutation;
     @Basic
     @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
-    private String idType;
+    @Enumerated(EnumType.STRING)
+    private IdTypeEnum idType;
     @Basic
     @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String idNumber;
@@ -38,26 +38,29 @@ public class Customer {
     @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date birthday;
     @Basic
-    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true)
     private byte[] photo;
     @Basic
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true)
     private String notes;
     @ManyToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
-    private Address addressByAddressId;
+    private Address address;
     @ManyToOne
     @JoinColumn(name = "contactId1", referencedColumnName = "id", nullable = false)
-    private Contact contactByContactId1;
+    private Contact contact1;
     @ManyToOne
     @JoinColumn(name = "contactId2", referencedColumnName = "id", nullable = false)
-    private Contact contactByContactId2;
+    private Contact contact2;
     @ManyToOne
     @JoinColumn(name = "contactId3", referencedColumnName = "id", nullable = false)
-    private Contact contactByContactId3;
+    private Contact contact3;
     @ManyToOne
     @JoinColumn(name = "cityId", referencedColumnName = "id", nullable = false)
-    private City cityByCityId;
+    private City city;
+    @ManyToOne
+    @JoinColumn(name = "occupationId", referencedColumnName = "id", nullable = false)
+    private Occupation occupation;
 
     public Long getId() {
         return id;
@@ -107,11 +110,11 @@ public class Customer {
         this.salutation = salutation;
     }
 
-    public String getIdType() {
+    public IdTypeEnum getIdType() {
         return idType;
     }
 
-    public void setIdType(String idType) {
+    public void setIdType(IdTypeEnum idType) {
         this.idType = idType;
     }
 
@@ -185,43 +188,51 @@ public class Customer {
         return result;
     }
 
-    public Address getAddressByAddressId() {
-        return addressByAddressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressByAddressId(Address addressByAddressId) {
-        this.addressByAddressId = addressByAddressId;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public Contact getContactByContactId1() {
-        return contactByContactId1;
+    public Contact getContact1() {
+        return contact1;
     }
 
-    public void setContactByContactId1(Contact contactByContactId1) {
-        this.contactByContactId1 = contactByContactId1;
+    public void setContact1(Contact contact1) {
+        this.contact1 = contact1;
     }
 
-    public Contact getContactByContactId2() {
-        return contactByContactId2;
+    public Contact getContact2() {
+        return contact2;
     }
 
-    public void setContactByContactId2(Contact contactByContactId2) {
-        this.contactByContactId2 = contactByContactId2;
+    public void setContact2(Contact contact2) {
+        this.contact2 = contact2;
     }
 
-    public Contact getContactByContactId3() {
-        return contactByContactId3;
+    public Contact getContact3() {
+        return contact3;
     }
 
-    public void setContactByContactId3(Contact contactByContactId3) {
-        this.contactByContactId3 = contactByContactId3;
+    public void setContact3(Contact contact3) {
+        this.contact3 = contact3;
     }
 
-    public City getCityByCityId() {
-        return cityByCityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityByCityId(City cityByCityId) {
-        this.cityByCityId = cityByCityId;
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Occupation getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
     }
 }
