@@ -7,17 +7,32 @@ import javax.persistence.*;
  */
 @Entity
 public class Address {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "address1", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String address1;
+    @Basic
+    @Column(name = "address2", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String address2;
+    @Basic
+    @Column(name = "province", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String province;
+    @Basic
+    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String phone;
+    @Basic
+    @Column(name = "mobile", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String mobile;
+    @Basic
+    @Column(name = "workPhone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String workPhone;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -26,8 +41,6 @@ public class Address {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -36,8 +49,6 @@ public class Address {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "address1", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     public String getAddress1() {
         return address1;
     }
@@ -46,8 +57,6 @@ public class Address {
         this.address1 = address1;
     }
 
-    @Basic
-    @Column(name = "address2", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     public String getAddress2() {
         return address2;
     }
@@ -56,8 +65,6 @@ public class Address {
         this.address2 = address2;
     }
 
-    @Basic
-    @Column(name = "province", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getProvince() {
         return province;
     }
@@ -66,8 +73,6 @@ public class Address {
         this.province = province;
     }
 
-    @Basic
-    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getPhone() {
         return phone;
     }
@@ -76,8 +81,6 @@ public class Address {
         this.phone = phone;
     }
 
-    @Basic
-    @Column(name = "mobile", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getMobile() {
         return mobile;
     }
@@ -86,8 +89,6 @@ public class Address {
         this.mobile = mobile;
     }
 
-    @Basic
-    @Column(name = "workPhone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getWorkPhone() {
         return workPhone;
     }

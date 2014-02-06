@@ -9,17 +9,32 @@ import java.util.Arrays;
  */
 @Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
+    @Basic
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String name;
+    @Basic
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal price;
+    @Basic
+    @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
     private Boolean available;
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
+    @Basic
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -28,8 +43,6 @@ public class Product {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -38,8 +51,6 @@ public class Product {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getCode() {
         return code;
     }
@@ -48,8 +59,6 @@ public class Product {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     public String getName() {
         return name;
     }
@@ -58,8 +67,6 @@ public class Product {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getPrice() {
         return price;
     }
@@ -68,8 +75,6 @@ public class Product {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
     public Boolean getAvailable() {
         return available;
     }
@@ -78,8 +83,6 @@ public class Product {
         this.available = available;
     }
 
-    @Basic
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     public String getNotes() {
         return notes;
     }
@@ -88,8 +91,6 @@ public class Product {
         this.notes = notes;
     }
 
-    @Basic
-    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     public byte[] getPhoto() {
         return photo;
     }

@@ -9,23 +9,50 @@ import java.sql.Timestamp;
  */
 @Entity
 public class Sale {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
+    @Basic
+    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp date;
+    @Basic
+    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal productPrice;
+    @Basic
+    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal discountedAmount;
+    @Basic
+    @Column(name = "total", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal total;
+    @Basic
+    @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     private String saleType;
+    @Basic
+    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal initialPayment;
+    @Basic
+    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal residualPayment;
+    @Basic
+    @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Integer paymentQuotes;
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
+    @ManyToOne
+    @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = false)
     private Employee employeeByEmployeeId;
+    @ManyToOne
+    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
     private Customer customerByCustomerId;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -34,8 +61,6 @@ public class Sale {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -44,8 +69,6 @@ public class Sale {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getCode() {
         return code;
     }
@@ -54,8 +77,6 @@ public class Sale {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Timestamp getDate() {
         return date;
     }
@@ -64,8 +85,6 @@ public class Sale {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getProductPrice() {
         return productPrice;
     }
@@ -74,8 +93,6 @@ public class Sale {
         this.productPrice = productPrice;
     }
 
-    @Basic
-    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getDiscountedAmount() {
         return discountedAmount;
     }
@@ -84,8 +101,6 @@ public class Sale {
         this.discountedAmount = discountedAmount;
     }
 
-    @Basic
-    @Column(name = "total", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getTotal() {
         return total;
     }
@@ -94,8 +109,6 @@ public class Sale {
         this.total = total;
     }
 
-    @Basic
-    @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     public String getSaleType() {
         return saleType;
     }
@@ -104,8 +117,6 @@ public class Sale {
         this.saleType = saleType;
     }
 
-    @Basic
-    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getInitialPayment() {
         return initialPayment;
     }
@@ -114,8 +125,6 @@ public class Sale {
         this.initialPayment = initialPayment;
     }
 
-    @Basic
-    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getResidualPayment() {
         return residualPayment;
     }
@@ -124,8 +133,6 @@ public class Sale {
         this.residualPayment = residualPayment;
     }
 
-    @Basic
-    @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     public Integer getPaymentQuotes() {
         return paymentQuotes;
     }
@@ -134,8 +141,6 @@ public class Sale {
         this.paymentQuotes = paymentQuotes;
     }
 
-    @Basic
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     public String getNotes() {
         return notes;
     }
@@ -188,8 +193,6 @@ public class Sale {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = false)
     public Employee getEmployeeByEmployeeId() {
         return employeeByEmployeeId;
     }
@@ -198,8 +201,6 @@ public class Sale {
         this.employeeByEmployeeId = employeeByEmployeeId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
     public Customer getCustomerByCustomerId() {
         return customerByCustomerId;
     }

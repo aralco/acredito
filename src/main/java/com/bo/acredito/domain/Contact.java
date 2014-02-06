@@ -7,13 +7,20 @@ import javax.persistence.*;
  */
 @Entity
 public class Contact {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String name;
+    @Basic
+    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String phone;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -22,8 +29,6 @@ public class Contact {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -32,8 +37,6 @@ public class Contact {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     public String getName() {
         return name;
     }
@@ -42,8 +45,6 @@ public class Contact {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getPhone() {
         return phone;
     }

@@ -9,17 +9,32 @@ import java.sql.Timestamp;
  */
 @Entity
 public class Charge {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
+    @Basic
+    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp date;
+    @Basic
+    @Column(name = "chargeAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal chargeAmount;
+    @Basic
+    @Column(name = "defaultingAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal defaultingAmount;
+    @Basic
+    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal totalAmount;
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -28,8 +43,6 @@ public class Charge {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -38,8 +51,6 @@ public class Charge {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getCode() {
         return code;
     }
@@ -48,8 +59,6 @@ public class Charge {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Timestamp getDate() {
         return date;
     }
@@ -58,8 +67,6 @@ public class Charge {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "chargeAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getChargeAmount() {
         return chargeAmount;
     }
@@ -68,8 +75,6 @@ public class Charge {
         this.chargeAmount = chargeAmount;
     }
 
-    @Basic
-    @Column(name = "defaultingAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getDefaultingAmount() {
         return defaultingAmount;
     }
@@ -78,8 +83,6 @@ public class Charge {
         this.defaultingAmount = defaultingAmount;
     }
 
-    @Basic
-    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
@@ -88,8 +91,6 @@ public class Charge {
         this.totalAmount = totalAmount;
     }
 
-    @Basic
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     public String getNotes() {
         return notes;
     }

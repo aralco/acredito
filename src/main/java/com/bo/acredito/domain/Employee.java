@@ -9,22 +9,47 @@ import java.util.Arrays;
  */
 @Entity
 public class Employee {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
+    @Basic
+    @Column(name = "active", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
     private Boolean active;
+    @Basic
+    @Column(name = "username", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String username;
+    @Basic
+    @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String password;
+    @Basic
+    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String firstName;
+    @Basic
+    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String lastName;
+    @Basic
+    @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
     private String idType;
+    @Basic
+    @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String idNumber;
+    @Basic
+    @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date birthday;
+    @Basic
+    @Column(name = "photo", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
+    @ManyToOne
+    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     private Address addressByAddressId;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -33,8 +58,6 @@ public class Employee {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -43,8 +66,6 @@ public class Employee {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getCode() {
         return code;
     }
@@ -53,8 +74,6 @@ public class Employee {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "active", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
     public Boolean getActive() {
         return active;
     }
@@ -63,8 +82,6 @@ public class Employee {
         this.active = active;
     }
 
-    @Basic
-    @Column(name = "username", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getUsername() {
         return username;
     }
@@ -73,8 +90,6 @@ public class Employee {
         this.username = username;
     }
 
-    @Basic
-    @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getPassword() {
         return password;
     }
@@ -83,8 +98,6 @@ public class Employee {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     public String getFirstName() {
         return firstName;
     }
@@ -93,8 +106,6 @@ public class Employee {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     public String getLastName() {
         return lastName;
     }
@@ -103,8 +114,6 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
     public String getIdType() {
         return idType;
     }
@@ -113,8 +122,6 @@ public class Employee {
         this.idType = idType;
     }
 
-    @Basic
-    @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getIdNumber() {
         return idNumber;
     }
@@ -123,8 +130,6 @@ public class Employee {
         this.idNumber = idNumber;
     }
 
-    @Basic
-    @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     public Date getBirthday() {
         return birthday;
     }
@@ -133,8 +138,6 @@ public class Employee {
         this.birthday = birthday;
     }
 
-    @Basic
-    @Column(name = "photo", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     public byte[] getPhoto() {
         return photo;
     }
@@ -183,8 +186,6 @@ public class Employee {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     public Address getAddressByAddressId() {
         return addressByAddressId;
     }

@@ -9,25 +9,56 @@ import java.util.Arrays;
  */
 @Entity
 public class Customer {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
+    @Basic
+    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String firstName;
+    @Basic
+    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String lastName;
+    @Basic
+    @Column(name = "salutation", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String salutation;
+    @Basic
+    @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
     private String idType;
+    @Basic
+    @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String idNumber;
+    @Basic
+    @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date birthday;
+    @Basic
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
+    @ManyToOne
+    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     private Address addressByAddressId;
+    @ManyToOne
+    @JoinColumn(name = "contactId1", referencedColumnName = "id", nullable = false)
     private Contact contactByContactId1;
+    @ManyToOne
+    @JoinColumn(name = "contactId2", referencedColumnName = "id", nullable = false)
     private Contact contactByContactId2;
+    @ManyToOne
+    @JoinColumn(name = "contactId3", referencedColumnName = "id", nullable = false)
     private Contact contactByContactId3;
+    @ManyToOne
+    @JoinColumn(name = "cityId", referencedColumnName = "id", nullable = false)
     private City cityByCityId;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -36,8 +67,6 @@ public class Customer {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -46,8 +75,6 @@ public class Customer {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getCode() {
         return code;
     }
@@ -56,8 +83,6 @@ public class Customer {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     public String getFirstName() {
         return firstName;
     }
@@ -66,8 +91,6 @@ public class Customer {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     public String getLastName() {
         return lastName;
     }
@@ -76,8 +99,6 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "salutation", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getSalutation() {
         return salutation;
     }
@@ -86,8 +107,6 @@ public class Customer {
         this.salutation = salutation;
     }
 
-    @Basic
-    @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
     public String getIdType() {
         return idType;
     }
@@ -96,8 +115,6 @@ public class Customer {
         this.idType = idType;
     }
 
-    @Basic
-    @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     public String getIdNumber() {
         return idNumber;
     }
@@ -106,8 +123,6 @@ public class Customer {
         this.idNumber = idNumber;
     }
 
-    @Basic
-    @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     public Date getBirthday() {
         return birthday;
     }
@@ -116,8 +131,6 @@ public class Customer {
         this.birthday = birthday;
     }
 
-    @Basic
-    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     public byte[] getPhoto() {
         return photo;
     }
@@ -126,8 +139,6 @@ public class Customer {
         this.photo = photo;
     }
 
-    @Basic
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     public String getNotes() {
         return notes;
     }
@@ -174,8 +185,6 @@ public class Customer {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     public Address getAddressByAddressId() {
         return addressByAddressId;
     }
@@ -184,8 +193,6 @@ public class Customer {
         this.addressByAddressId = addressByAddressId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "contactId1", referencedColumnName = "id", nullable = false)
     public Contact getContactByContactId1() {
         return contactByContactId1;
     }
@@ -194,8 +201,6 @@ public class Customer {
         this.contactByContactId1 = contactByContactId1;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "contactId2", referencedColumnName = "id", nullable = false)
     public Contact getContactByContactId2() {
         return contactByContactId2;
     }
@@ -204,8 +209,6 @@ public class Customer {
         this.contactByContactId2 = contactByContactId2;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "contactId3", referencedColumnName = "id", nullable = false)
     public Contact getContactByContactId3() {
         return contactByContactId3;
     }
@@ -214,8 +217,6 @@ public class Customer {
         this.contactByContactId3 = contactByContactId3;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "cityId", referencedColumnName = "id", nullable = false)
     public City getCityByCityId() {
         return cityByCityId;
     }

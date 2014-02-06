@@ -9,14 +9,23 @@ import java.sql.Timestamp;
  */
 @Entity
 public class Payment {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "paymentNumber", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Integer paymentNumber;
+    @Basic
+    @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp dueDate;
+    @Basic
+    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal amountDue;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -25,8 +34,6 @@ public class Payment {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -35,8 +42,6 @@ public class Payment {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "paymentNumber", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     public Integer getPaymentNumber() {
         return paymentNumber;
     }
@@ -45,8 +50,6 @@ public class Payment {
         this.paymentNumber = paymentNumber;
     }
 
-    @Basic
-    @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Timestamp getDueDate() {
         return dueDate;
     }
@@ -55,8 +58,6 @@ public class Payment {
         this.dueDate = dueDate;
     }
 
-    @Basic
-    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     public BigDecimal getAmountDue() {
         return amountDue;
     }

@@ -7,17 +7,32 @@ import javax.persistence.*;
  */
 @Entity
 public class Supplier {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
+    @Basic
+    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String firstName;
+    @Basic
+    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String lastName;
+    @Basic
+    @Column(name = "companyName", nullable = true, insertable = true, updatable = true, length = 100, precision = 0)
     private String companyName;
+    @Basic
+    @Column(name = "nit", nullable = true, insertable = true, updatable = true, length = 45, precision = 0)
     private String nit;
+    @ManyToOne
+    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     private Address addressByAddressId;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -26,8 +41,6 @@ public class Supplier {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getVersion() {
         return version;
     }
@@ -36,8 +49,6 @@ public class Supplier {
         this.version = version;
     }
 
-    @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getCode() {
         return code;
     }
@@ -46,8 +57,6 @@ public class Supplier {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     public String getFirstName() {
         return firstName;
     }
@@ -56,8 +65,6 @@ public class Supplier {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     public String getLastName() {
         return lastName;
     }
@@ -66,8 +73,6 @@ public class Supplier {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "companyName", nullable = true, insertable = true, updatable = true, length = 100, precision = 0)
     public String getCompanyName() {
         return companyName;
     }
@@ -76,8 +81,6 @@ public class Supplier {
         this.companyName = companyName;
     }
 
-    @Basic
-    @Column(name = "nit", nullable = true, insertable = true, updatable = true, length = 45, precision = 0)
     public String getNit() {
         return nit;
     }
@@ -117,8 +120,6 @@ public class Supplier {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     public Address getAddressByAddressId() {
         return addressByAddressId;
     }

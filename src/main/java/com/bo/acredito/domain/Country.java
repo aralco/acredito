@@ -1,20 +1,20 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by aralco on 2/5/14.
  */
 @Entity
 public class Country {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Basic
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String name;
 
-    @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     public Long getId() {
         return id;
     }
@@ -23,8 +23,6 @@ public class Country {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     public String getName() {
         return name;
     }
