@@ -84,11 +84,11 @@ public class SalesUI extends CustomComponent {
         leftFormLayout.addComponent(residualPayment);
         leftFormLayout.addComponent(notes);
         saleType.setNullSelectionAllowed(false);
-        saleType.setValue(SaleTypeEnum.CONTADO);
+        saleType.setValue(SaleTypeEnum.CASH);
         saleType.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                if (saleType.getValue().equals(SaleTypeEnum.CREDITO)) {
+                if (saleType.getValue().equals(SaleTypeEnum.CREDIT)) {
                     initialPayment.setVisible(true);
                     residualPayment.setVisible(true);
                 } else {

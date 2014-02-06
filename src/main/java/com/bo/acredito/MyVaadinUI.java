@@ -1,7 +1,7 @@
 package com.bo.acredito;
 
-import com.bo.acredito.domain.Person;
-import com.bo.acredito.ui.components.PersonUI;
+//import com.bo.acredito.domain.Person;
+//import com.bo.acredito.ui.components.PersonUI;
 import com.bo.acredito.ui.components.SalesUI;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
@@ -52,8 +52,9 @@ public class MyVaadinUI extends UI
 
         //Customers
         //JPAContainer<com.bo.acredito.domain.Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
-        PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
-        tabSheetMain.addTab(personUI, CUSTOMERS, null);
+        //PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
+        //tabSheetMain.addTab(personUI, CUSTOMERS, null);
+        tabSheetMain.addTab(null, CUSTOMERS, null);
 
         //Products
         Label productosLabel = new Label("Productos List below");

@@ -1,9 +1,6 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by aralco on 2/5/14.
@@ -11,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Contact {
     private Long id;
-    private String version;
+    private Long version;
     private String name;
     private String phone;
 
@@ -26,12 +23,12 @@ public class Contact {
     }
 
     @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 16777215, precision = 0)
-    public String getVersion() {
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    public Long getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Long version) {
         this.version = version;
     }
 

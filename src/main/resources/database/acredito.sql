@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`City` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Address` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `address1` VARCHAR(250) NOT NULL,
   `address2` VARCHAR(250) NOT NULL,
   `province` VARCHAR(45) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Address` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Supplier` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `firstName` VARCHAR(100) NOT NULL,
   `lastName` VARCHAR(100) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Supplier` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Product` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `name` VARCHAR(250) NOT NULL,
   `price` DECIMAL(5,2) NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Product` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Employee` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `active` TINYINT(1) NOT NULL,
   `username` VARCHAR(45) NOT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Occupation` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Contact` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `name` VARCHAR(250) NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Contact` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Customer` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `firstName` VARCHAR(100) NOT NULL,
   `lastName` VARCHAR(100) NOT NULL,
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Customer` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Sale` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `date` DATETIME NOT NULL,
   `productPrice` DECIMAL(5,2) NOT NULL,
@@ -256,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Sale` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Payment` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `paymentNumber` INT NOT NULL,
   `dueDate` DATETIME NOT NULL,
   `amountDue` DECIMAL(5,2) NOT NULL,
@@ -276,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Payment` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Charge` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` MEDIUMTEXT NOT NULL,
+  `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `date` DATETIME NOT NULL,
   `chargeAmount` DECIMAL(5,2) NOT NULL,

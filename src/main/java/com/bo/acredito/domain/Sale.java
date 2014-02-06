@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Entity
 public class Sale {
     private Long id;
-    private String version;
+    private Long version;
     private Long code;
     private Timestamp date;
     private BigDecimal productPrice;
@@ -22,7 +22,6 @@ public class Sale {
     private Integer paymentQuotes;
     private String notes;
     private Employee employeeByEmployeeId;
-    private Product productByProductId;
     private Customer customerByCustomerId;
 
     @Id
@@ -36,12 +35,12 @@ public class Sale {
     }
 
     @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 16777215, precision = 0)
-    public String getVersion() {
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    public Long getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Long version) {
         this.version = version;
     }
 
@@ -197,16 +196,6 @@ public class Sale {
 
     public void setEmployeeByEmployeeId(Employee employeeByEmployeeId) {
         this.employeeByEmployeeId = employeeByEmployeeId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "id", nullable = false)
-    public Product getProductByProductId() {
-        return productByProductId;
-    }
-
-    public void setProductByProductId(Product productByProductId) {
-        this.productByProductId = productByProductId;
     }
 
     @ManyToOne

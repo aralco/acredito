@@ -1,9 +1,6 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -13,7 +10,7 @@ import java.util.Arrays;
 @Entity
 public class Product {
     private Long id;
-    private String version;
+    private Long version;
     private Long code;
     private String name;
     private BigDecimal price;
@@ -32,12 +29,12 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 16777215, precision = 0)
-    public String getVersion() {
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    public Long getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Long version) {
         this.version = version;
     }
 
