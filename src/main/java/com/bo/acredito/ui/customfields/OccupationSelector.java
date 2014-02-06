@@ -4,18 +4,16 @@ package com.bo.acredito.ui.customfields;
  * Created by asejas on 2/6/14.
  */
 
-import com.bo.acredito.domain.Address;
 import com.bo.acredito.domain.Occupation;
 import com.bo.acredito.util.Constants;
-import com.vaadin.addon.jpacontainer.EntityItem;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
+import com.vaadin.data.Property;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomField;
 
-import java.awt.*;
 
 /**
  * A custom field that allows selection of an address.
@@ -31,6 +29,23 @@ public class OccupationSelector extends CustomField<Occupation> {
 
         occupation.setContainerDataSource(container);
         occupation.setItemCaptionPropertyId("name");
+
+        occupation.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(
+                    com.vaadin.data.Property.ValueChangeEvent event) {
+                /*
+                 * Modify the actual value of the custom field.
+                 */
+                if (occupation.getValue() == null) {
+                    setValue(null, false);
+                } else {
+                    Occupation entity = container
+                            .getItem(occupation.getValue()).getEntity();
+                    setValue(entity, false);
+                }
+            }
+        });
     }
 
     @Override

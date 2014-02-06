@@ -15,7 +15,7 @@ import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
-import com.vaadin.server.VaadinRequest;
+
 import com.vaadin.ui.*;
 
 public class CustomerForm extends CustomComponent {
@@ -27,6 +27,7 @@ public class CustomerForm extends CustomComponent {
         FormLayout formLayout = new FormLayout();
 
         //final FieldGroup fieldGroup = new FieldGroup(customerContainer.getItem(customerContainer.getItem(new Long(401)))) {
+
         final FieldGroup fieldGroup = new FieldGroup(new BeanItem<Customer>(new Customer())) {
             /*
              * Override configureField to add a bean validator to each field.
@@ -75,11 +76,11 @@ public class CustomerForm extends CustomComponent {
         formLayout.addComponent(fieldGroup.buildAndBind("Número de identificación: ","idNumber"));
         formLayout.addComponent(fieldGroup.buildAndBind("Fecha de nacimiento: ","birthday"));
 
-        formLayout.addComponent(fieldGroup.buildAndBind("Dirección: ","address"));
-        formLayout.addComponent(fieldGroup.buildAndBind("Persona de contacto1: ","contact1"));
-        formLayout.addComponent(fieldGroup.buildAndBind("Persona de contacto2: ","contact2"));
-        formLayout.addComponent(fieldGroup.buildAndBind("Persona de contacto3: ","contact3"));
-        formLayout.addComponent(fieldGroup.buildAndBind("Ciudad: ","city"));
+        //formLayout.addComponent(fieldGroup.buildAndBind("Dirección: ","address"));
+        //formLayout.addComponent(fieldGroup.buildAndBind("Persona de contacto1: ","contact1"));
+        //formLayout.addComponent(fieldGroup.buildAndBind("Persona de contacto2: ","contact2"));
+        //formLayout.addComponent(fieldGroup.buildAndBind("Persona de contacto3: ","contact3"));
+        //formLayout.addComponent(fieldGroup.buildAndBind("Ciudad: ","city"));
         formLayout.addComponent(fieldGroup.buildAndBind("Ocupación: ","occupation"));
         formLayout.addComponent(fieldGroup.buildAndBind("Observaciones: ","notes"));
 
@@ -89,6 +90,8 @@ public class CustomerForm extends CustomComponent {
             public void buttonClick(Button.ClickEvent event) {
                 try {
                     fieldGroup.commit();
+                    Customer customer = ((BeanItem<Customer>) fieldGroup.getItemDataSource()).getBean();
+                    System.out.println("Customer: "+customer);
                 } catch (FieldGroup.CommitException e) {
                     Notification.show("Problema al guardar el cliente: "
                             + e.getCause().getMessage(),
@@ -109,6 +112,9 @@ public class CustomerForm extends CustomComponent {
 
         formLayout.setMargin(true);
         formLayout.setSpacing(true);
-        setCompositionRoot(formLayout);
+        Panel panel=new Panel("Cliente");
+        panel.setSizeFull();
+        panel.setContent(formLayout);
+        setCompositionRoot(panel);
     }
 }

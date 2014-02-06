@@ -16,6 +16,7 @@ public class IdTypeSelector extends CustomField<IdTypeEnum> {
     private ComboBox idType=new ComboBox(null, Arrays.asList(IdTypeEnum.values()));
 
     public IdTypeSelector() {
+        idType.setImmediate(true);
     }
 
     @Override
