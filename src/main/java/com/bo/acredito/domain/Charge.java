@@ -1,27 +1,40 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/4/14.
+ * Created by aralco on 2/5/14.
  */
 @Entity
 public class Charge {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
-    private String code;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Long code;
+    @Basic
+    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp date;
+    @Basic
+    @Column(name = "chargeAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal chargeAmount;
+    @Basic
+    @Column(name = "defaultingAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal defaultingAmount;
+    @Basic
+    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal totalAmount;
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
 
-    @Id
-    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -30,18 +43,22 @@ public class Charge {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "code")
-    public String getCode() {
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "date")
     public Timestamp getDate() {
         return date;
     }
@@ -50,8 +67,6 @@ public class Charge {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "chargeAmount")
     public BigDecimal getChargeAmount() {
         return chargeAmount;
     }
@@ -60,8 +75,6 @@ public class Charge {
         this.chargeAmount = chargeAmount;
     }
 
-    @Basic
-    @Column(name = "defaultingAmount")
     public BigDecimal getDefaultingAmount() {
         return defaultingAmount;
     }
@@ -70,8 +83,6 @@ public class Charge {
         this.defaultingAmount = defaultingAmount;
     }
 
-    @Basic
-    @Column(name = "totalAmount")
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
@@ -80,8 +91,6 @@ public class Charge {
         this.totalAmount = totalAmount;
     }
 
-    @Basic
-    @Column(name = "notes")
     public String getNotes() {
         return notes;
     }
@@ -106,6 +115,7 @@ public class Charge {
         if (id != null ? !id.equals(charge.id) : charge.id != null) return false;
         if (notes != null ? !notes.equals(charge.notes) : charge.notes != null) return false;
         if (totalAmount != null ? !totalAmount.equals(charge.totalAmount) : charge.totalAmount != null) return false;
+        if (version != null ? !version.equals(charge.version) : charge.version != null) return false;
 
         return true;
     }
@@ -113,6 +123,7 @@ public class Charge {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (chargeAmount != null ? chargeAmount.hashCode() : 0);

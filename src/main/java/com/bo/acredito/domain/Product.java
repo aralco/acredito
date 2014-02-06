@@ -1,27 +1,40 @@
 package com.bo.acredito.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
 /**
- * Created by aralco on 2/4/14.
+ * Created by aralco on 2/5/14.
  */
 @Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
-    private String code;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Long code;
+    @Basic
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String name;
+    @Basic
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal price;
+    @Basic
+    @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
     private Boolean available;
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
+    @Basic
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
 
-    @Id
-    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -30,18 +43,22 @@ public class Product {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "code")
-    public String getCode() {
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -50,8 +67,6 @@ public class Product {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "price")
     public BigDecimal getPrice() {
         return price;
     }
@@ -60,8 +75,6 @@ public class Product {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "available")
     public Boolean getAvailable() {
         return available;
     }
@@ -70,8 +83,6 @@ public class Product {
         this.available = available;
     }
 
-    @Basic
-    @Column(name = "notes")
     public String getNotes() {
         return notes;
     }
@@ -80,8 +91,6 @@ public class Product {
         this.notes = notes;
     }
 
-    @Basic
-    @Column(name = "photo")
     public byte[] getPhoto() {
         return photo;
     }
@@ -104,6 +113,7 @@ public class Product {
         if (notes != null ? !notes.equals(product.notes) : product.notes != null) return false;
         if (!Arrays.equals(photo, product.photo)) return false;
         if (price != null ? !price.equals(product.price) : product.price != null) return false;
+        if (version != null ? !version.equals(product.version) : product.version != null) return false;
 
         return true;
     }
@@ -111,6 +121,7 @@ public class Product {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);

@@ -5,26 +5,54 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/4/14.
+ * Created by aralco on 2/5/14.
  */
 @Entity
 public class Sale {
-    private Long id;
-    private String code;
-    private Timestamp date;
-    private BigDecimal subTotal;
-    private BigDecimal discountedAmount;
-    private BigDecimal total;
-    private String saleType;
-    private BigDecimal initialPayment;
-    private BigDecimal residualPayment;
-    private String notes;
-    private Customer customerByCustomerId;
-    private Employee employeeByEmployeeId;
-    private Product productByProductId;
-
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Long version;
+    @Basic
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Long code;
+    @Basic
+    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Timestamp date;
+    @Basic
+    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    private BigDecimal productPrice;
+    @Basic
+    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    private BigDecimal discountedAmount;
+    @Basic
+    @Column(name = "total", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    private BigDecimal total;
+    @Basic
+    @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
+    private String saleType;
+    @Basic
+    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    private BigDecimal initialPayment;
+    @Basic
+    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    private BigDecimal residualPayment;
+    @Basic
+    @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private Integer paymentQuotes;
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
+    private String notes;
+    @ManyToOne
+    @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = false)
+    private Employee employeeByEmployeeId;
+    @ManyToOne
+    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
+    private Customer customerByCustomerId;
+
     public Long getId() {
         return id;
     }
@@ -33,18 +61,22 @@ public class Sale {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "code")
-    public String getCode() {
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "date")
     public Timestamp getDate() {
         return date;
     }
@@ -53,18 +85,14 @@ public class Sale {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "subTotal")
-    public BigDecimal getSubTotal() {
-        return subTotal;
+    public BigDecimal getProductPrice() {
+        return productPrice;
     }
 
-    public void setSubTotal(BigDecimal subTotal) {
-        this.subTotal = subTotal;
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
     }
 
-    @Basic
-    @Column(name = "discountedAmount")
     public BigDecimal getDiscountedAmount() {
         return discountedAmount;
     }
@@ -73,8 +101,6 @@ public class Sale {
         this.discountedAmount = discountedAmount;
     }
 
-    @Basic
-    @Column(name = "total")
     public BigDecimal getTotal() {
         return total;
     }
@@ -83,8 +109,6 @@ public class Sale {
         this.total = total;
     }
 
-    @Basic
-    @Column(name = "saleType")
     public String getSaleType() {
         return saleType;
     }
@@ -93,8 +117,6 @@ public class Sale {
         this.saleType = saleType;
     }
 
-    @Basic
-    @Column(name = "initialPayment")
     public BigDecimal getInitialPayment() {
         return initialPayment;
     }
@@ -103,8 +125,6 @@ public class Sale {
         this.initialPayment = initialPayment;
     }
 
-    @Basic
-    @Column(name = "residualPayment")
     public BigDecimal getResidualPayment() {
         return residualPayment;
     }
@@ -113,8 +133,14 @@ public class Sale {
         this.residualPayment = residualPayment;
     }
 
-    @Basic
-    @Column(name = "notes")
+    public Integer getPaymentQuotes() {
+        return paymentQuotes;
+    }
+
+    public void setPaymentQuotes(Integer paymentQuotes) {
+        this.paymentQuotes = paymentQuotes;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -138,11 +164,14 @@ public class Sale {
         if (initialPayment != null ? !initialPayment.equals(sale.initialPayment) : sale.initialPayment != null)
             return false;
         if (notes != null ? !notes.equals(sale.notes) : sale.notes != null) return false;
+        if (paymentQuotes != null ? !paymentQuotes.equals(sale.paymentQuotes) : sale.paymentQuotes != null)
+            return false;
+        if (productPrice != null ? !productPrice.equals(sale.productPrice) : sale.productPrice != null) return false;
         if (residualPayment != null ? !residualPayment.equals(sale.residualPayment) : sale.residualPayment != null)
             return false;
         if (saleType != null ? !saleType.equals(sale.saleType) : sale.saleType != null) return false;
-        if (subTotal != null ? !subTotal.equals(sale.subTotal) : sale.subTotal != null) return false;
         if (total != null ? !total.equals(sale.total) : sale.total != null) return false;
+        if (version != null ? !version.equals(sale.version) : sale.version != null) return false;
 
         return true;
     }
@@ -150,30 +179,20 @@ public class Sale {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (subTotal != null ? subTotal.hashCode() : 0);
+        result = 31 * result + (productPrice != null ? productPrice.hashCode() : 0);
         result = 31 * result + (discountedAmount != null ? discountedAmount.hashCode() : 0);
         result = 31 * result + (total != null ? total.hashCode() : 0);
         result = 31 * result + (saleType != null ? saleType.hashCode() : 0);
         result = 31 * result + (initialPayment != null ? initialPayment.hashCode() : 0);
         result = 31 * result + (residualPayment != null ? residualPayment.hashCode() : 0);
+        result = 31 * result + (paymentQuotes != null ? paymentQuotes.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
-    public Customer getCustomerByCustomerId() {
-        return customerByCustomerId;
-    }
-
-    public void setCustomerByCustomerId(Customer customerByCustomerId) {
-        this.customerByCustomerId = customerByCustomerId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = false)
     public Employee getEmployeeByEmployeeId() {
         return employeeByEmployeeId;
     }
@@ -182,13 +201,11 @@ public class Sale {
         this.employeeByEmployeeId = employeeByEmployeeId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "id", nullable = false)
-    public Product getProductByProductId() {
-        return productByProductId;
+    public Customer getCustomerByCustomerId() {
+        return customerByCustomerId;
     }
 
-    public void setProductByProductId(Product productByProductId) {
-        this.productByProductId = productByProductId;
+    public void setCustomerByCustomerId(Customer customerByCustomerId) {
+        this.customerByCustomerId = customerByCustomerId;
     }
 }

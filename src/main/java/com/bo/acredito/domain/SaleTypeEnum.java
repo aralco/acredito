@@ -4,16 +4,16 @@ package com.bo.acredito.domain;
  * Created by aralco on 2/2/14.
  */
 public enum SaleTypeEnum {
-    CONTADO, CREDITO;
+    CASH, CREDIT;
 
     @Override
     public String toString() {
         String label = "";
         switch (this)  {
-            case CONTADO:
+            case CASH:
                 label = "Contado";
                 break;
-            case CREDITO:
+            case CREDIT:
                 label = "Crédito";
                 break;
         }

@@ -3,16 +3,24 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 
 /**
- * Created by aralco on 2/4/14.
+ * Created by aralco on 2/5/14.
  */
 @Entity
 public class Contact {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
+    @Version
+    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    private Long version;
+    @Basic
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String name;
+    @Basic
+    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String phone;
 
-    @Id
-    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -21,8 +29,14 @@ public class Contact {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     public String getName() {
         return name;
     }
@@ -31,8 +45,6 @@ public class Contact {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "phone")
     public String getPhone() {
         return phone;
     }
@@ -51,6 +63,7 @@ public class Contact {
         if (id != null ? !id.equals(contact.id) : contact.id != null) return false;
         if (name != null ? !name.equals(contact.name) : contact.name != null) return false;
         if (phone != null ? !phone.equals(contact.phone) : contact.phone != null) return false;
+        if (version != null ? !version.equals(contact.version) : contact.version != null) return false;
 
         return true;
     }
@@ -58,6 +71,7 @@ public class Contact {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         return result;
