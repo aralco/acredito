@@ -2,15 +2,11 @@ package com.bo.acredito;
 
 //import com.bo.acredito.domain.Person;
 //import com.bo.acredito.ui.components.PersonUI;
-import com.bo.acredito.ui.components.SalesUI;
+import com.bo.acredito.ui.forms.SalesForm;
 import com.bo.acredito.ui.forms.CustomerForm;
-import com.bo.acredito.ui.forms.PersonForm;
 import com.bo.acredito.web.JEE6VaadinServlet;
-import com.vaadin.addon.jpacontainer.JPAContainer;
-import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
@@ -65,8 +61,8 @@ public class MyVaadinUI extends UI
 
 
         //Sales
-        SalesUI salesUI = new SalesUI();
-        tabSheetMain.addTab(salesUI, SALES, null);
+        SalesForm salesForm = new SalesForm();
+        tabSheetMain.addTab(salesForm, SALES, null);
 
         //Charges
         Label chargesLabel = new Label(CHARGES+"... Not Yet Implemented");

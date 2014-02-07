@@ -1,4 +1,4 @@
-package com.bo.acredito.ui.components;
+package com.bo.acredito.ui.forms;
 
 import com.bo.acredito.domain.Product;
 import com.bo.acredito.domain.SaleTypeEnum;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 /**
  * Created by aralco on 2/2/14.
  */
-public class SalesUI extends CustomComponent {
+public class SalesForm extends CustomComponent {
 
     private ComboBox customer = new ComboBox("Cliente:");
     private ComboBox product;
@@ -29,7 +29,7 @@ public class SalesUI extends CustomComponent {
     private final Button saveButton   = new Button("Guardar");
     private final Button cancelButton   = new Button("Cancelar");
 
-    public SalesUI() {
+    public SalesForm() {
         Panel salesPanel = new Panel("Registro de Venta");
         salesPanel.setSizeFull();
 

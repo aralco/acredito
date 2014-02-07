@@ -44,11 +44,12 @@ public class Employee {
     @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date birthday;
     @Basic
+    @Lob
     @Column(name = "photo", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
     @ManyToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
-    private Address addressByAddressId;
+    private Address address;
 
     public Long getId() {
         return id;
@@ -186,11 +187,11 @@ public class Employee {
         return result;
     }
 
-    public Address getAddressByAddressId() {
-        return addressByAddressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressByAddressId(Address addressByAddressId) {
-        this.addressByAddressId = addressByAddressId;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

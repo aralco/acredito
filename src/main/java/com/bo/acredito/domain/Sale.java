@@ -33,7 +33,8 @@ public class Sale {
     private BigDecimal total;
     @Basic
     @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
-    private String saleType;
+    @Enumerated(EnumType.STRING)
+    private SaleTypeEnum saleType;
     @Basic
     @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal initialPayment;
@@ -44,14 +45,15 @@ public class Sale {
     @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Integer paymentQuotes;
     @Basic
+    @Lob
     @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
     @ManyToOne
     @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = false)
-    private Employee employeeByEmployeeId;
+    private Employee employee;
     @ManyToOne
     @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
-    private Customer customerByCustomerId;
+    private Customer customer;
 
     public Long getId() {
         return id;
@@ -109,11 +111,11 @@ public class Sale {
         this.total = total;
     }
 
-    public String getSaleType() {
+    public SaleTypeEnum getSaleType() {
         return saleType;
     }
 
-    public void setSaleType(String saleType) {
+    public void setSaleType(SaleTypeEnum saleType) {
         this.saleType = saleType;
     }
 
@@ -193,19 +195,19 @@ public class Sale {
         return result;
     }
 
-    public Employee getEmployeeByEmployeeId() {
-        return employeeByEmployeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeByEmployeeId(Employee employeeByEmployeeId) {
-        this.employeeByEmployeeId = employeeByEmployeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Customer getCustomerByCustomerId() {
-        return customerByCustomerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerByCustomerId(Customer customerByCustomerId) {
-        this.customerByCustomerId = customerByCustomerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

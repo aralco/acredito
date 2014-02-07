@@ -32,6 +32,7 @@ public class Charge {
     @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
     private BigDecimal totalAmount;
     @Basic
+    @Lob
     @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
 

@@ -38,10 +38,12 @@ public class Customer {
     @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date birthday;
     @Basic
-    @Column(name = "photo", nullable = true, insertable = true, updatable = true)
+    @Lob
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
     @Basic
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true)
+    @Lob
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
     @ManyToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)

@@ -29,9 +29,11 @@ public class Product {
     @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
     private Boolean available;
     @Basic
+    @Lob
     @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
     @Basic
+    @Lob
     @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
 

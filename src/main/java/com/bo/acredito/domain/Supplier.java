@@ -31,7 +31,7 @@ public class Supplier {
     private String nit;
     @ManyToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
-    private Address addressByAddressId;
+    private Address address;
 
     public Long getId() {
         return id;
@@ -120,11 +120,11 @@ public class Supplier {
         return result;
     }
 
-    public Address getAddressByAddressId() {
-        return addressByAddressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressByAddressId(Address addressByAddressId) {
-        this.addressByAddressId = addressByAddressId;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
