@@ -2,8 +2,9 @@ package com.bo.acredito;
 
 //import com.bo.acredito.domain.Person;
 //import com.bo.acredito.ui.components.PersonUI;
+
 import com.bo.acredito.ui.forms.SalesForm;
-import com.bo.acredito.ui.forms.CustomerForm;
+import com.bo.acredito.ui.lists.CustomerList;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -49,10 +50,8 @@ public class MyVaadinUI extends UI
         tabSheetMain.setHeight("100%");
 
         //Customers
-        //JPAContainer<com.bo.acredito.domain.Person> container = JPAContainerFactory.make(Person.class, PERSISTENCE_UNIT);
-        //PersonUI personUI=new PersonUI(new BeanItem<Person>(new Person()));
-        CustomerForm customerForm=new CustomerForm();
-        tabSheetMain.addTab(customerForm, CUSTOMERS, null);
+        CustomerList customerList=new CustomerList();
+        tabSheetMain.addTab(customerList, CUSTOMERS, null);
         tabSheetMain.addTab(null, CUSTOMERS, null);
 
         //Products

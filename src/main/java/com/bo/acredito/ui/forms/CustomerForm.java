@@ -3,6 +3,7 @@ package com.bo.acredito.ui.forms;
 /**
  * Created by asejas on 2/6/14.
  */
+
 import com.bo.acredito.domain.Customer;
 import com.bo.acredito.domain.IdTypeEnum;
 import com.bo.acredito.domain.Occupation;
@@ -15,20 +16,25 @@ import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
-
 import com.vaadin.ui.*;
 
-public class CustomerForm extends CustomComponent {
+public class CustomerForm extends Window {
 
-    public CustomerForm() {
-        JPAContainer<Customer> customerContainer = JPAContainerFactory.make(Customer.class,
+    public CustomerForm(String caption, Long customerId) {
+        super(caption);
+        setModal(true);
+
+        final JPAContainer<Customer> customerContainer = JPAContainerFactory.make(Customer.class,
                 Constants.PersistenceUnit);
 
         FormLayout formLayout = new FormLayout();
 
-        //final FieldGroup fieldGroup = new FieldGroup(customerContainer.getItem(customerContainer.getItem(new Long(401)))) {
+        Customer customer=new Customer();
+        if(customerId!=null){
+            customer = customerContainer.getItem(customerId).getEntity();
+        }
 
-        final FieldGroup fieldGroup = new FieldGroup(new BeanItem<Customer>(new Customer())) {
+        final FieldGroup fieldGroup = new FieldGroup(new BeanItem<Customer>(customer)) {
             /*
              * Override configureField to add a bean validator to each field.
              */
@@ -92,6 +98,8 @@ public class CustomerForm extends CustomComponent {
                     fieldGroup.commit();
                     Customer customer = ((BeanItem<Customer>) fieldGroup.getItemDataSource()).getBean();
                     System.out.println("Customer: "+customer);
+                    customerContainer.addEntity(customer);
+                    close();
                 } catch (FieldGroup.CommitException e) {
                     Notification.show("Problema al guardar el cliente: "
                             + e.getCause().getMessage(),
@@ -104,17 +112,18 @@ public class CustomerForm extends CustomComponent {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 fieldGroup.discard();
+                close();
             }
         });
-
-        formLayout.addComponent(saveButton);
-        formLayout.addComponent(cancelButton);
+        HorizontalLayout buttonsLayout=new HorizontalLayout();
+        buttonsLayout.addComponent(saveButton);
+        buttonsLayout.addComponent(cancelButton);
+        formLayout.addComponent(buttonsLayout);
 
         formLayout.setMargin(true);
         formLayout.setSpacing(true);
-        Panel panel=new Panel("Cliente");
-        panel.setSizeFull();
-        panel.setContent(formLayout);
-        setCompositionRoot(panel);
+        formLayout.setSizeUndefined();
+
+        setContent(formLayout);
     }
 }

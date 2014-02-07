@@ -9,6 +9,7 @@ import com.bo.acredito.util.Constants;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
+import com.vaadin.data.util.converter.Converter;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -54,7 +55,22 @@ public class OccupationSelector extends CustomField<Occupation> {
         cssLayout.addComponent(occupation);
         return cssLayout;
     }
+    @Override
+    public void setPropertyDataSource(Property newDataSource) {
+        super.setPropertyDataSource(newDataSource);
+        setOccupation((Occupation) newDataSource.getValue());
+    }
 
+    @Override
+    public void setValue(Occupation newValue) throws ReadOnlyException,
+            Converter.ConversionException {
+        setOccupation(newValue);
+        super.setValue(newValue);
+    }
+
+    private void setOccupation(Occupation value) {
+        occupation.setValue(value != null ? value.getId() : null);
+    }
     @Override
     public Class<? extends Occupation> getType() {
         return Occupation.class;
