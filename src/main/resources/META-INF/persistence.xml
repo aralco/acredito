@@ -15,6 +15,7 @@
     <class>com.bo.acredito.domain.Payment</class>
     <class>com.bo.acredito.domain.Product</class>
     <class>com.bo.acredito.domain.Sale</class>
+    <class>com.bo.acredito.domain.State</class>
     <class>com.bo.acredito.domain.Supplier</class>
     <properties>
         <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>

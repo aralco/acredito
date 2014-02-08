@@ -10,8 +10,27 @@ USE `acredito` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Country` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `code` VARCHAR(2) NOT NULL,
   `name` VARCHAR(100) NOT NULL,
+  `callCode` INT NOT NULL,
   PRIMARY KEY (`id`))
+  ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `acredito`.`State`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acredito`.`State` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `countryId` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_State_Country1_idx` (`countryId` ASC),
+  CONSTRAINT `fk_State_Country1`
+  FOREIGN KEY (`countryId`)
+  REFERENCES `acredito`.`Country` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
   ENGINE = InnoDB;
 
 
@@ -21,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Country` (
 CREATE TABLE IF NOT EXISTS `acredito`.`City` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `countryId` BIGINT NOT NULL,
+  `stateId` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_City_Country1_idx` (`countryId` ASC),
-  CONSTRAINT `fk_City_Country1`
-  FOREIGN KEY (`countryId`)
-  REFERENCES `acredito`.`Country` (`id`)
+  INDEX `fk_City_State1_idx` (`stateId` ASC),
+  CONSTRAINT `fk_City_State1`
+  FOREIGN KEY (`stateId`)
+  REFERENCES `acredito`.`State` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;

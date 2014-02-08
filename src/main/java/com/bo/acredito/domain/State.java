@@ -3,10 +3,10 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 
 /**
- * Created by aralco on 2/5/14.
+ * Created by aralco on 2/8/14.
  */
 @Entity
-public class City {
+public class State {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
@@ -15,8 +15,8 @@ public class City {
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String name;
     @ManyToOne
-    @JoinColumn(name = "stateId", referencedColumnName = "id", nullable = false)
-    private State state;
+    @JoinColumn(name = "countryId", referencedColumnName = "id", nullable = false)
+    private Country country;
 
     public Long getId() {
         return id;
@@ -34,12 +34,12 @@ public class City {
         this.name = name;
     }
 
-    public State getState() {
-        return state;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     @Override
@@ -47,10 +47,10 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        City city = (City) o;
+        State state = (State) o;
 
-        if (id != null ? !id.equals(city.id) : city.id != null) return false;
-        if (name != null ? !name.equals(city.name) : city.name != null) return false;
+        if (id != null ? !id.equals(state.id) : state.id != null) return false;
+        if (name != null ? !name.equals(state.name) : state.name != null) return false;
 
         return true;
     }
