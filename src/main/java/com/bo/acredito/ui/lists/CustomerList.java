@@ -14,8 +14,8 @@ import com.vaadin.ui.themes.Reindeer;
  */
 public class CustomerList extends CustomComponent{
     final private Table customerTable;
-    private String[] tablePropertyIds={"firstName","lastName", "code", "birthday", "occupation.name"};
-    private String[] tableHeaders={"Nombre","Apellido", "Código de cliente", "Fecha de nacimiento", "Ocupación",};
+    private String[] tablePropertyIds={"firstName","lastName", "code", "address", "address.phoneNumbers"};
+    private String[] tableHeaders={"Nombre","Apellido", "Código de cliente", "Dirección", "Teléfonos"};
     final private Button addButton;
 
     public CustomerList() {
@@ -32,6 +32,7 @@ public class CustomerList extends CustomComponent{
 
         JPAContainer container = JPAContainerFactory.make(Customer.class, Constants.PersistenceUnit);
         container.addNestedContainerProperty("occupation.name");
+        container.addNestedContainerProperty("address.phoneNumbers");
         customerTable =new Table(null, container);
         customerTable.setContainerDataSource(container);
         customerTable.setVisibleColumns(tablePropertyIds);

@@ -1,6 +1,7 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Arrays;
 
@@ -16,25 +17,32 @@ public class Customer {
     @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
     @Basic
+    @NotNull
     @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
     @Basic
+    @NotNull
     @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String firstName;
     @Basic
+    @NotNull
     @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String lastName;
     @Basic
+    @NotNull
     @Column(name = "salutation", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String salutation;
     @Basic
+    @NotNull
     @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
     @Enumerated(EnumType.STRING)
     private IdTypeEnum idType;
     @Basic
+    @NotNull
     @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String idNumber;
     @Basic
+    @NotNull
     @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date birthday;
     @Basic
@@ -43,24 +51,31 @@ public class Customer {
     private byte[] photo;
     @Basic
     @Lob
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
+    @NotNull
+    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     private Address address;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
     @JoinColumn(name = "contactId1", referencedColumnName = "id", nullable = false)
     private Contact contact1;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
     @JoinColumn(name = "contactId2", referencedColumnName = "id", nullable = false)
     private Contact contact2;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
     @JoinColumn(name = "contactId3", referencedColumnName = "id", nullable = false)
     private Contact contact3;
     @ManyToOne
-    @JoinColumn(name = "cityId", referencedColumnName = "id", nullable = false)
-    private City city;
+    @NotNull
+    @JoinColumn(name = "stateId", referencedColumnName = "id", nullable = false)
+    private State state;
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "occupationId", referencedColumnName = "id", nullable = false)
     private Occupation occupation;
 
@@ -222,12 +237,12 @@ public class Customer {
         this.contact3 = contact3;
     }
 
-    public City getCity() {
-        return city;
+    public State getState() {
+        return state;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setState(State state) {
+        this.state = state;
     }
 
     public Occupation getOccupation() {

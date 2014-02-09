@@ -1,7 +1,10 @@
 package com.bo.acredito.web;
 
 //import com.bo.acredito.service.person.PersonService;
+import com.bo.acredito.service.CustomerService;
 import com.vaadin.server.VaadinServlet;
+
+import javax.inject.Inject;
 //
 //import javax.inject.Inject;
 
@@ -10,10 +13,10 @@ import com.vaadin.server.VaadinServlet;
  */
 public class JEE6VaadinServlet extends VaadinServlet {
 
-//    @Inject
-//    private PersonService personService;
-//
-//    public PersonService getPersonService() {
-//        return personService;
-//    }
+    @Inject
+    private CustomerService customerService;
+
+    public CustomerService getCustomerService() {
+        return customerService;
+    }
 }

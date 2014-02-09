@@ -1,6 +1,7 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by aralco on 2/5/14.
@@ -15,23 +16,34 @@ public class Address {
     @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long version;
     @Basic
+    @NotNull
     @Column(name = "address1", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String address1;
     @Basic
+    @NotNull
     @Column(name = "address2", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String address2;
     @Basic
+    @NotNull
     @Column(name = "province", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String province;
     @Basic
+    @NotNull
     @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String phone;
     @Basic
+    @NotNull
     @Column(name = "mobile", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String mobile;
     @Basic
+    @NotNull
     @Column(name = "workPhone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String workPhone;
+
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "stateId", referencedColumnName = "id", nullable = false)
+    private State state;
 
     public Long getId() {
         return id;
@@ -97,6 +109,14 @@ public class Address {
         this.workPhone = workPhone;
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -127,5 +147,16 @@ public class Address {
         result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
         result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        String addressToShow=state.getName()+"("+province+"):"+address1;
+        return addressToShow;
+    }
+
+    public String getPhoneNumbers(){
+        String phoneNumbers=phone+"/"+mobile+"/"+workPhone;
+        return phoneNumbers;
     }
 }

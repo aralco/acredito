@@ -1,6 +1,7 @@
 package com.bo.acredito.ui.customfields;
 
 /**
+ * This class implements the OccupationSelector
  * Created by asejas on 2/6/14.
  */
 
@@ -16,9 +17,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomField;
 
 
-/**
- * A custom field that allows selection of an address.
- */
 public class OccupationSelector extends CustomField<Occupation> {
     private ComboBox occupation = new ComboBox();
 
@@ -30,7 +28,7 @@ public class OccupationSelector extends CustomField<Occupation> {
 
         occupation.setContainerDataSource(container);
         occupation.setItemCaptionPropertyId("name");
-
+        occupation.setImmediate(true);
         occupation.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(
