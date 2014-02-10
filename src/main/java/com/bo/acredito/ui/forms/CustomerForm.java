@@ -28,7 +28,7 @@ public class CustomerForm extends Window {
         setModal(true);
 
         final JPAContainer<Customer> customerContainer = JPAContainerFactory.make(Customer.class,
-                Constants.PersistenceUnit);
+                Constants.PERSISTENCE_UNIT);
 
         FormLayout formLayoutLeft = new FormLayout();
         FormLayout formLayoutRight = new FormLayout();

@@ -24,7 +24,7 @@ public class OccupationSelector extends CustomField<Occupation> {
 
     public OccupationSelector() {
         container = JPAContainerFactory.make(Occupation.class,
-                Constants.PersistenceUnit);
+                Constants.PERSISTENCE_UNIT);
 
         occupation.setContainerDataSource(container);
         occupation.setItemCaptionPropertyId("name");

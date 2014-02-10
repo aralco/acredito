@@ -28,6 +28,10 @@ public class Customer {
     @NotNull
     @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String lastName;
+    @Transient
+    private String fullName;
+    @Transient
+    private String codeName;
     @Basic
     @NotNull
     @Column(name = "salutation", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
@@ -117,6 +121,22 @@ public class Customer {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return firstName+" "+lastName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getCodeName() {
+        return code+" - "+firstName+" "+lastName;
+    }
+
+    public void setCodeName(String codeName) {
+        this.codeName = codeName;
     }
 
     public String getSalutation() {

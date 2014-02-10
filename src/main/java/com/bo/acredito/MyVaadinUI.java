@@ -1,27 +1,22 @@
 package com.bo.acredito;
 
-//import com.bo.acredito.domain.Person;
-//import com.bo.acredito.ui.components.PersonUI;
-
 import com.bo.acredito.ui.forms.SalesForm;
 import com.bo.acredito.ui.lists.CustomerList;
+import com.bo.acredito.util.Constants;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+
+import com.vaadin.server.ClassResource;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import javax.persistence.PersistenceContext;
 import javax.servlet.annotation.WebServlet;
 
 @Theme("mytheme")
 @SuppressWarnings("serial")
-public class MyVaadinUI extends UI
-{
-    public static final String PERSISTENCE_UNIT = "acreditoPU";
+public class MyVaadinUI extends UI {
     public static final String CUSTOMERS = "Clientes";
     public static final String PRODUCTS = "Productos";
     public static final String SALES = "Ventas";
@@ -32,7 +27,7 @@ public class MyVaadinUI extends UI
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
-    @PersistenceContext(name="persistence/em",unitName="acreditoPU")
+    @PersistenceContext(name="persistence/em",unitName= Constants.PERSISTENCE_UNIT)
     public static class Servlet extends JEE6VaadinServlet {
     }
 
@@ -42,6 +37,10 @@ public class MyVaadinUI extends UI
         contentLayout.setSizeFull();
         //contentLayout.setMargin(true);
         setContent(contentLayout);
+
+        //header
+//        Image imageHeader = new Image(null,
+//                new ClassResource("images/headerLOGO.png"));
 
         //Tabs Container
         TabSheet tabSheetMain = new TabSheet();
@@ -79,6 +78,7 @@ public class MyVaadinUI extends UI
         Label adminLabel = new Label(ADMIN+"... Not Yet Implemented");
         tabSheetMain.addTab(adminLabel, ADMIN, null);
 
+        //contentLayout.addComponent(imageHeader);
         contentLayout.addComponent(tabSheetMain);
 
     }

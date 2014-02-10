@@ -14,13 +14,20 @@ import com.vaadin.ui.themes.Reindeer;
  */
 public class CustomerList extends CustomComponent{
     final private Table customerTable;
-    private String[] tablePropertyIds={"firstName","lastName", "code", "address", "address.phoneNumbers"};
-    private String[] tableHeaders={"Nombre","Apellido", "Código de cliente", "Dirección", "Teléfonos"};
+    private String[] tablePropertyIds={"code", "fullName", "address", "address.phoneNumbers"};
+    private String[] tableHeaders={"Código", "Nombre completo", "Dirección", "Teléfonos"};
     final private Button addButton;
 
     public CustomerList() {
-        addButton = new Button("+");
-        addButton.setDescription("Crear nuevo cliente");
+        Panel customerListPanel=new Panel("Lista de clientes");
+        customerListPanel.setSizeFull();
+
+        VerticalLayout mainLayout = new VerticalLayout();
+        mainLayout.setSizeFull();
+        mainLayout.setMargin(true);
+
+        addButton = new Button("Registrar nuevo cliente");
+        addButton.setDescription("Crea un nuevo cliente");
         addButton.setStyleName(Reindeer.BUTTON_SMALL);
         addButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -30,15 +37,14 @@ public class CustomerList extends CustomComponent{
             }
         });
 
-        JPAContainer container = JPAContainerFactory.make(Customer.class, Constants.PersistenceUnit);
+        JPAContainer container = JPAContainerFactory.make(Customer.class, Constants.PERSISTENCE_UNIT);
         container.addNestedContainerProperty("occupation.name");
         container.addNestedContainerProperty("address.phoneNumbers");
         customerTable =new Table(null, container);
-        customerTable.setContainerDataSource(container);
+        //customerTable.setContainerDataSource(container);
         customerTable.setVisibleColumns(tablePropertyIds);
         customerTable.setSelectable(true);
         customerTable.setImmediate(true);
-        setSizeFull();
         customerTable.setColumnHeaders(tableHeaders);
         customerTable.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
@@ -51,9 +57,11 @@ public class CustomerList extends CustomComponent{
         VerticalLayout verticalLayout=new VerticalLayout();
         verticalLayout.addComponent(addButton);
         verticalLayout.addComponent(customerTable);
-        Panel panel=new Panel("Lista de clientes");
-        panel.setSizeFull();
-        panel.setContent(verticalLayout);
-        setCompositionRoot(panel);
+        customerListPanel.setContent(verticalLayout);
+
+        mainLayout.addComponent(customerListPanel);
+
+        setCompositionRoot(mainLayout);
+        //setSizeFull();
     }
 }

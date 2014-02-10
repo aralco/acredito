@@ -22,8 +22,10 @@ public class Product {
     @Basic
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String name;
+    @Transient
+    private String codeName;
     @Basic
-    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
     private BigDecimal price;
     @Basic
     @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
@@ -36,6 +38,9 @@ public class Product {
     @Lob
     @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
+    @ManyToOne
+    @JoinColumn(name = "supplierId", referencedColumnName = "id", nullable = false)
+    private Supplier supplier;
 
     public Long getId() {
         return id;
@@ -69,6 +74,14 @@ public class Product {
         this.name = name;
     }
 
+    public String getCodeName() {
+        return code+" - "+name;
+    }
+
+    public void setCodeName(String codeName) {
+        this.codeName = codeName;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -99,6 +112,14 @@ public class Product {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     @Override

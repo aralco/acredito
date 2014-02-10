@@ -23,7 +23,7 @@ public class Payment {
     @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp dueDate;
     @Basic
-    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
     private BigDecimal amountDue;
 
     public Long getId() {

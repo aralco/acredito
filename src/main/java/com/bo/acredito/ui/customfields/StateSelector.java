@@ -26,9 +26,9 @@ public class StateSelector extends CustomField<State> {
 
     public StateSelector() {
         countryContainer = JPAContainerFactory.make(Country.class,
-                Constants.PersistenceUnit);
+                Constants.PERSISTENCE_UNIT);
         stateContainer = JPAContainerFactory.make(State.class,
-                Constants.PersistenceUnit);
+                Constants.PERSISTENCE_UNIT);
         state.setEnabled(false);
         country.setContainerDataSource(countryContainer);
         country.setItemCaptionPropertyId("name");

@@ -23,23 +23,23 @@ public class Sale {
     @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp date;
     @Basic
-    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
     private BigDecimal productPrice;
     @Basic
-    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
     private BigDecimal discountedAmount;
     @Basic
-    @Column(name = "total", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    @Column(name = "total", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
     private BigDecimal total;
     @Basic
     @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Enumerated(EnumType.STRING)
     private SaleTypeEnum saleType;
     @Basic
-    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
     private BigDecimal initialPayment;
     @Basic
-    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
+    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
     private BigDecimal residualPayment;
     @Basic
     @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
@@ -54,6 +54,9 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
     private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "productId", referencedColumnName = "id", nullable = false)
+    private Product product;
 
     public Long getId() {
         return id;
@@ -209,5 +212,13 @@ public class Sale {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

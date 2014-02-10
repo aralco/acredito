@@ -1,7 +1,10 @@
 package com.bo.acredito.ui.forms;
 
+import com.bo.acredito.domain.Customer;
+import com.bo.acredito.domain.Payment;
 import com.bo.acredito.domain.Product;
 import com.bo.acredito.domain.SaleTypeEnum;
+import com.bo.acredito.util.Constants;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
@@ -17,7 +20,7 @@ import java.util.Arrays;
  */
 public class SalesForm extends CustomComponent {
 
-    private ComboBox customer = new ComboBox("Cliente:");
+    private ComboBox customer;
     private ComboBox product;
     private TextField subTotal   = new TextField("Monto $us:");
     private TextField discountedAmount   = new TextField("Descuento $us:");
@@ -25,7 +28,12 @@ public class SalesForm extends CustomComponent {
     private ComboBox saleType = new ComboBox("Forma de pago:", Arrays.asList(SaleTypeEnum.values()));
     private TextField initialPayment = new TextField("Cuota inicial $us:");
     private TextField residualPayment = new TextField("Saldo a crédito $us:");
-    private TextArea notes   = new TextArea("Observaciones");
+    private TextArea notes   = new TextArea("Observaciones: ");
+    private Label totalLabel = new Label("Total a pagar: ");
+    private TextField paymentQuotes = new TextField("Número de cuotas: ");
+    final private Table paymentTable;
+    private String [] tableHeaders = {"Número","Fecha", "Monto $us"};
+    private final Button viewButton   = new Button("Ver");
     private final Button saveButton   = new Button("Guardar");
     private final Button cancelButton   = new Button("Cancelar");
 
@@ -33,20 +41,24 @@ public class SalesForm extends CustomComponent {
         Panel salesPanel = new Panel("Registro de Venta");
         salesPanel.setSizeFull();
 
-        VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.setSizeFull();
-        verticalLayout.setMargin(true);
-
+        VerticalLayout mainLayout = new VerticalLayout();
+        mainLayout.setSizeFull();
+        mainLayout.setMargin(true);
 
         GridLayout gridLayout = new GridLayout(2,1);
         gridLayout.setSizeFull();
 
         final FormLayout leftFormLayout = new FormLayout();
+        //Load customers
+        final JPAContainer<Customer> customers = JPAContainerFactory.make(Customer.class, "acreditoPU");
+        customer = new ComboBox("Cliente:", customers);
+        customer.setItemCaptionPropertyId("fullName");
+        customer.setImmediate(true);
         leftFormLayout.addComponent(customer);
         //Load products
         final JPAContainer<Product> products = JPAContainerFactory.make(Product.class, "acreditoPU");
         product = new ComboBox("Producto:", products);
-        product.setItemCaptionPropertyId("name");
+        product.setItemCaptionPropertyId("fullName");
         product.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
@@ -102,8 +114,17 @@ public class SalesForm extends CustomComponent {
         gridLayout.addComponent(leftFormLayout,0,0);
 
         FormLayout rightFormLayout = new FormLayout();
-//        rightFormLayout.addComponent(entry3);
-//        rightFormLayout.addComponent(entry4);
+        JPAContainer container = JPAContainerFactory.make(Payment.class, Constants.PERSISTENCE_UNIT);
+        paymentTable = new Table(null, container);
+        paymentTable.setVisibleColumns("paymentNumber","dueDate", "amountDue");
+        paymentTable.setEditable(true);
+        paymentTable.setImmediate(true);
+        paymentTable.setColumnHeaders(tableHeaders);
+
+        rightFormLayout.addComponent(totalLabel);
+        HorizontalLayout rightHorizontalLayout = new HorizontalLayout(paymentQuotes,viewButton);
+        rightFormLayout.addComponent(rightHorizontalLayout);
+        rightFormLayout.addComponent(paymentTable);
         //rightFormLayout.setSizeFull();
         gridLayout.addComponent(rightFormLayout,1,0);
 
@@ -130,10 +151,9 @@ public class SalesForm extends CustomComponent {
         formLayout.addComponent(horizontalLayout);
         salesPanel.setContent(formLayout);
 
-        verticalLayout.addComponent(salesPanel);
+        mainLayout.addComponent(salesPanel);
 
-        setCompositionRoot(verticalLayout);
-
-        setSizeFull();
+        setCompositionRoot(mainLayout);
+        //setSizeFull();
     }
 }

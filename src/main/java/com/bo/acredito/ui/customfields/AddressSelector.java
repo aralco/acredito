@@ -86,9 +86,9 @@ public class AddressSelector extends CustomField<Address>
         });
         //**************************************State related
         countryContainer = JPAContainerFactory.make(Country.class,
-                Constants.PersistenceUnit);
+                Constants.PERSISTENCE_UNIT);
         stateContainer = JPAContainerFactory.make(State.class,
-                Constants.PersistenceUnit);
+                Constants.PERSISTENCE_UNIT);
         country.setContainerDataSource(countryContainer);
         country.setItemCaptionPropertyId("name");
         country.setImmediate(true);

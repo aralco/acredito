@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CustomerService {
-    @PersistenceContext(unitName = Constants.PersistenceUnit)
+    @PersistenceContext(unitName = Constants.PERSISTENCE_UNIT)
     private EntityManager em;
 
     public void saveCustomer(Customer customer){
