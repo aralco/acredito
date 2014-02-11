@@ -1,24 +1,28 @@
 package com.bo.acredito.ui.forms;
 
-import com.bo.acredito.domain.Customer;
-import com.bo.acredito.domain.Payment;
-import com.bo.acredito.domain.Product;
-import com.bo.acredito.domain.SaleTypeEnum;
+import com.bo.acredito.domain.*;
+import com.bo.acredito.service.SaleService;
 import com.bo.acredito.util.Constants;
+import com.bo.acredito.web.JEE6VaadinServlet;
+import com.vaadin.addon.jpacontainer.EntityItem;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
+import com.vaadin.addon.jpacontainer.JPAContainerItem;
 import com.vaadin.data.Property;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.FieldEvents;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.Calendar;
 
 /**
  * Created by aralco on 2/2/14.
  */
-public class SalesForm extends CustomComponent {
+public class SaleForm extends CustomComponent {
 
     private ComboBox customer;
     private ComboBox product;
@@ -37,7 +41,7 @@ public class SalesForm extends CustomComponent {
     private final Button saveButton   = new Button("Guardar");
     private final Button cancelButton   = new Button("Cancelar");
 
-    public SalesForm() {
+    public SaleForm() {
         Panel salesPanel = new Panel("Registro de Venta");
         salesPanel.setSizeFull();
 
@@ -105,14 +109,30 @@ public class SalesForm extends CustomComponent {
         //leftFormLayout.setSizeFull();
         gridLayout.addComponent(leftFormLayout,0,0);
 
+
+
         FormLayout rightFormLayout = new FormLayout();
-        JPAContainer container = JPAContainerFactory.make(Payment.class, Constants.PERSISTENCE_UNIT);
+        final JPAContainer container = JPAContainerFactory.makeBatchable(Payment.class, Constants.PERSISTENCE_UNIT);
+
         paymentTable = new Table(null, container);
-        Payment p = new Payment();
-        p.setPaymentNumber(1);
-        p.setDueDate(Calendar.getInstance().getTime());
-        p.setAmountDue(new Double(100));
-        //container.addEntity(p);
+        Payment p1 = new Payment();
+        p1.setPaymentNumber(1);
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = Calendar.getInstance().getTime();
+        p1.setDueDate(date);
+        p1.setAmountDue(Double.valueOf(100));
+        container.addEntity(p1);
+        Payment p2 = new Payment();
+        p2.setPaymentNumber(2);
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        date = Calendar.getInstance().getTime();
+        p2.setDueDate(date);
+        p2.setAmountDue(Double.valueOf(1000));
+        container.addEntity(p2);
+        final List<Payment> paymentList = new ArrayList<Payment>(2);
+        paymentList.add(p1);
+        paymentList.add(p2);
+
         paymentTable.setSelectable(true);
         paymentTable.setVisibleColumns("paymentNumber", "dueDate", "amountDue");
 //        paymentTable.addValueChangeListener(new Property.ValueChangeListener()  {
@@ -143,6 +163,26 @@ public class SalesForm extends CustomComponent {
         HorizontalLayout horizontalLayout = new HorizontalLayout();
         saveButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
+                //container.commit();
+                SaleService saleService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getSaleService();
+                //saleService.savePayments(paymentList);
+                final Sale sale = new Sale();
+                sale.setCode(Long.valueOf(1));
+                sale.setDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
+                sale.setProductPrice(Double.valueOf(subTotal.getValue()));
+                sale.setDiscountedAmount(Double.valueOf(discountedAmount.getValue()));
+                sale.setTotal(Double.valueOf(total.getValue()));
+                sale.setSaleType((SaleTypeEnum)saleType.getValue());
+                sale.setInitialPayment(Double.valueOf(initialPayment.getValue()));
+                sale.setResidualPayment(Double.valueOf(residualPayment.getValue()));
+                sale.setPaymentQuotes(Integer.valueOf(paymentQuotes.getValue()));
+                sale.setNotes(notes.getValue());
+                JPAContainer<Employee> employeeJPAContainer= JPAContainerFactory.make(Employee.class, Constants.PERSISTENCE_UNIT);
+                EntityItem<Employee> entityItem = employeeJPAContainer.getItem(Long.valueOf(1));
+                sale.setEmployee(entityItem.getEntity());
+                sale.setCustomer(customers.getItem(customer.getValue()).getEntity());
+                sale.setProduct(products.getItem(product.getValue()).getEntity());
+                saleService.saveSale(sale);
                 Notification.show("GUARDADO", "Venta registrada con éxito", Notification.Type.HUMANIZED_MESSAGE);
             }
         });

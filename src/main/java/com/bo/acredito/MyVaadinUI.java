@@ -1,6 +1,6 @@
 package com.bo.acredito;
 
-import com.bo.acredito.ui.forms.SalesForm;
+import com.bo.acredito.ui.forms.SaleForm;
 import com.bo.acredito.ui.lists.CustomerList;
 import com.bo.acredito.util.Constants;
 import com.bo.acredito.web.JEE6VaadinServlet;
@@ -54,7 +54,7 @@ public class MyVaadinUI extends UI {
 
 
         //Sales
-        SalesForm salesForm = new SalesForm();
+        SaleForm salesForm = new SaleForm();
         tabSheetMain.addTab(salesForm, SALES, null);
 
         //Charges

@@ -19,6 +19,7 @@ public class Sale {
     @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp date;
     @Basic
