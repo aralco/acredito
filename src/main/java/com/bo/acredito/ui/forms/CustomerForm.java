@@ -85,9 +85,6 @@ public class CustomerForm extends Window {
                 else if (type.isAssignableFrom(State.class)) {
                     return (T) new StateSelector();
                 }
-                else if (type.isAssignableFrom(State.class)) {
-                    return (T) new StateSelector();
-                }
                 else if (type.isAssignableFrom(Date.class)) {
                     PopupDateField popupDateField=new PopupDateField();
                     popupDateField.setDateFormat("yyyy-MM-dd");
@@ -106,7 +103,6 @@ public class CustomerForm extends Window {
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Tipo de identificación: ","idType"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Número de identificación: ","idNumber"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Fecha de nacimiento: ","birthday"));
-        formLayoutLeft.addComponent(fieldGroup.buildAndBind("Lugar de nacimiento: ","state"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Ocupación: ","occupation"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto1: ","contact1"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto2: ","contact2"));

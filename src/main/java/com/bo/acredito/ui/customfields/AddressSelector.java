@@ -26,12 +26,10 @@ public class AddressSelector extends CustomField<Address>
     private TextField id;
     private ComboBox country = new ComboBox("País");
     private ComboBox state = new ComboBox("Ciudad");
-
     private JPAContainer<Country> countryContainer;
     private JPAContainer<State> stateContainer;
-    private boolean countryListenerEnabled=true;
 
-
+    private final Long DEFAULTCOUNTRYID=27L; //Bolivia
     public AddressSelector() {
         province.setNullRepresentation("");
         address1.setNullRepresentation("");
@@ -87,17 +85,20 @@ public class AddressSelector extends CustomField<Address>
         //**************************************State related
         countryContainer = JPAContainerFactory.make(Country.class,
                 Constants.PERSISTENCE_UNIT);
+        countryContainer.addContainerFilter(new Compare.Equal("id", DEFAULTCOUNTRYID));
+
         stateContainer = JPAContainerFactory.make(State.class,
                 Constants.PERSISTENCE_UNIT);
         country.setContainerDataSource(countryContainer);
         country.setItemCaptionPropertyId("name");
-        country.setImmediate(true);
         country.setTextInputAllowed(false);
+        country.setValue(DEFAULTCOUNTRYID);
+        country.setReadOnly(true);
 
+        stateContainer.addContainerFilter(new Compare.Equal("country.id", DEFAULTCOUNTRYID));
         state.setContainerDataSource(stateContainer);
         state.setItemCaptionPropertyId("name");
         state.setTextInputAllowed(false);
-        state.setEnabled(false);
         state.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(
@@ -106,26 +107,6 @@ public class AddressSelector extends CustomField<Address>
             }
         });
 
-        country.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(
-                    com.vaadin.data.Property.ValueChangeEvent event) {
-                if(countryListenerEnabled){
-                    state.setValue(null);
-                    if (country.getValue() == null) {
-                        state.setEnabled(false);
-                    } else {
-                        Country countryEntity = countryContainer
-                                .getItem(country.getValue()).getEntity();
-
-                        stateContainer.removeAllContainerFilters();
-                        stateContainer.addContainerFilter(new Compare.Equal("country", countryEntity));
-                        stateContainer.applyFilters();
-                        state.setEnabled(true);
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -168,12 +149,6 @@ public class AddressSelector extends CustomField<Address>
         if(value!=null){
             State entity = stateContainer.getItem(value.getState().getId()).getEntity();
             state.setValue(entity.getId());
-            state.setEnabled(true);
-            if(country.getValue()==null){
-                countryListenerEnabled=false;
-                country.setValue(entity.getCountry().getId());
-                countryListenerEnabled=true;
-            }
         }
         else{
             state.setValue(null);
@@ -198,13 +173,7 @@ public class AddressSelector extends CustomField<Address>
         }
         if(state.getValue()!=null){
             State stateEntity = stateContainer.getItem(state.getValue()).getEntity();
-            if(country.getValue()==null){
-                countryListenerEnabled=false;
-                country.setValue(stateEntity.getCountry().getId());
-                countryListenerEnabled=true;
-            }
             entity.setState(stateEntity);
-            state.setEnabled(true);
         }
         else{
             entity.setState(null);
