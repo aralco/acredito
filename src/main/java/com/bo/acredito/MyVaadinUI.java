@@ -7,7 +7,6 @@ import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 
-import com.vaadin.server.ClassResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
 
@@ -37,10 +36,6 @@ public class MyVaadinUI extends UI {
         contentLayout.setSizeFull();
         //contentLayout.setMargin(true);
         setContent(contentLayout);
-
-        //header
-//        Image imageHeader = new Image(null,
-//                new ClassResource("images/headerLOGO.png"));
 
         //Tabs Container
         TabSheet tabSheetMain = new TabSheet();
@@ -78,7 +73,6 @@ public class MyVaadinUI extends UI {
         Label adminLabel = new Label(ADMIN+"... Not Yet Implemented");
         tabSheetMain.addTab(adminLabel, ADMIN, null);
 
-        //contentLayout.addComponent(imageHeader);
         contentLayout.addComponent(tabSheetMain);
 
     }

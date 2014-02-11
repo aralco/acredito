@@ -3,7 +3,7 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 
 /**
- * Created by aralco on 2/8/14.
+ * Created by aralco on 2/11/14.
  */
 @Entity
 public class State {
@@ -34,14 +34,6 @@ public class State {
         this.name = name;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,5 +52,13 @@ public class State {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }

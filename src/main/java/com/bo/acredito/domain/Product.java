@@ -1,11 +1,10 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Arrays;
 
 /**
- * Created by aralco on 2/5/14.
+ * Created by aralco on 2/11/14.
  */
 @Entity
 public class Product {
@@ -25,8 +24,8 @@ public class Product {
     @Transient
     private String codeName;
     @Basic
-    @Column(name = "price", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
-    private BigDecimal price;
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double price;
     @Basic
     @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
     private Boolean available;
@@ -82,11 +81,11 @@ public class Product {
         this.codeName = codeName;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

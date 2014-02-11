@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by aralco on 2/5/14.
+ * Created by aralco on 2/11/14.
  */
 @Entity
 public class Address {
@@ -12,9 +12,6 @@ public class Address {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
-    @Version
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
-    private Long version;
     @Basic
     @NotNull
     @Column(name = "address1", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
@@ -51,14 +48,6 @@ public class Address {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public String getAddress1() {
@@ -130,7 +119,6 @@ public class Address {
         if (mobile != null ? !mobile.equals(address.mobile) : address.mobile != null) return false;
         if (phone != null ? !phone.equals(address.phone) : address.phone != null) return false;
         if (province != null ? !province.equals(address.province) : address.province != null) return false;
-        if (version != null ? !version.equals(address.version) : address.version != null) return false;
         if (workPhone != null ? !workPhone.equals(address.workPhone) : address.workPhone != null) return false;
 
         return true;
@@ -139,7 +127,6 @@ public class Address {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (address1 != null ? address1.hashCode() : 0);
         result = 31 * result + (address2 != null ? address2.hashCode() : 0);
         result = 31 * result + (province != null ? province.hashCode() : 0);

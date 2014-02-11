@@ -6,7 +6,6 @@
     <non-jta-data-source>acreditoUnmanaged</non-jta-data-source>
     <class>com.bo.acredito.domain.Address</class>
     <class>com.bo.acredito.domain.Charge</class>
-    <class>com.bo.acredito.domain.City</class>
     <class>com.bo.acredito.domain.Contact</class>
     <class>com.bo.acredito.domain.Country</class>
     <class>com.bo.acredito.domain.Customer</class>

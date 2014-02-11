@@ -11,11 +11,11 @@ insert into Occupation(id, name) values(3,"Abogado");
 insert into Occupation(id, name) values(4,"Contador");
 
 #Address for Employee - id=1
-insert into address(address1, address2, stateId, mobile, phone, workPhone, province, version)
-values("Av. Villazon 102", "km 3 1/2 Quintanilla", 382, "70748821", "4321274", "4324233", "Cercado",1);
+insert into address(address1, address2, stateId, mobile, phone, workPhone, province)
+values("Av. Villazon 102", "km 3 1/2 Quintanilla", 382, "70748821", "4321274", "4324233", "Cercado");
 #Address for supplier - id=2
-insert into address(address1, address2, stateId, mobile, phone, workPhone, province, version)
-values("Av. Blanco Galindo 876", "km 6 frente Hospital CNS", 382, "77482821", "4728374", "4324233", "Cercado",1);
+insert into address(address1, address2, stateId, mobile, phone, workPhone, province)
+values("Av. Blanco Galindo 876", "km 6 frente Hospital CNS", 382, "77482821", "4728374", "4324233", "Cercado");
 #Employee
 INSERT INTO `acredito`.`employee` (`id`, `active`, `birthday`, `code`, `firstName`, `idNumber`, `idType`, `lastName`, `password`, `username`, `version`, `addressId`)
 VALUES (NULL, b'1', '1979-12-12', '1', 'Miguel Angel', '4321234 CBA', 'ID', 'Mendez Perez', 'secret', 'mmendez', '1', '1');

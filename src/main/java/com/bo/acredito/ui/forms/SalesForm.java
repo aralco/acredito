@@ -12,8 +12,8 @@ import com.vaadin.event.FieldEvents;
 import com.vaadin.ui.*;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.util.Arrays;
+import java.util.*;
+import java.util.Calendar;
 
 /**
  * Created by aralco on 2/2/14.
@@ -52,13 +52,12 @@ public class SalesForm extends CustomComponent {
         //Load customers
         final JPAContainer<Customer> customers = JPAContainerFactory.make(Customer.class, "acreditoPU");
         customer = new ComboBox("Cliente:", customers);
-        customer.setItemCaptionPropertyId("fullName");
+        customer.setItemCaptionPropertyId("codeName");
         customer.setImmediate(true);
-        leftFormLayout.addComponent(customer);
         //Load products
         final JPAContainer<Product> products = JPAContainerFactory.make(Product.class, "acreditoPU");
         product = new ComboBox("Producto:", products);
-        product.setItemCaptionPropertyId("fullName");
+        product.setItemCaptionPropertyId("codeName");
         product.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
@@ -71,8 +70,6 @@ public class SalesForm extends CustomComponent {
             }
         });
         product.setImmediate(true);
-        leftFormLayout.addComponent(product);
-        leftFormLayout.addComponent(subTotal);
         discountedAmount.setValue("0.00");
         discountedAmount.addTextChangeListener(new FieldEvents.TextChangeListener() {
             @Override
@@ -87,14 +84,9 @@ public class SalesForm extends CustomComponent {
             }
         });
         discountedAmount.setImmediate(true);
-        leftFormLayout.addComponent(discountedAmount);
-        leftFormLayout.addComponent(total);
-        leftFormLayout.addComponent(saleType);
+        leftFormLayout.addComponents(customer, product, subTotal, discountedAmount, total, saleType, initialPayment, residualPayment, notes);
         initialPayment.setVisible(false);
-        leftFormLayout.addComponent(initialPayment);
         residualPayment.setVisible(false);
-        leftFormLayout.addComponent(residualPayment);
-        leftFormLayout.addComponent(notes);
         saleType.setNullSelectionAllowed(false);
         saleType.setValue(SaleTypeEnum.CASH);
         saleType.addValueChangeListener(new Property.ValueChangeListener() {
@@ -116,13 +108,32 @@ public class SalesForm extends CustomComponent {
         FormLayout rightFormLayout = new FormLayout();
         JPAContainer container = JPAContainerFactory.make(Payment.class, Constants.PERSISTENCE_UNIT);
         paymentTable = new Table(null, container);
-        paymentTable.setVisibleColumns("paymentNumber","dueDate", "amountDue");
-        paymentTable.setEditable(true);
+        Payment p = new Payment();
+        p.setPaymentNumber(1);
+        p.setDueDate(Calendar.getInstance().getTime());
+        p.setAmountDue(new Double(100));
+        //container.addEntity(p);
+        paymentTable.setSelectable(true);
+        paymentTable.setVisibleColumns("paymentNumber", "dueDate", "amountDue");
+//        paymentTable.addValueChangeListener(new Property.ValueChangeListener()  {
+//            @Override
+//            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+//                if(paymentTable.isEditable())
+//                    paymentTable.setEditable(false);
+//                else
+//                    paymentTable.setEditable(true);
+//            }
+//        });
         paymentTable.setImmediate(true);
         paymentTable.setColumnHeaders(tableHeaders);
+        paymentTable.setFooterVisible(true);
+        paymentTable.setColumnFooter("dueDate", "Total $us");
+        Double totalAmount = 0.00;
+        paymentTable.setColumnFooter("amountDue", String.valueOf(totalAmount));
 
         rightFormLayout.addComponent(totalLabel);
         HorizontalLayout rightHorizontalLayout = new HorizontalLayout(paymentQuotes,viewButton);
+        rightFormLayout.setSpacing(true);
         rightFormLayout.addComponent(rightHorizontalLayout);
         rightFormLayout.addComponent(paymentTable);
         //rightFormLayout.setSizeFull();
@@ -135,8 +146,7 @@ public class SalesForm extends CustomComponent {
                 Notification.show("GUARDADO", "Venta registrada con éxito", Notification.Type.HUMANIZED_MESSAGE);
             }
         });
-        horizontalLayout.addComponent(saveButton);
-        horizontalLayout.addComponent(cancelButton);
+        horizontalLayout.addComponents(saveButton, cancelButton);
         //horizontalLayout.setSizeFull();
 
 //        verticalLayout.addComponent(gridLayout);
@@ -147,8 +157,7 @@ public class SalesForm extends CustomComponent {
 //        setCompositionRoot(salesPanel);
 
         VerticalLayout formLayout = new VerticalLayout();
-        formLayout.addComponent(gridLayout);
-        formLayout.addComponent(horizontalLayout);
+        formLayout.addComponents(gridLayout, horizontalLayout);
         salesPanel.setContent(formLayout);
 
         mainLayout.addComponent(salesPanel);

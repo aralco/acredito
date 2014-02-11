@@ -1,11 +1,10 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/5/14.
+ * Created by aralco on 2/11/14.
  */
 @Entity
 public class Charge {
@@ -13,9 +12,6 @@ public class Charge {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
-    @Version
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
-    private Long version;
     @Basic
     @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
@@ -23,14 +19,14 @@ public class Charge {
     @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp date;
     @Basic
-    @Column(name = "chargeAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
-    private BigDecimal chargeAmount;
+    @Column(name = "chargeAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double chargeAmount;
     @Basic
-    @Column(name = "defaultingAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
-    private BigDecimal defaultingAmount;
+    @Column(name = "defaultingAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double defaultingAmount;
     @Basic
-    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 5, precision = 2)
-    private BigDecimal totalAmount;
+    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double totalAmount;
     @Basic
     @Lob
     @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
@@ -42,14 +38,6 @@ public class Charge {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public Long getCode() {
@@ -68,27 +56,27 @@ public class Charge {
         this.date = date;
     }
 
-    public BigDecimal getChargeAmount() {
+    public Double getChargeAmount() {
         return chargeAmount;
     }
 
-    public void setChargeAmount(BigDecimal chargeAmount) {
+    public void setChargeAmount(Double chargeAmount) {
         this.chargeAmount = chargeAmount;
     }
 
-    public BigDecimal getDefaultingAmount() {
+    public Double getDefaultingAmount() {
         return defaultingAmount;
     }
 
-    public void setDefaultingAmount(BigDecimal defaultingAmount) {
+    public void setDefaultingAmount(Double defaultingAmount) {
         this.defaultingAmount = defaultingAmount;
     }
 
-    public BigDecimal getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
@@ -116,7 +104,6 @@ public class Charge {
         if (id != null ? !id.equals(charge.id) : charge.id != null) return false;
         if (notes != null ? !notes.equals(charge.notes) : charge.notes != null) return false;
         if (totalAmount != null ? !totalAmount.equals(charge.totalAmount) : charge.totalAmount != null) return false;
-        if (version != null ? !version.equals(charge.version) : charge.version != null) return false;
 
         return true;
     }
@@ -124,7 +111,6 @@ public class Charge {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (chargeAmount != null ? chargeAmount.hashCode() : 0);

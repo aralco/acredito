@@ -1,11 +1,10 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by aralco on 2/5/14.
+ * Created by aralco on 2/11/14.
  */
 @Entity
 public class Sale {
@@ -23,24 +22,24 @@ public class Sale {
     @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp date;
     @Basic
-    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
-    private BigDecimal productPrice;
+    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double productPrice;
     @Basic
-    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
-    private BigDecimal discountedAmount;
+    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double discountedAmount;
     @Basic
-    @Column(name = "total", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
-    private BigDecimal total;
+    @Column(name = "total", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double total;
     @Basic
     @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Enumerated(EnumType.STRING)
     private SaleTypeEnum saleType;
     @Basic
-    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
-    private BigDecimal initialPayment;
+    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double initialPayment;
     @Basic
-    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
-    private BigDecimal residualPayment;
+    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double residualPayment;
     @Basic
     @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Integer paymentQuotes;
@@ -90,27 +89,27 @@ public class Sale {
         this.date = date;
     }
 
-    public BigDecimal getProductPrice() {
+    public Double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(BigDecimal productPrice) {
+    public void setProductPrice(Double productPrice) {
         this.productPrice = productPrice;
     }
 
-    public BigDecimal getDiscountedAmount() {
+    public Double getDiscountedAmount() {
         return discountedAmount;
     }
 
-    public void setDiscountedAmount(BigDecimal discountedAmount) {
+    public void setDiscountedAmount(Double discountedAmount) {
         this.discountedAmount = discountedAmount;
     }
 
-    public BigDecimal getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
@@ -122,19 +121,19 @@ public class Sale {
         this.saleType = saleType;
     }
 
-    public BigDecimal getInitialPayment() {
+    public Double getInitialPayment() {
         return initialPayment;
     }
 
-    public void setInitialPayment(BigDecimal initialPayment) {
+    public void setInitialPayment(Double initialPayment) {
         this.initialPayment = initialPayment;
     }
 
-    public BigDecimal getResidualPayment() {
+    public Double getResidualPayment() {
         return residualPayment;
     }
 
-    public void setResidualPayment(BigDecimal residualPayment) {
+    public void setResidualPayment(Double residualPayment) {
         this.residualPayment = residualPayment;
     }
 

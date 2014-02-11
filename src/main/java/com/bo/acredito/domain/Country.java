@@ -3,7 +3,7 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 
 /**
- * Created by aralco on 2/8/14.
+ * Created by aralco on 2/11/14.
  */
 @Entity
 public class Country {

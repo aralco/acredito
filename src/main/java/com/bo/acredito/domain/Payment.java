@@ -1,11 +1,10 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
- * Created by aralco on 2/5/14.
+ * Created by aralco on 2/11/14.
  */
 @Entity
 public class Payment {
@@ -13,18 +12,15 @@ public class Payment {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
-    @Version
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
-    private Long version;
     @Basic
     @Column(name = "paymentNumber", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Integer paymentNumber;
     @Basic
-    @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
-    private Timestamp dueDate;
+    @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private Date dueDate;
     @Basic
-    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, precision = 10, scale = 2)
-    private BigDecimal amountDue;
+    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    private Double amountDue;
 
     public Long getId() {
         return id;
@@ -32,14 +28,6 @@ public class Payment {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public Integer getPaymentNumber() {
@@ -50,19 +38,19 @@ public class Payment {
         this.paymentNumber = paymentNumber;
     }
 
-    public Timestamp getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Timestamp dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
-    public BigDecimal getAmountDue() {
+    public Double getAmountDue() {
         return amountDue;
     }
 
-    public void setAmountDue(BigDecimal amountDue) {
+    public void setAmountDue(Double amountDue) {
         this.amountDue = amountDue;
     }
 
@@ -78,7 +66,6 @@ public class Payment {
         if (id != null ? !id.equals(payment.id) : payment.id != null) return false;
         if (paymentNumber != null ? !paymentNumber.equals(payment.paymentNumber) : payment.paymentNumber != null)
             return false;
-        if (version != null ? !version.equals(payment.version) : payment.version != null) return false;
 
         return true;
     }
@@ -86,7 +73,6 @@ public class Payment {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (paymentNumber != null ? paymentNumber.hashCode() : 0);
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
         result = 31 * result + (amountDue != null ? amountDue.hashCode() : 0);

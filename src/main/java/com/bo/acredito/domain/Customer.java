@@ -2,16 +2,17 @@ package com.bo.acredito.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Arrays;
 
 /**
- * Created by aralco on 2/5/14.
+ * Created by aralco on 2/11/14.
  */
 @Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
     @Version
     @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
@@ -56,7 +57,7 @@ public class Customer {
     @Basic
     @Lob
     @NotNull
-    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
     @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
@@ -74,10 +75,6 @@ public class Customer {
     @NotNull
     @JoinColumn(name = "contactId3", referencedColumnName = "id", nullable = false)
     private Contact contact3;
-    @ManyToOne
-    @NotNull
-    @JoinColumn(name = "stateId", referencedColumnName = "id", nullable = false)
-    private State state;
     @ManyToOne
     @NotNull
     @JoinColumn(name = "occupationId", referencedColumnName = "id", nullable = false)
@@ -255,14 +252,6 @@ public class Customer {
 
     public void setContact3(Contact contact3) {
         this.contact3 = contact3;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public Occupation getOccupation() {
