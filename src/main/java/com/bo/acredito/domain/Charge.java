@@ -19,13 +19,13 @@ public class Charge {
     @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Timestamp date;
     @Basic
-    @Column(name = "chargeAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    @Column(name = "chargeAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
     private Double chargeAmount;
     @Basic
-    @Column(name = "defaultingAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    @Column(name = "defaultingAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
     private Double defaultingAmount;
     @Basic
-    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
     private Double totalAmount;
     @Basic
     @Lob

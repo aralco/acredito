@@ -19,7 +19,7 @@ public class Payment {
     @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date dueDate;
     @Basic
-    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
     private Double amountDue;
 
     public Long getId() {

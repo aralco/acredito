@@ -45,7 +45,7 @@ public class Employee {
     private Date birthday;
     @Basic
     @Lob
-    @Column(name = "photo", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
     @ManyToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)

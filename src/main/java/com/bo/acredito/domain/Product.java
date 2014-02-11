@@ -24,7 +24,7 @@ public class Product {
     @Transient
     private String codeName;
     @Basic
-    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 18, precision = 2)
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
     private Double price;
     @Basic
     @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)

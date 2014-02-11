@@ -50,12 +50,12 @@ public class SalesForm extends CustomComponent {
 
         final FormLayout leftFormLayout = new FormLayout();
         //Load customers
-        final JPAContainer<Customer> customers = JPAContainerFactory.make(Customer.class, "acreditoPU");
+        final JPAContainer<Customer> customers = JPAContainerFactory.make(Customer.class, Constants.PERSISTENCE_UNIT);
         customer = new ComboBox("Cliente:", customers);
         customer.setItemCaptionPropertyId("codeName");
         customer.setImmediate(true);
         //Load products
-        final JPAContainer<Product> products = JPAContainerFactory.make(Product.class, "acreditoPU");
+        final JPAContainer<Product> products = JPAContainerFactory.make(Product.class, Constants.PERSISTENCE_UNIT);
         product = new ComboBox("Producto:", products);
         product.setItemCaptionPropertyId("codeName");
         product.addValueChangeListener(new Property.ValueChangeListener() {

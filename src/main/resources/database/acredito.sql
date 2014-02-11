@@ -35,40 +35,22 @@ CREATE TABLE IF NOT EXISTS `acredito`.`State` (
 
 
 -- -----------------------------------------------------
--- Table `acredito`.`City`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `acredito`.`City` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  `stateId` BIGINT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_City_State1_idx` (`stateId` ASC),
-  CONSTRAINT `fk_City_State1`
-  FOREIGN KEY (`stateId`)
-  REFERENCES `acredito`.`State` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `acredito`.`Address`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Address` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` BIGINT NOT NULL,
   `address1` VARCHAR(250) NOT NULL,
   `address2` VARCHAR(250) NOT NULL,
   `province` VARCHAR(45) NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
   `mobile` VARCHAR(45) NOT NULL,
   `workPhone` VARCHAR(45) NOT NULL,
-  `cityId` BIGINT NOT NULL,
+  `stateId` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Address_City1_idx` (`cityId` ASC),
-  CONSTRAINT `fk_Address_City1`
-  FOREIGN KEY (`cityId`)
-  REFERENCES `acredito`.`City` (`id`)
+  INDEX `fk_Address_State1_idx` (`stateId` ASC),
+  CONSTRAINT `fk_Address_State1`
+  FOREIGN KEY (`stateId`)
+  REFERENCES `acredito`.`State` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -104,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Product` (
   `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `name` VARCHAR(250) NOT NULL,
-  `price` DECIMAL(5,2) NOT NULL,
+  `price` DOUBLE(18,2) NOT NULL,
   `available` TINYINT(1) NOT NULL,
   `notes` TEXT NOT NULL,
   `photo` BLOB NULL,
@@ -161,7 +143,6 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Occupation` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Contact` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` BIGINT NOT NULL,
   `name` VARCHAR(250) NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -188,14 +169,12 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Customer` (
   `contactId1` BIGINT NOT NULL,
   `contactId2` BIGINT NOT NULL,
   `contactId3` BIGINT NOT NULL,
-  `cityId` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Person_Occupation1_idx` (`occupationId` ASC),
   INDEX `fk_Person_Address1_idx` (`addressId` ASC),
   INDEX `fk_Customer_Contact1_idx` (`contactId1` ASC),
   INDEX `fk_Customer_Contact2_idx` (`contactId2` ASC),
   INDEX `fk_Customer_Contact3_idx` (`contactId3` ASC),
-  INDEX `fk_Customer_City1_idx` (`cityId` ASC),
   CONSTRAINT `fk_Person_Occupation1`
   FOREIGN KEY (`occupationId`)
   REFERENCES `acredito`.`Occupation` (`id`)
@@ -220,11 +199,6 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Customer` (
   FOREIGN KEY (`contactId3`)
   REFERENCES `acredito`.`Contact` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Customer_City1`
-  FOREIGN KEY (`cityId`)
-  REFERENCES `acredito`.`City` (`id`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
 
@@ -237,12 +211,12 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Sale` (
   `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `date` DATETIME NOT NULL,
-  `productPrice` DECIMAL(5,2) NOT NULL,
-  `discountedAmount` DECIMAL(5,2) NOT NULL,
-  `total` DECIMAL(5,2) NOT NULL,
+  `productPrice` DOUBLE(18,2) NOT NULL,
+  `discountedAmount` DOUBLE(18,2) NOT NULL,
+  `total` DOUBLE(18,2) NOT NULL,
   `saleType` ENUM('CASH','CREDIT') NOT NULL,
-  `initialPayment` DECIMAL(5,2) NOT NULL,
-  `residualPayment` DECIMAL(5,2) NOT NULL,
+  `initialPayment` DOUBLE(18,2) NOT NULL,
+  `residualPayment` DOUBLE(18,2) NOT NULL,
   `paymentQuotes` INT NOT NULL,
   `notes` TEXT NOT NULL,
   `employeeId` BIGINT NOT NULL,
@@ -275,10 +249,9 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Sale` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Payment` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` BIGINT NOT NULL,
   `paymentNumber` INT NOT NULL,
-  `dueDate` DATETIME NOT NULL,
-  `amountDue` DECIMAL(5,2) NOT NULL,
+  `dueDate` DATE NOT NULL,
+  `amountDue` DOUBLE(18,2) NOT NULL,
   `saleId` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Payment_Sale1_idx` (`saleId` ASC),
@@ -295,12 +268,11 @@ CREATE TABLE IF NOT EXISTS `acredito`.`Payment` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `acredito`.`Charge` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `version` BIGINT NOT NULL,
   `code` BIGINT NOT NULL,
   `date` DATETIME NOT NULL,
-  `chargeAmount` DECIMAL(5,2) NOT NULL,
-  `defaultingAmount` DECIMAL(5,2) NOT NULL,
-  `totalAmount` DECIMAL(5,2) NOT NULL,
+  `chargeAmount` DOUBLE(18,2) NOT NULL,
+  `defaultingAmount` DOUBLE(18,2) NOT NULL,
+  `totalAmount` DOUBLE(18,2) NOT NULL,
   `notes` TEXT NOT NULL,
   `saleId` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
