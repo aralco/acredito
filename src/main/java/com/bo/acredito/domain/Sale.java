@@ -1,7 +1,7 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by aralco on 2/11/14.
@@ -21,7 +21,7 @@ public class Sale {
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
-    private Timestamp date;
+    private Date date;
     @Basic
     @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
     private Double productPrice;
@@ -82,11 +82,11 @@ public class Sale {
         this.code = code;
     }
 
-    public Timestamp getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -16,6 +16,7 @@ public class Payment {
     @Column(name = "paymentNumber", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Integer paymentNumber;
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date dueDate;
     @Basic
