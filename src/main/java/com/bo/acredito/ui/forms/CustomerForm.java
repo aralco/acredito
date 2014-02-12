@@ -22,9 +22,10 @@ import com.vaadin.ui.*;
 import java.util.Date;
 
 public class CustomerForm extends Window {
-
-    public CustomerForm(String caption, Long customerId) {
+    private JPAContainer listContainer;
+    public CustomerForm(String caption, Long customerId, JPAContainer parentContainer) {
         super(caption);
+        listContainer=parentContainer;
         setModal(true);
 
         final JPAContainer<Customer> customerContainer = JPAContainerFactory.make(Customer.class,
@@ -80,7 +81,7 @@ public class CustomerForm extends Window {
                     return (T) new ContactSelector();
                 }
                 else if (type.isAssignableFrom(Address.class)) {
-                    return (T) new AddressSelector();
+                    return (T) new AddressSelector2();
                 }
                 else if (type.isAssignableFrom(State.class)) {
                     return (T) new StateSelector();
@@ -97,6 +98,7 @@ public class CustomerForm extends Window {
                 return field;
             }
         });
+
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Saludo: ","salutation"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Nombres: ","firstName"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Apellidos: ","lastName"));
@@ -122,8 +124,9 @@ public class CustomerForm extends Window {
             public void buttonClick(Button.ClickEvent event) {
                 try {
                     fieldGroup.commit();
+                    AddressSelector2 addressSelector2= (AddressSelector2) fieldGroup.getField("address");
                     Customer customer = ((BeanItem<Customer>) fieldGroup.getItemDataSource()).getBean();
-
+                    customer.setAddress(addressSelector2.getValue());
                     CustomerService customerService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getCustomerService();
                     if(customer.getId()==null){
                         customerService.saveCustomer(customer);
@@ -133,6 +136,7 @@ public class CustomerForm extends Window {
                     }
                     close();
                     fieldGroup.discard();
+
                 } catch (FieldGroup.CommitException e) {
                     Notification.show("Problema al guardar el cliente: "
                             + e.getCause().getMessage(),
@@ -162,5 +166,11 @@ public class CustomerForm extends Window {
         mainLayout.setSpacing(true);
         mainLayout.setSizeUndefined();
         setContent(mainLayout);
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        listContainer.refresh();
     }
 }

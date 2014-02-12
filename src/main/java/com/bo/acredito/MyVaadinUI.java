@@ -6,9 +6,11 @@ import com.bo.acredito.util.Constants;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 import javax.persistence.PersistenceContext;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +27,7 @@ public class MyVaadinUI extends UI {
     public static final String ADMIN = "Administración";
 
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
+    @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class, widgetset = "com.bo.acredito.AppWidgetSet")
     @PersistenceContext(name="persistence/em",unitName= Constants.PERSISTENCE_UNIT)
     public static class Servlet extends JEE6VaadinServlet {
     }

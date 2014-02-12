@@ -2,8 +2,9 @@ package com.bo.acredito.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import javax.validation.constraints.Size;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by aralco on 2/11/14.
@@ -48,6 +49,7 @@ public class Customer {
     private String idNumber;
     @Basic
     @NotNull
+    @Temporal(TemporalType.DATE)
     @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private Date birthday;
     @Basic
@@ -57,12 +59,13 @@ public class Customer {
     @Basic
     @Lob
     @NotNull
+    @Size(min = 1)
     @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
     @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
-    private Address address;
+    private Address address=new Address();
     @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     @JoinColumn(name = "contactId1", referencedColumnName = "id", nullable = false)

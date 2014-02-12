@@ -1,6 +1,5 @@
 package com.bo.acredito.ui.customfields;
 
-import com.bo.acredito.domain.Country;
 import com.bo.acredito.domain.State;
 import com.bo.acredito.util.Constants;
 import com.vaadin.addon.jpacontainer.JPAContainer;
@@ -10,71 +9,37 @@ import com.vaadin.data.util.converter.Converter;
 import com.vaadin.data.util.filter.Compare;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomField;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * This is a selector for state (updating state from country)
  */
 public class StateSelector extends CustomField<State> {
-    private ComboBox country = new ComboBox("País");
-    private ComboBox state = new ComboBox("Ciudad");
-
-    private JPAContainer<Country> countryContainer;
-    private JPAContainer<State> stateContainer;
-    private boolean countryListenerEnabled=true;
+    private ComboBox state = new ComboBox();
+    private final Long DEFAULTCOUNTRYID=27L; //Bolivia
+    private JPAContainer<State> container;
 
     public StateSelector() {
-        countryContainer = JPAContainerFactory.make(Country.class,
+        container = JPAContainerFactory.make(State.class,
                 Constants.PERSISTENCE_UNIT);
-        stateContainer = JPAContainerFactory.make(State.class,
-                Constants.PERSISTENCE_UNIT);
-        state.setEnabled(false);
-        country.setContainerDataSource(countryContainer);
-        country.setItemCaptionPropertyId("name");
-        country.setImmediate(true);
-        country.setTextInputAllowed(false);
-        state.setContainerDataSource(stateContainer);
+        container.addContainerFilter(new Compare.Equal("country.id", DEFAULTCOUNTRYID));
+        state.setContainerDataSource(container);
         state.setItemCaptionPropertyId("name");
-        state.setTextInputAllowed(false);
-
-        country.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(
-                    com.vaadin.data.Property.ValueChangeEvent event) {
-                if(countryListenerEnabled){
-                    if (country.getValue() == null) {
-                        setValue(null);
-                        state.setEnabled(false);
-                    } else {
-                        Country countryEntity = countryContainer
-                                .getItem(country.getValue()).getEntity();
-
-                        stateContainer.removeAllContainerFilters();
-                        stateContainer.addContainerFilter(new Compare.Equal("country", countryEntity));
-                        stateContainer.applyFilters();
-                        state.setValue(null);
-                        state.setEnabled(true);
-                    }
-                }
-            }
-        });
+        state.setImmediate(true);
         state.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(
                     com.vaadin.data.Property.ValueChangeEvent event) {
+                /*
+                 * Modify the actual value of the custom field.
+                 */
                 if (state.getValue() == null) {
                     setValue(null, false);
                 } else {
-                    State entity = stateContainer
+                    State entity = container
                             .getItem(state.getValue()).getEntity();
-                    if(country.getValue()==null){
-                        countryListenerEnabled=false;
-                        country.setValue(entity.getCountry().getId());
-                        countryListenerEnabled=true;
-                    }
                     setValue(entity, false);
-                    setEnabled(true);
                 }
             }
         });
@@ -82,10 +47,9 @@ public class StateSelector extends CustomField<State> {
 
     @Override
     protected Component initContent() {
-        VerticalLayout verticalLayout=new VerticalLayout();
-        verticalLayout.addComponent(country);
-        verticalLayout.addComponent(state);
-        return verticalLayout;
+        CssLayout cssLayout = new CssLayout();
+        cssLayout.addComponent(state);
+        return cssLayout;
     }
     @Override
     public void setPropertyDataSource(Property newDataSource) {
@@ -102,13 +66,9 @@ public class StateSelector extends CustomField<State> {
 
     private void setState(State value) {
         state.setValue(value != null ? value.getId() : null);
-        if(state.getValue()!=null){
-            state.setEnabled(true);
-        }
     }
     @Override
     public Class<? extends State> getType() {
         return State.class;
     }
-
 }

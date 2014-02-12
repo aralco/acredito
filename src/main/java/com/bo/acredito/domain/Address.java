@@ -136,14 +136,6 @@ public class Address {
         return result;
     }
 
-    @Override
-    public String toString() {
-        String addressToShow=state.getName()+"("+province+"):"+address1;
-        return addressToShow;
-    }
 
-    public String getPhoneNumbers(){
-        String phoneNumbers=phone+"/"+mobile+"/"+workPhone;
-        return phoneNumbers;
-    }
+
 }
