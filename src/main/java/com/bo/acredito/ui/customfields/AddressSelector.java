@@ -99,11 +99,22 @@ public class AddressSelector extends CustomField<Address>
         state.setContainerDataSource(stateContainer);
         state.setItemCaptionPropertyId("name");
         state.setTextInputAllowed(false);
+        state.setImmediate(true);
         state.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(
                     com.vaadin.data.Property.ValueChangeEvent event) {
-                selectorValueChange();
+                if(state.getValue()==null){
+                    if(getValue()!=null){
+                        getValue().setState(null);
+                    }
+                }
+                else{
+                    if(getValue()!=null){
+                        State stateEntity = stateContainer.getItem(state.getValue()).getEntity();
+                        getValue().setState(stateEntity);
+                    }
+                }
             }
         });
 
@@ -171,14 +182,6 @@ public class AddressSelector extends CustomField<Address>
         if(id.getValue()!=null){
             entity.setId(new Long(id.getValue()));
         }
-        if(state.getValue()!=null){
-            State stateEntity = stateContainer.getItem(state.getValue()).getEntity();
-            entity.setState(stateEntity);
-        }
-        else{
-            entity.setState(null);
-        }
-
         setValue(entity, false);
     }
 }

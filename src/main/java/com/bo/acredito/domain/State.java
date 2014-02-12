@@ -1,6 +1,7 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by aralco on 2/11/14.
@@ -8,13 +9,16 @@ import javax.persistence.*;
 @Entity
 public class State {
     @Id
+    @NotNull
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
     @Basic
+    @NotNull
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String name;
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "countryId", referencedColumnName = "id", nullable = false)
     private Country country;
 
