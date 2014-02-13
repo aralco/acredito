@@ -63,6 +63,7 @@ public class CustomerList extends CustomComponent{
             }
         });
         VerticalLayout verticalLayout=new VerticalLayout();
+        verticalLayout.setSpacing(true);
         verticalLayout.addComponent(addButton);
         verticalLayout.addComponent(filterTable);
         verticalLayout.addComponent(filterTable.createControls());

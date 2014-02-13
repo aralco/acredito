@@ -31,8 +31,8 @@
 
     <persistence-unit name="acreditoPU">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <jta-data-source>acredito</jta-data-source>
-        <non-jta-data-source>acreditoUnmanaged</non-jta-data-source>
+        <!--<jta-data-source>acredito</jta-data-source>-->
+        <!--<non-jta-data-source>acreditoUnmanaged</non-jta-data-source>-->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.jdbc.platform" value="org.eclipse.persistence.platform.database.MySQLPlatform" />

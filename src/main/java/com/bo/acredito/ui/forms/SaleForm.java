@@ -46,6 +46,7 @@ public class SaleForm extends CustomComponent {
 
     public SaleForm() {
 
+        //initialize Fields
         productPriceTextField = new TextField("Monto $us:");
         discountedAmountTextField = new TextField("Descuento $us:");
         totalTextField = new TextField("Total $us:");
@@ -56,6 +57,8 @@ public class SaleForm extends CustomComponent {
         paymentPlanLabel = new Label("Total a pagar: ");
         paymentPlanFormLayout = new HorizontalLayout();
         paymentQuotesTextField = new TextField("Número de cuotas: ");
+//        paymentQuotesTextField.setImmediate(true);
+//        totalTextField.setImmediate(true);
         modifyPaymentPlanCheckBox = new CheckBox("Modificar plan de pagos");
         paymentTable = new Table(null);
         viewPaymentPlanButton = new Button("Ver");
@@ -79,41 +82,68 @@ public class SaleForm extends CustomComponent {
         //Load customers
         final JPAContainer<Customer> customers = JPAContainerFactory.make(Customer.class, Constants.PERSISTENCE_UNIT);
         customersComboBox = new ComboBox("Cliente:", customers);
-        customersComboBox.setItemCaptionPropertyId("codeName");
         customersComboBox.setImmediate(true);
+        customersComboBox.setItemCaptionPropertyId("codeName");
         //Load products
         final JPAContainer<Product> products = JPAContainerFactory.make(Product.class, Constants.PERSISTENCE_UNIT);
         productsComboBox = new ComboBox("Producto:", products);
+        productsComboBox.setImmediate(true);
         productsComboBox.setItemCaptionPropertyId("codeName");
         productsComboBox.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
                 productPriceTextField.setReadOnly(false);
                 String price = products.getItem(productsComboBox.getValue()).getEntity().getPrice().toString();
+                productPriceTextField.setReadOnly(false);
                 productPriceTextField.setValue(price);
                 productPriceTextField.setReadOnly(true);
                 totalTextField.setReadOnly(false);
                 totalTextField.setValue(price);
+                totalTextField.setReadOnly(true);
+                initialPaymentTextField.setValue(totalTextField.getValue());
+                residualPaymentTextField.setReadOnly(false);
+                residualPaymentTextField.setValue("0.00");
+                residualPaymentTextField.setReadOnly(true);
+                paymentTable.setColumnFooter("amountDue", totalTextField.getValue());
             }
         });
-        productsComboBox.setImmediate(true);
+        //Load Fields
         discountedAmountTextField.setValue("0.00");
+        discountedAmountTextField.setImmediate(true);
         discountedAmountTextField.addTextChangeListener(new FieldEvents.TextChangeListener() {
             @Override
             public void textChange(FieldEvents.TextChangeEvent textChangeEvent) {
-                totalTextField.setReadOnly(false);
-                if (productPriceTextField.getValue() != null) {
+                if (productPriceTextField.getValue() != null && discountedAmountTextField.getValue()!=null) {
                     BigDecimal st = new BigDecimal(productPriceTextField.getValue());
                     BigDecimal da = new BigDecimal(textChangeEvent.getText());
+                    totalTextField.setReadOnly(false);
                     totalTextField.setValue(st.subtract(da).toString());
                     totalTextField.setReadOnly(true);
+                    initialPaymentTextField.setValue(totalTextField.getValue());
+                    residualPaymentTextField.setReadOnly(false);
+                    residualPaymentTextField.setValue("0.00");
+                    residualPaymentTextField.setReadOnly(true);
+                    paymentTable.setColumnFooter("amountDue", totalTextField.getValue());
                 }
             }
         });
-        discountedAmountTextField.setImmediate(true);
+        //residualPayment
+        initialPaymentTextField.setImmediate(true);
+        initialPaymentTextField.addTextChangeListener(new FieldEvents.TextChangeListener() {
+            @Override
+            public void textChange(FieldEvents.TextChangeEvent textChangeEvent) {
+                if(initialPaymentTextField.getValue()!=null && totalTextField.getValue()!=null)   {
+                    BigDecimal ip = new BigDecimal(textChangeEvent.getText());
+                    BigDecimal ta = new BigDecimal(totalTextField.getValue());
+                    residualPaymentTextField.setReadOnly(false);
+                    residualPaymentTextField.setValue(ta.subtract(ip).toString());
+                    residualPaymentTextField.setReadOnly(true);
+                    paymentTable.setColumnFooter("amountDue", totalTextField.getValue());
+                }
+            }
+        });
         leftFormLayout.addComponents(customersComboBox, productsComboBox, productPriceTextField, discountedAmountTextField, totalTextField, saleTypeComboBox, initialPaymentTextField, residualPaymentTextField, notesTextArea);
-        initialPaymentTextField.setVisible(false);
-        residualPaymentTextField.setVisible(false);
+
         saleTypeComboBox.setNullSelectionAllowed(false);
         saleTypeComboBox.setValue(SaleTypeEnum.CASH);
         saleTypeComboBox.addValueChangeListener(new Property.ValueChangeListener() {
@@ -132,18 +162,37 @@ public class SaleForm extends CustomComponent {
                     modifyPaymentPlanCheckBox.setVisible(false);
                     paymentPlanFormLayout.setVisible(false);
                 }
+                paymentQuotesTextField.setValue(String.valueOf((1)));
             }
         });
         saleTypeComboBox.setImmediate(true);
         //leftFormLayout.setSizeFull();
         gridLayout.addComponent(leftFormLayout,0,0);
 
-
+        modifyPaymentPlanCheckBox.addValueChangeListener(
+                new Property.ValueChangeListener() {
+                    public void valueChange(Property.ValueChangeEvent event) {
+                        paymentTable.setEditable(((Boolean) event.getProperty()
+                                .getValue()).booleanValue());
+                    }
+                });
+        modifyPaymentPlanCheckBox.setImmediate(true);
 
         FormLayout rightFormLayout = new FormLayout();
         rightFormLayout.setSpacing(true);
-        final JPAContainer container = JPAContainerFactory.makeBatchable(Payment.class, Constants.PERSISTENCE_UNIT);
+        rightFormLayout.addComponent(paymentPlanLabel);
+        FormLayout paymentPlanFormLayout1 = new FormLayout(paymentQuotesTextField);
+        paymentPlanFormLayout.addComponents(paymentPlanFormLayout1, viewPaymentPlanButton);
+        paymentPlanFormLayout.setSpacing(true);
+        rightFormLayout.setSpacing(true);
+        rightFormLayout.addComponent(paymentPlanFormLayout);
+        rightFormLayout.addComponent(modifyPaymentPlanCheckBox);
+        rightFormLayout.addComponent(paymentTable);
+        //rightFormLayout.setSizeFull();
+        gridLayout.addComponent(rightFormLayout,1,0);
 
+
+        final JPAContainer container = JPAContainerFactory.makeBatchable(Payment.class, Constants.PERSISTENCE_UNIT);
         //paymentTable = new Table(null, container);
         paymentTable.setContainerDataSource(container);
         Payment p1 = new Payment();
@@ -170,29 +219,13 @@ public class SaleForm extends CustomComponent {
         paymentTable.setColumnHeaders(paymentTableHeaders);
         paymentTable.setFooterVisible(true);
         paymentTable.setColumnFooter("dueDate", "Total $us");
-        Double totalAmount = 0.00;
-        paymentTable.setColumnFooter("amountDue", String.valueOf(totalAmount));
+        paymentTable.setColumnFooter("amountDue", totalTextField.getValue());
 
-        modifyPaymentPlanCheckBox.addValueChangeListener(
-                new Property.ValueChangeListener() {
-                    public void valueChange(Property.ValueChangeEvent event) {
-                        paymentTable.setEditable(((Boolean) event.getProperty()
-                                .getValue()).booleanValue());
-                    }
-                });
-        modifyPaymentPlanCheckBox.setImmediate(true);
-
-
-        rightFormLayout.addComponent(paymentPlanLabel);
-        FormLayout paymentPlanFormLayout1 = new FormLayout(paymentQuotesTextField);
-        paymentPlanFormLayout.addComponents(paymentPlanFormLayout1, viewPaymentPlanButton);
-        paymentPlanFormLayout.setSpacing(true);
-        rightFormLayout.setSpacing(true);
-        rightFormLayout.addComponent(paymentPlanFormLayout);
-        rightFormLayout.addComponent(modifyPaymentPlanCheckBox);
-        rightFormLayout.addComponent(paymentTable);
-        //rightFormLayout.setSizeFull();
-        gridLayout.addComponent(rightFormLayout,1,0);
+        //hide credit fields
+        initialPaymentTextField.setVisible(false);
+        residualPaymentTextField.setVisible(false);
+        modifyPaymentPlanCheckBox.setVisible(false);
+        paymentPlanFormLayout.setVisible(false);
 
 
         HorizontalLayout horizontalLayout = new HorizontalLayout();

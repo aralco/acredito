@@ -153,6 +153,7 @@ public class CustomerForm extends Window {
             }
         });
         HorizontalLayout buttonsLayout=new HorizontalLayout();
+        buttonsLayout.setSpacing(true);
         buttonsLayout.addComponent(saveButton);
         buttonsLayout.addComponent(cancelButton);
         formLayoutRight.addComponent(buttonsLayout);
