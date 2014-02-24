@@ -1,6 +1,7 @@
 package com.bo.acredito.service;
 
 import com.bo.acredito.domain.Customer;
+import com.bo.acredito.domain.Occupation;
 import com.bo.acredito.util.Constants;
 
 import javax.ejb.Stateless;
@@ -27,6 +28,10 @@ public class CustomerService {
 
     public void updateCustomer(Customer customer){
         em.merge(customer);
+    }
+
+    public void saveOccupation(Occupation occupation){
+        em.persist(occupation);
     }
 
 }

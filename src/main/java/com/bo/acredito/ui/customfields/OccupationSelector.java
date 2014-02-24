@@ -6,15 +6,15 @@ package com.bo.acredito.ui.customfields;
  */
 
 import com.bo.acredito.domain.Occupation;
+import com.bo.acredito.service.CustomerService;
 import com.bo.acredito.util.Constants;
+import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.converter.Converter;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomField;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.*;
 
 
 public class OccupationSelector extends CustomField<Occupation> {
@@ -29,6 +29,18 @@ public class OccupationSelector extends CustomField<Occupation> {
         occupation.setContainerDataSource(container);
         occupation.setItemCaptionPropertyId("name");
         occupation.setImmediate(true);
+        occupation.setNewItemsAllowed(true);
+        occupation.setNewItemHandler(new AbstractSelect.NewItemHandler(){
+            @Override
+            public void addNewItem(String newItemCaption) {
+                Occupation newOccupation=new Occupation();
+                newOccupation.setName(newItemCaption);
+                CustomerService customerService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getCustomerService();
+                customerService.saveOccupation(newOccupation);
+                container.refresh();
+                occupation.setValue(newOccupation.getId());
+            }
+        });
         occupation.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(
