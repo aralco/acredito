@@ -2,9 +2,6 @@ package com.bo.acredito.ui.customfields;
 
 import com.bo.acredito.domain.Address;
 import com.bo.acredito.domain.State;
-import com.bo.acredito.util.Constants;
-import com.vaadin.addon.jpacontainer.JPAContainer;
-import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -20,11 +17,6 @@ public class AddressSelector2 extends CustomField<Address> {
     private FieldGroup fieldGroup;
 
     private VerticalLayout verticalLayout=new VerticalLayout();
-
-    final JPAContainer<Address> addressContainer = JPAContainerFactory.make(Address.class,
-            Constants.PERSISTENCE_UNIT);
-    final JPAContainer<State> stateContainer = JPAContainerFactory.make(State.class,
-            Constants.PERSISTENCE_UNIT);
     public AddressSelector2() {
 
     }

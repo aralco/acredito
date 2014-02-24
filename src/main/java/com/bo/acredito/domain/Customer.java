@@ -69,15 +69,15 @@ public class Customer {
     @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     @JoinColumn(name = "contactId1", referencedColumnName = "id", nullable = false)
-    private Contact contact1;
+    private Contact contact1=new Contact();
     @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     @JoinColumn(name = "contactId2", referencedColumnName = "id", nullable = false)
-    private Contact contact2;
+    private Contact contact2=new Contact();
     @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     @JoinColumn(name = "contactId3", referencedColumnName = "id", nullable = false)
-    private Contact contact3;
+    private Contact contact3=new Contact();
     @ManyToOne
     @NotNull
     @JoinColumn(name = "occupationId", referencedColumnName = "id", nullable = false)

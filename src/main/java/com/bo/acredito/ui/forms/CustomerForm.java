@@ -8,10 +8,8 @@ package com.bo.acredito.ui.forms;
 import com.bo.acredito.domain.*;
 import com.bo.acredito.service.CustomerService;
 import com.bo.acredito.ui.customfields.*;
-import com.bo.acredito.util.Constants;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
-import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -22,14 +20,13 @@ import com.vaadin.ui.*;
 import java.util.Date;
 
 public class CustomerForm extends Window {
-    private JPAContainer listContainer;
-    public CustomerForm(String caption, Long customerId, JPAContainer parentContainer) {
+    private JPAContainer<Customer> customerContainer;
+    public CustomerForm(String caption, Long customerId, JPAContainer<Customer> parentContainer) {
         super(caption);
-        listContainer=parentContainer;
+        customerContainer =parentContainer;
         setModal(true);
 
-        final JPAContainer<Customer> customerContainer = JPAContainerFactory.make(Customer.class,
-                Constants.PERSISTENCE_UNIT);
+        //final JPAContainer<Customer> customerContainer = JPAContainerFactory.make(Customer.class,Constants.PERSISTENCE_UNIT);
 
         FormLayout formLayoutLeft = new FormLayout();
         FormLayout formLayoutRight = new FormLayout();
@@ -111,7 +108,6 @@ public class CustomerForm extends Window {
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto3: ","contact3"));
 
         formLayoutRight.addComponent(fieldGroup.buildAndBind("Dirección: ","address"));
-        //formLayoutRight.addComponent(fieldGroup.buildAndBind("Observaciones: ","notes"));
         TextArea notes=new TextArea("Observaciones");
         notes.setColumns(15);
         notes.setNullRepresentation("");
@@ -125,8 +121,15 @@ public class CustomerForm extends Window {
                 try {
                     fieldGroup.commit();
                     AddressSelector2 addressSelector2= (AddressSelector2) fieldGroup.getField("address");
+                    ContactSelector contactSelector1= (ContactSelector) fieldGroup.getField("contact1");
+                    ContactSelector contactSelector2= (ContactSelector) fieldGroup.getField("contact2");
+                    ContactSelector contactSelector3= (ContactSelector) fieldGroup.getField("contact3");
+
                     Customer customer = ((BeanItem<Customer>) fieldGroup.getItemDataSource()).getBean();
                     customer.setAddress(addressSelector2.getValue());
+                    customer.setContact1(contactSelector1.getValue());
+                    customer.setContact2(contactSelector2.getValue());
+                    customer.setContact3(contactSelector3.getValue());
                     CustomerService customerService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getCustomerService();
                     if(customer.getId()==null){
                         customerService.saveCustomer(customer);
@@ -172,6 +175,6 @@ public class CustomerForm extends Window {
     @Override
     public void close() {
         super.close();
-        listContainer.refresh();
+        customerContainer.refresh();
     }
 }

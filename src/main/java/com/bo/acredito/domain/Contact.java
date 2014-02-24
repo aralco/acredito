@@ -1,6 +1,7 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by aralco on 2/11/14.
@@ -12,9 +13,11 @@ public class Contact {
     @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;
     @Basic
+    @NotNull
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String name;
     @Basic
+    @NotNull
     @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String phone;
 

@@ -5,13 +5,12 @@ import com.bo.acredito.ui.forms.CustomerForm;
 import com.bo.acredito.util.Constants;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
-import com.vaadin.data.Property;
+import com.vaadin.addon.jpacontainer.JPAContainerItem;
 import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import org.tepi.filtertable.paged.PagedFilterTable;
-
-import java.util.Collection;
 
 /**
  * Created by asejas on 2/7/14.
@@ -53,12 +52,11 @@ public class CustomerList extends CustomComponent{
         container.addNestedContainerProperty("address.workPhone");
         container.addNestedContainerProperty("address.state.name");
         filterTable=buildPagedTable(container);
-        filterTable.addValueChangeListener(new Property.ValueChangeListener() {
+        filterTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
             @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                Object itemCollection = event.getProperty().getValue();
-                Object itemId=((Collection)itemCollection).iterator().next();
-                CustomerForm customerForm = new CustomerForm("Editar cliente", (Long)itemId, container);
+            public void itemClick(ItemClickEvent event) {
+                Customer selectedCustomer = ((JPAContainerItem<Customer>)event.getItem()).getEntity();
+                CustomerForm customerForm = new CustomerForm("Editar cliente", selectedCustomer.getId(), container);
                 getUI().addWindow(customerForm);
             }
         });
