@@ -16,6 +16,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
+import org.eclipse.persistence.exceptions.OptimisticLockException;
 
 import java.util.Date;
 
@@ -140,9 +141,9 @@ public class CustomerForm extends Window {
                     close();
                     fieldGroup.discard();
 
-                } catch (FieldGroup.CommitException e) {
+                }catch (Exception e) {
                     Notification.show("Problema al guardar el cliente: "
-                            + e.getCause().getMessage(),
+                                    + e.getMessage(),
                             Notification.Type.ERROR_MESSAGE);
                 }
             }

@@ -3,6 +3,7 @@ package com.bo.acredito.ui.forms;
 import com.bo.acredito.domain.*;
 import com.bo.acredito.service.SaleService;
 import com.bo.acredito.util.Constants;
+import com.bo.acredito.util.RefreshableTabComponent;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.EntityItem;
 import com.vaadin.addon.jpacontainer.JPAContainer;
@@ -20,7 +21,7 @@ import java.util.Calendar;
 /**
  * Created by aralco on 2/2/14.
  */
-public class SaleForm extends CustomComponent {
+public class SaleForm extends RefreshableTabComponent{
 
     //left
     private ComboBox customersComboBox;
@@ -34,18 +35,22 @@ public class SaleForm extends CustomComponent {
     private TextArea notesTextArea;
     private Label paymentPlanLabel;
     private TextField paymentQuotesTextField;
-    private final Button viewPaymentPlanButton;
-    private final CheckBox modifyPaymentPlanCheckBox;
-    private final Table paymentTable;
-    private final Button saveButton;
-    private final Button cancelButton;
+    private Button viewPaymentPlanButton;
+    private CheckBox modifyPaymentPlanCheckBox;
+    private Table paymentTable;
+    private Button saveButton;
+    private Button cancelButton;
     private String [] paymentTableHeaders;
     //layouts
     private HorizontalLayout paymentPlanFormLayout;
 
 
     public SaleForm() {
+        paintComponent();
+    }
 
+    @Override
+    public void paintComponent() {
         //initialize Fields
         productPriceTextField = new TextField("Monto $us:");
         discountedAmountTextField = new TextField("Descuento $us:");

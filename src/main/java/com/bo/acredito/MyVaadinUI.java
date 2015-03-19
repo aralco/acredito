@@ -3,14 +3,12 @@ package com.bo.acredito;
 import com.bo.acredito.ui.forms.SaleForm;
 import com.bo.acredito.ui.lists.CustomerList;
 import com.bo.acredito.util.Constants;
+import com.bo.acredito.util.RefreshableTabComponent;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import javax.persistence.PersistenceContext;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +46,6 @@ public class MyVaadinUI extends UI {
         //Customers
         CustomerList customerList=new CustomerList();
         tabSheetMain.addTab(customerList, CUSTOMERS, null);
-        tabSheetMain.addTab(null, CUSTOMERS, null);
 
         //Products
         Label productosLabel = new Label("Productos List below");
@@ -76,7 +73,15 @@ public class MyVaadinUI extends UI {
         tabSheetMain.addTab(adminLabel, ADMIN, null);
 
         contentLayout.addComponent(tabSheetMain);
-
+        tabSheetMain.addSelectedTabChangeListener(
+            new TabSheet.SelectedTabChangeListener() {
+                public void selectedTabChange(TabSheet.SelectedTabChangeEvent event){
+                    TabSheet tabsheet = event.getTabSheet();
+                    RefreshableTabComponent tab = (RefreshableTabComponent) tabsheet.getSelectedTab();
+                    System.out.println("******************** "+tabsheet.getTab(tab).getCaption());
+                    tab.paintComponent();
+                }
+            });
     }
 
 }

@@ -3,6 +3,7 @@ package com.bo.acredito.ui.lists;
 import com.bo.acredito.domain.Customer;
 import com.bo.acredito.ui.forms.CustomerForm;
 import com.bo.acredito.util.Constants;
+import com.bo.acredito.util.RefreshableTabComponent;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.addon.jpacontainer.JPAContainerItem;
@@ -15,16 +16,49 @@ import org.tepi.filtertable.paged.PagedFilterTable;
 /**
  * Created by asejas on 2/7/14.
  */
-public class CustomerList extends CustomComponent{
+public class CustomerList extends RefreshableTabComponent {
     PagedFilterTable<IndexedContainer> filterTable;
     private String[] tablePropertyIds={"code", "firstName", "lastName", "idNumber", "address.state.name", "address.province","address.address1","address.phone", "address.mobile"};
     private String[] tableHeaders={"Código", "Nombres", "Apellidos", "identificación", "Departamento", "Provincia","Dirección1","Teléfono","Celular"};
-    final private Button addButton;
+    private Button addButton;
     private TextField searchTextField=new TextField();
     private Button searchButton=new Button("Buscar");
-    private final JPAContainer container;
+    private JPAContainer container;
 
     public CustomerList() {
+        paintComponent();
+    }
+    private PagedFilterTable buildPagedTable(JPAContainer container){
+        filterTable= new PagedFilterTable<IndexedContainer>();
+        filterTable.setWidth("100%");
+
+        filterTable.setFilterDecorator(new CustomerFilterDecorator());
+        filterTable.setFilterGenerator(new CustomerFilterGenerator());
+
+        filterTable.setFilterBarVisible(true);
+
+        filterTable.setSelectable(true);
+        filterTable.setImmediate(true);
+        filterTable.setMultiSelect(true);
+
+        filterTable.setRowHeaderMode(CustomTable.RowHeaderMode.INDEX);
+
+        filterTable.setColumnCollapsingAllowed(true);
+
+        filterTable.setColumnCollapsed("state", true);
+
+        filterTable.setColumnReorderingAllowed(true);
+
+        filterTable.setContainerDataSource(container);
+
+        filterTable.setVisibleColumns(tablePropertyIds);
+        filterTable.setColumnHeaders(tableHeaders);
+
+        return filterTable;
+    }
+
+    @Override
+    public void paintComponent() {
         Panel customerListPanel=new Panel("Lista de clientes");
         customerListPanel.setSizeFull();
 
@@ -72,33 +106,4 @@ public class CustomerList extends CustomComponent{
         setCompositionRoot(mainLayout);
         //setSizeFull();
     }
-    private PagedFilterTable buildPagedTable(JPAContainer container){
-        filterTable= new PagedFilterTable<IndexedContainer>();
-        filterTable.setWidth("100%");
-
-        filterTable.setFilterDecorator(new CustomerFilterDecorator());
-        filterTable.setFilterGenerator(new CustomerFilterGenerator());
-
-        filterTable.setFilterBarVisible(true);
-
-        filterTable.setSelectable(true);
-        filterTable.setImmediate(true);
-        filterTable.setMultiSelect(true);
-
-        filterTable.setRowHeaderMode(CustomTable.RowHeaderMode.INDEX);
-
-        filterTable.setColumnCollapsingAllowed(true);
-
-        filterTable.setColumnCollapsed("state", true);
-
-        filterTable.setColumnReorderingAllowed(true);
-
-        filterTable.setContainerDataSource(container);
-
-        filterTable.setVisibleColumns(tablePropertyIds);
-        filterTable.setColumnHeaders(tableHeaders);
-
-        return filterTable;
-    }
-
 }
