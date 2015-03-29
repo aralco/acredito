@@ -33,6 +33,9 @@ public class Supplier {
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     private Address address;
 
+    @Transient
+    private String fullName;
+
     public Long getId() {
         return id;
     }
@@ -87,6 +90,14 @@ public class Supplier {
 
     public void setNit(String nit) {
         this.nit = nit;
+    }
+
+    public String getFullName() {
+        return firstName+" "+lastName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Override

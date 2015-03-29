@@ -2,6 +2,7 @@ package com.bo.acredito;
 
 import com.bo.acredito.ui.forms.SaleForm;
 import com.bo.acredito.ui.lists.CustomerList;
+import com.bo.acredito.ui.lists.ProductList;
 import com.bo.acredito.util.Constants;
 import com.bo.acredito.util.RefreshableTabComponent;
 import com.bo.acredito.web.JEE6VaadinServlet;
@@ -48,8 +49,8 @@ public class MyVaadinUI extends UI {
         tabSheetMain.addTab(customerList, CUSTOMERS, null);
 
         //Products
-        Label productosLabel = new Label("Productos List below");
-        tabSheetMain.addTab(productosLabel, PRODUCTS, null);
+        ProductList productList = new ProductList();
+        tabSheetMain.addTab(productList, PRODUCTS, null);
 
 
         //Sales

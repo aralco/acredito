@@ -1,6 +1,10 @@
 package com.bo.acredito.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 /**
@@ -19,11 +23,14 @@ public class Product {
     @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long code;
     @Basic
+    @NotEmpty
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
     private String name;
     @Transient
     private String codeName;
     @Basic
+    @NotNull
+    @Digits(integer=10, fraction=2)
     @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
     private Double price;
     @Basic

@@ -1,6 +1,7 @@
 package com.bo.acredito.web;
 
 import com.bo.acredito.service.CustomerService;
+import com.bo.acredito.service.ProductService;
 import com.bo.acredito.service.SaleService;
 import com.vaadin.server.VaadinServlet;
 
@@ -17,8 +18,15 @@ public class JEE6VaadinServlet extends VaadinServlet {
     @Inject
     private SaleService saleService;
 
+    @Inject
+    private ProductService productService;
+
     public CustomerService getCustomerService() {
         return customerService;
+    }
+
+    public ProductService getProductService() {
+        return productService;
     }
 
     public SaleService getSaleService() {
