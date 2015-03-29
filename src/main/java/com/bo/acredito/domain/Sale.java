@@ -1,6 +1,7 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -49,6 +50,10 @@ public class Sale {
     @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
     private String notes;
     @ManyToOne
+    @NotNull
+    @JoinColumn(name = "officeId", referencedColumnName = "id", nullable = false)
+    private Office office;
+    @ManyToOne
     @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = false)
     private Employee employee;
     @ManyToOne
@@ -57,6 +62,20 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name = "productId", referencedColumnName = "id", nullable = false)
     private Product product;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @JoinColumn(name = "contactId1", referencedColumnName = "id", nullable = false)
+    private Contact contact1=new Contact();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @JoinColumn(name = "contactId2", referencedColumnName = "id", nullable = false)
+    private Contact contact2=new Contact();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @JoinColumn(name = "contactId3", referencedColumnName = "id", nullable = false)
+    private Contact contact3=new Contact();
+
 
     public Long getId() {
         return id;
@@ -154,48 +173,36 @@ public class Sale {
         this.notes = notes;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Sale sale = (Sale) o;
-
-        if (code != null ? !code.equals(sale.code) : sale.code != null) return false;
-        if (date != null ? !date.equals(sale.date) : sale.date != null) return false;
-        if (discountedAmount != null ? !discountedAmount.equals(sale.discountedAmount) : sale.discountedAmount != null)
-            return false;
-        if (id != null ? !id.equals(sale.id) : sale.id != null) return false;
-        if (initialPayment != null ? !initialPayment.equals(sale.initialPayment) : sale.initialPayment != null)
-            return false;
-        if (notes != null ? !notes.equals(sale.notes) : sale.notes != null) return false;
-        if (paymentQuotes != null ? !paymentQuotes.equals(sale.paymentQuotes) : sale.paymentQuotes != null)
-            return false;
-        if (productPrice != null ? !productPrice.equals(sale.productPrice) : sale.productPrice != null) return false;
-        if (residualPayment != null ? !residualPayment.equals(sale.residualPayment) : sale.residualPayment != null)
-            return false;
-        if (saleType != null ? !saleType.equals(sale.saleType) : sale.saleType != null) return false;
-        if (total != null ? !total.equals(sale.total) : sale.total != null) return false;
-        if (version != null ? !version.equals(sale.version) : sale.version != null) return false;
-
-        return true;
+    public Office getOffice() {
+        return office;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (version != null ? version.hashCode() : 0);
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (productPrice != null ? productPrice.hashCode() : 0);
-        result = 31 * result + (discountedAmount != null ? discountedAmount.hashCode() : 0);
-        result = 31 * result + (total != null ? total.hashCode() : 0);
-        result = 31 * result + (saleType != null ? saleType.hashCode() : 0);
-        result = 31 * result + (initialPayment != null ? initialPayment.hashCode() : 0);
-        result = 31 * result + (residualPayment != null ? residualPayment.hashCode() : 0);
-        result = 31 * result + (paymentQuotes != null ? paymentQuotes.hashCode() : 0);
-        result = 31 * result + (notes != null ? notes.hashCode() : 0);
-        return result;
+    public void setOffice(Office office) {
+        this.office = office;
+    }
+
+    public Contact getContact1() {
+        return contact1;
+    }
+
+    public void setContact1(Contact contact1) {
+        this.contact1 = contact1;
+    }
+
+    public Contact getContact2() {
+        return contact2;
+    }
+
+    public void setContact2(Contact contact2) {
+        this.contact2 = contact2;
+    }
+
+    public Contact getContact3() {
+        return contact3;
+    }
+
+    public void setContact3(Contact contact3) {
+        this.contact3 = contact3;
     }
 
     public Employee getEmployee() {

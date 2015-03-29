@@ -53,27 +53,4 @@ public class Country {
         this.callCode = callCode;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Country country = (Country) o;
-
-        if (callCode != null ? !callCode.equals(country.callCode) : country.callCode != null) return false;
-        if (code != null ? !code.equals(country.code) : country.code != null) return false;
-        if (id != null ? !id.equals(country.id) : country.id != null) return false;
-        if (name != null ? !name.equals(country.name) : country.name != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (callCode != null ? callCode.hashCode() : 0);
-        return result;
-    }
 }

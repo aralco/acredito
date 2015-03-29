@@ -45,6 +45,10 @@ public class Product {
     @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
     @ManyToOne
+    @NotNull
+    @JoinColumn(name = "officeId", referencedColumnName = "id", nullable = false)
+    private Office office;
+    @ManyToOne
     @JoinColumn(name = "supplierId", referencedColumnName = "id", nullable = false)
     private Supplier supplier;
 
@@ -120,43 +124,19 @@ public class Product {
         this.photo = photo;
     }
 
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office office) {
+        this.office = office;
+    }
+
     public Supplier getSupplier() {
         return supplier;
     }
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Product product = (Product) o;
-
-        if (available != null ? !available.equals(product.available) : product.available != null) return false;
-        if (code != null ? !code.equals(product.code) : product.code != null) return false;
-        if (id != null ? !id.equals(product.id) : product.id != null) return false;
-        if (name != null ? !name.equals(product.name) : product.name != null) return false;
-        if (notes != null ? !notes.equals(product.notes) : product.notes != null) return false;
-        if (!Arrays.equals(photo, product.photo)) return false;
-        if (price != null ? !price.equals(product.price) : product.price != null) return false;
-        if (version != null ? !version.equals(product.version) : product.version != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (version != null ? version.hashCode() : 0);
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (available != null ? available.hashCode() : 0);
-        result = 31 * result + (notes != null ? notes.hashCode() : 0);
-        result = 31 * result + (photo != null ? Arrays.hashCode(photo) : 0);
-        return result;
     }
 }

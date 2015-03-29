@@ -1,6 +1,7 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Arrays;
 
@@ -29,6 +30,9 @@ public class Employee {
     @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
     private String password;
     @Basic
+    @Column(name = "role", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    private String role;
+    @Basic
     @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     private String firstName;
     @Basic
@@ -47,6 +51,12 @@ public class Employee {
     @Lob
     @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
     private byte[] photo;
+
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "officeId", referencedColumnName = "id", nullable = false)
+    private Office office;
+
     @ManyToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     private Address address;
@@ -99,6 +109,14 @@ public class Employee {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -147,44 +165,12 @@ public class Employee {
         this.photo = photo;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Employee employee = (Employee) o;
-
-        if (active != null ? !active.equals(employee.active) : employee.active != null) return false;
-        if (birthday != null ? !birthday.equals(employee.birthday) : employee.birthday != null) return false;
-        if (code != null ? !code.equals(employee.code) : employee.code != null) return false;
-        if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
-        if (id != null ? !id.equals(employee.id) : employee.id != null) return false;
-        if (idNumber != null ? !idNumber.equals(employee.idNumber) : employee.idNumber != null) return false;
-        if (idType != null ? !idType.equals(employee.idType) : employee.idType != null) return false;
-        if (lastName != null ? !lastName.equals(employee.lastName) : employee.lastName != null) return false;
-        if (password != null ? !password.equals(employee.password) : employee.password != null) return false;
-        if (!Arrays.equals(photo, employee.photo)) return false;
-        if (username != null ? !username.equals(employee.username) : employee.username != null) return false;
-        if (version != null ? !version.equals(employee.version) : employee.version != null) return false;
-
-        return true;
+    public Office getOffice() {
+        return office;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (version != null ? version.hashCode() : 0);
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (active != null ? active.hashCode() : 0);
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (idType != null ? idType.hashCode() : 0);
-        result = 31 * result + (idNumber != null ? idNumber.hashCode() : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (photo != null ? Arrays.hashCode(photo) : 0);
-        return result;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 
     public Address getAddress() {
