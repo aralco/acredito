@@ -124,18 +124,17 @@ public class CustomerForm extends Window {
             public void buttonClick(Button.ClickEvent event) {
                 try {
                     fieldGroup.commit();
+                    Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
                     AddressSelector2 addressSelector2= (AddressSelector2) fieldGroup.getField("address");
-//                    ContactSelector contactSelector1= (ContactSelector) fieldGroup.getField("contact1");
-//                    ContactSelector contactSelector2= (ContactSelector) fieldGroup.getField("contact2");
-//                    ContactSelector contactSelector3= (ContactSelector) fieldGroup.getField("contact3");
 
                     Customer customer = ((BeanItem<Customer>) fieldGroup.getItemDataSource()).getBean();
-                    customer.setAddress(addressSelector2.getValue());
-//                    customer.setContact1(contactSelector1.getValue());
-//                    customer.setContact2(contactSelector2.getValue());
-//                    customer.setContact3(contactSelector3.getValue());
+                    Address address=addressSelector2.getValue();
+                    if(address.getOffice()==null){
+                        address.setOffice(office);
+                    }
+                    customer.setAddress(address);
                     CustomerService customerService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getCustomerService();
-                    Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
+
                     if(customer.getId()==null){
                         customer.setOffice(office);
                         customerService.saveCustomer(customer);
