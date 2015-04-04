@@ -1,8 +1,9 @@
 package com.bo.acredito.ui.lists;
 
 import com.bo.acredito.domain.Product;
-import com.bo.acredito.ui.forms.CustomerForm;
 import com.bo.acredito.ui.forms.ProductForm;
+import com.bo.acredito.ui.util.GenericFilterDecorator;
+import com.bo.acredito.ui.util.GenericFilterGenerator;
 import com.bo.acredito.util.Constants;
 import com.bo.acredito.util.RefreshableTabComponent;
 import com.vaadin.addon.jpacontainer.JPAContainer;
@@ -32,8 +33,8 @@ public class ProductList extends RefreshableTabComponent {
         filterTable= new PagedFilterTable<IndexedContainer>();
         filterTable.setWidth("100%");
 
-        filterTable.setFilterDecorator(new CustomerFilterDecorator());
-        filterTable.setFilterGenerator(new CustomerFilterGenerator());
+        filterTable.setFilterDecorator(new GenericFilterDecorator());
+        filterTable.setFilterGenerator(new GenericFilterGenerator());
 
         filterTable.setFilterBarVisible(true);
 

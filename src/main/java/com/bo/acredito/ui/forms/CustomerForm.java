@@ -135,13 +135,13 @@ public class CustomerForm extends Window {
 //                    customer.setContact2(contactSelector2.getValue());
 //                    customer.setContact3(contactSelector3.getValue());
                     CustomerService customerService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getCustomerService();
-
+                    Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
                     if(customer.getId()==null){
-                        Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
                         customer.setOffice(office);
                         customerService.saveCustomer(customer);
                     }
                     else{
+                        customer.setOffice(office);
                         customerService.updateCustomer(customer);
                     }
                     close();

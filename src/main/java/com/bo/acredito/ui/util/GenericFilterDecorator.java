@@ -1,4 +1,4 @@
-package com.bo.acredito.ui.lists;
+package com.bo.acredito.ui.util;
 
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -10,7 +10,7 @@ import java.text.DateFormat;
 import java.util.Locale;
 
 @SuppressWarnings("serial")
-public class CustomerFilterDecorator implements FilterDecorator, Serializable {
+public class GenericFilterDecorator implements FilterDecorator, Serializable {
 
     @Override
     public String getEnumFilterDisplayName(Object propertyId, Object value) {

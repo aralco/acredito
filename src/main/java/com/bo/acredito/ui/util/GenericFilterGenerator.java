@@ -1,4 +1,4 @@
-package com.bo.acredito.ui.lists;
+package com.bo.acredito.ui.util;
 
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.filter.Compare;
@@ -13,7 +13,7 @@ import org.tepi.filtertable.FilterGenerator;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-class CustomerFilterGenerator implements FilterGenerator, Serializable {
+public class GenericFilterGenerator implements FilterGenerator, Serializable {
 
     @Override
     public Filter generateFilter(Object propertyId, Object value) {

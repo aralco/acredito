@@ -5,6 +5,7 @@ package com.bo.acredito.ui.forms;
  * Created by asejas on 29/3/15.
  */
 
+import com.bo.acredito.MyVaadinUI;
 import com.bo.acredito.domain.*;
 import com.bo.acredito.service.CustomerService;
 import com.bo.acredito.service.ProductService;
@@ -100,10 +101,14 @@ public class ProductForm extends Window {
                     Product product = ((BeanItem<Product>) fieldGroup.getItemDataSource()).getBean();
                     product.setSupplier(supplierSelector.getValue());
                     ProductService productService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getProductService();
+                    Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
+
                     if(product.getId()==null){
+                        product.setOffice(office);
                         productService.saveProduct(product);
                     }
                     else{
+                        product.setOffice(office);
                         productService.updateProduct(product);
                     }
                     close();

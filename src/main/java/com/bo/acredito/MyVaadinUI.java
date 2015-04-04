@@ -5,16 +5,14 @@ import com.bo.acredito.ui.forms.LoginForm;
 import com.bo.acredito.ui.forms.SaleForm;
 import com.bo.acredito.ui.lists.CustomerList;
 import com.bo.acredito.ui.lists.ProductList;
+import com.bo.acredito.ui.lists.SupplierList;
 import com.bo.acredito.util.Constants;
 import com.bo.acredito.util.RefreshableTabComponent;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import javax.persistence.PersistenceContext;
 import javax.servlet.annotation.WebServlet;
@@ -24,11 +22,13 @@ import javax.servlet.annotation.WebServlet;
 public class MyVaadinUI extends UI {
     public static final String CUSTOMERS = "Clientes";
     public static final String PRODUCTS = "Productos";
+    public static final String SUPPLIER = "Proveedores";
     public static final String SALES = "Ventas";
     public static final String CHARGES = "Cobranzas";
     public static final String EXPENSES = "Egresos";
     public static final String SUPPORT = "Soporte";
     public static final String ADMIN = "Administración";
+    public static final String CATALOGS = "Catálogos";
 
     private Employee employee;
 
@@ -52,7 +52,7 @@ public class MyVaadinUI extends UI {
         setContent(contentLayout);
 
         //Tabs Container
-        TabSheet tabSheetMain = new TabSheet();
+        final TabSheet tabSheetMain = new TabSheet();
         tabSheetMain.setImmediate(true);
         tabSheetMain.setWidth("100%");
         tabSheetMain.setHeight("100%");
@@ -65,6 +65,8 @@ public class MyVaadinUI extends UI {
         ProductList productList = new ProductList();
         tabSheetMain.addTab(productList, PRODUCTS, null);
 
+        //Catalogs
+        tabSheetMain.addTab(buildCatalogs(),CATALOGS);
 
         //Sales
         SaleForm salesForm = new SaleForm();
@@ -89,14 +91,25 @@ public class MyVaadinUI extends UI {
         contentLayout.addComponent(tabSheetMain);
         tabSheetMain.addSelectedTabChangeListener(
                 new TabSheet.SelectedTabChangeListener() {
-                    public void selectedTabChange(TabSheet.SelectedTabChangeEvent event){
-                        TabSheet tabsheet = event.getTabSheet();
+                public void selectedTabChange(TabSheet.SelectedTabChangeEvent event){
+                    TabSheet tabsheet = event.getTabSheet();
+                    if(tabSheetMain.getSelectedTab() instanceof RefreshableTabComponent) {
                         RefreshableTabComponent tab = (RefreshableTabComponent) tabsheet.getSelectedTab();
-                        System.out.println("******************** "+tabsheet.getTab(tab).getCaption());
+                        System.out.println("******************** " + tabsheet.getTab(tab).getCaption());
                         tab.paintComponent();
                     }
-                });
+                }
+            });
+    }
+    private TabSheet buildCatalogs(){
+        TabSheet firstInner = new TabSheet();
+        SupplierList supplierList = new SupplierList();
+        firstInner.addTab(supplierList, SUPPLIER, null);
+        firstInner.addTab(new CssLayout(), "Tab 1.1");
+        firstInner.addTab(new CssLayout(), "Tab 1.2");
+        firstInner.addTab(new CssLayout(), "Tab 1.3");
 
+        return firstInner;
     }
 
     public void setEmployee(Employee employee) {
