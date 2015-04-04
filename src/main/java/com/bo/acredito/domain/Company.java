@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 @Entity
 public class Company {
     @Id
-    @NotNull
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     private Long id;

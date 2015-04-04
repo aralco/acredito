@@ -1,6 +1,5 @@
 package com.bo.acredito.service;
 
-import com.bo.acredito.dao.EmployeeDao;
 import com.bo.acredito.domain.Employee;
 
 import javax.ejb.Stateless;
@@ -13,13 +12,13 @@ import javax.inject.Inject;
 public class AuthService {
 
     @Inject
-    private EmployeeDao employeeDao;
+    private EmployeeService employeeService;
 
     public Employee authenticate(String username, String password) {
         Employee employee = null;
-        long employeeId = employeeDao.exits(username, password);
+        long employeeId = employeeService.exits(username, password);
         if(employeeId!=0)  {
-            employee = employeeDao.findOne(employeeId);
+            employee = employeeService.findOne(employeeId);
         }
         return employee;
     }

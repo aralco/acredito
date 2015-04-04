@@ -1,4 +1,4 @@
-package com.bo.acredito.dao;
+package com.bo.acredito.service;
 
 import com.bo.acredito.domain.Employee;
 import com.bo.acredito.util.Constants;
@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
  * Created by aralco on 4/3/15.
  */
 @Stateless
-public class EmployeeDao {
+public class EmployeeService {
 
     @PersistenceContext(unitName = Constants.PERSISTENCE_UNIT)
     private EntityManager entityManager;
