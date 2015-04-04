@@ -23,6 +23,7 @@ public class CustomerService {
             code=0L;
         }
         customer.setCode(code+1);
+        //TODO This line fails when saving a new customer
         em.persist(customer);
     }
 

@@ -1,5 +1,7 @@
 package com.bo.acredito;
 
+import com.bo.acredito.domain.Employee;
+import com.bo.acredito.ui.forms.LoginForm;
 import com.bo.acredito.ui.forms.SaleForm;
 import com.bo.acredito.ui.lists.CustomerList;
 import com.bo.acredito.ui.lists.ProductList;
@@ -9,7 +11,10 @@ import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 import javax.persistence.PersistenceContext;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +30,8 @@ public class MyVaadinUI extends UI {
     public static final String SUPPORT = "Soporte";
     public static final String ADMIN = "Administración";
 
+    private Employee employee;
+
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class, widgetset = "com.bo.acredito.AppWidgetSet")
     @PersistenceContext(name="persistence/em",unitName= Constants.PERSISTENCE_UNIT)
@@ -33,6 +40,12 @@ public class MyVaadinUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
+        final com.bo.acredito.ui.forms.LoginForm loginForm = new LoginForm();
+        setContent(loginForm);
+    }
+
+    public void buildUI()  {
+        System.out.println("Welcome user:"+employee.getUsername());
         final VerticalLayout contentLayout = new VerticalLayout();
         contentLayout.setSizeFull();
         //contentLayout.setMargin(true);
@@ -75,14 +88,22 @@ public class MyVaadinUI extends UI {
 
         contentLayout.addComponent(tabSheetMain);
         tabSheetMain.addSelectedTabChangeListener(
-            new TabSheet.SelectedTabChangeListener() {
-                public void selectedTabChange(TabSheet.SelectedTabChangeEvent event){
-                    TabSheet tabsheet = event.getTabSheet();
-                    RefreshableTabComponent tab = (RefreshableTabComponent) tabsheet.getSelectedTab();
-                    System.out.println("******************** "+tabsheet.getTab(tab).getCaption());
-                    tab.paintComponent();
-                }
-            });
+                new TabSheet.SelectedTabChangeListener() {
+                    public void selectedTabChange(TabSheet.SelectedTabChangeEvent event){
+                        TabSheet tabsheet = event.getTabSheet();
+                        RefreshableTabComponent tab = (RefreshableTabComponent) tabsheet.getSelectedTab();
+                        System.out.println("******************** "+tabsheet.getTab(tab).getCaption());
+                        tab.paintComponent();
+                    }
+                });
+
     }
 
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
 }

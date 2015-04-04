@@ -5,9 +5,13 @@ package com.bo.acredito.ui.forms;
  * Created by asejas on 2/6/14.
  */
 
+import com.bo.acredito.MyVaadinUI;
 import com.bo.acredito.domain.*;
 import com.bo.acredito.service.CustomerService;
-import com.bo.acredito.ui.customfields.*;
+import com.bo.acredito.ui.customfields.AddressSelector2;
+import com.bo.acredito.ui.customfields.IdTypeSelector;
+import com.bo.acredito.ui.customfields.OccupationSelector;
+import com.bo.acredito.ui.customfields.StateSelector;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
@@ -16,7 +20,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
-import org.eclipse.persistence.exceptions.OptimisticLockException;
 
 import java.util.Date;
 
@@ -75,9 +78,9 @@ public class CustomerForm extends Window {
                 else if (type.isAssignableFrom(IdTypeEnum.class)) {
                     return (T) new IdTypeSelector();
                 }
-                else if (type.isAssignableFrom(Contact.class)) {
-                    return (T) new ContactSelector();
-                }
+//                else if (type.isAssignableFrom(Contact.class)) {
+//                    return (T) new ContactSelector();
+//                }
                 else if (type.isAssignableFrom(Address.class)) {
                     return (T) new AddressSelector2();
                 }
@@ -104,9 +107,9 @@ public class CustomerForm extends Window {
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Número de identificación: ","idNumber"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Fecha de nacimiento: ","birthday"));
         formLayoutLeft.addComponent(fieldGroup.buildAndBind("Ocupación: ","occupation"));
-        formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto1: ","contact1"));
-        formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto2: ","contact2"));
-        formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto3: ","contact3"));
+//        formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto1: ","contact1"));
+//        formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto2: ","contact2"));
+//        formLayoutLeft.addComponent(fieldGroup.buildAndBind("Persona de contacto3: ","contact3"));
 
         formLayoutRight.addComponent(fieldGroup.buildAndBind("Dirección: ","address"));
         TextArea notes=new TextArea("Observaciones");
@@ -122,17 +125,20 @@ public class CustomerForm extends Window {
                 try {
                     fieldGroup.commit();
                     AddressSelector2 addressSelector2= (AddressSelector2) fieldGroup.getField("address");
-                    ContactSelector contactSelector1= (ContactSelector) fieldGroup.getField("contact1");
-                    ContactSelector contactSelector2= (ContactSelector) fieldGroup.getField("contact2");
-                    ContactSelector contactSelector3= (ContactSelector) fieldGroup.getField("contact3");
+//                    ContactSelector contactSelector1= (ContactSelector) fieldGroup.getField("contact1");
+//                    ContactSelector contactSelector2= (ContactSelector) fieldGroup.getField("contact2");
+//                    ContactSelector contactSelector3= (ContactSelector) fieldGroup.getField("contact3");
 
                     Customer customer = ((BeanItem<Customer>) fieldGroup.getItemDataSource()).getBean();
                     customer.setAddress(addressSelector2.getValue());
-                    customer.setContact1(contactSelector1.getValue());
-                    customer.setContact2(contactSelector2.getValue());
-                    customer.setContact3(contactSelector3.getValue());
+//                    customer.setContact1(contactSelector1.getValue());
+//                    customer.setContact2(contactSelector2.getValue());
+//                    customer.setContact3(contactSelector3.getValue());
                     CustomerService customerService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getCustomerService();
+
                     if(customer.getId()==null){
+                        Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
+                        customer.setOffice(office);
                         customerService.saveCustomer(customer);
                     }
                     else{
