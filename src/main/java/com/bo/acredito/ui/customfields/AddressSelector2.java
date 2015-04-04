@@ -1,6 +1,8 @@
 package com.bo.acredito.ui.customfields;
 
+import com.bo.acredito.MyVaadinUI;
 import com.bo.acredito.domain.Address;
+import com.bo.acredito.domain.Office;
 import com.bo.acredito.domain.State;
 import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
@@ -94,6 +96,10 @@ public class AddressSelector2 extends CustomField<Address> {
         }
         if(address==null){
             address=super.getValue();
+        }
+        if(address.getOffice()==null){
+            Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
+            address.setOffice(office);
         }
         return address;
     }

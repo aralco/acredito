@@ -128,11 +128,8 @@ public class CustomerForm extends Window {
                     AddressSelector2 addressSelector2= (AddressSelector2) fieldGroup.getField("address");
 
                     Customer customer = ((BeanItem<Customer>) fieldGroup.getItemDataSource()).getBean();
-                    Address address=addressSelector2.getValue();
-                    if(address.getOffice()==null){
-                        address.setOffice(office);
-                    }
-                    customer.setAddress(address);
+
+                    customer.setAddress(addressSelector2.getValue());
                     CustomerService customerService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getCustomerService();
 
                     if(customer.getId()==null){
