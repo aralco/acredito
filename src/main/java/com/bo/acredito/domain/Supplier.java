@@ -34,9 +34,10 @@ public class Supplier {
     @NotNull
     @JoinColumn(name = "officeId", referencedColumnName = "id", nullable = false)
     private Office office;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
-    private Address address;
+    private Address address=new Address();
 
     @Transient
     private String fullName;

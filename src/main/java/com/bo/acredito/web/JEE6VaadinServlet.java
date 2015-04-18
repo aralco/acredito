@@ -1,9 +1,6 @@
 package com.bo.acredito.web;
 
-import com.bo.acredito.service.AuthService;
-import com.bo.acredito.service.CustomerService;
-import com.bo.acredito.service.ProductService;
-import com.bo.acredito.service.SaleService;
+import com.bo.acredito.service.*;
 import com.vaadin.server.VaadinServlet;
 
 import javax.inject.Inject;
@@ -25,6 +22,9 @@ public class JEE6VaadinServlet extends VaadinServlet {
     @Inject
     private AuthService authService;
 
+    @Inject
+    private SupplierService supplierService;
+
     public CustomerService getCustomerService() {
         return customerService;
     }
@@ -37,8 +37,9 @@ public class JEE6VaadinServlet extends VaadinServlet {
         return saleService;
     }
 
-    public AuthService getAuthService() {
-        return authService;
+    public AuthService getAuthService() { return authService; }
+    public SupplierService getSupplierService() {
+        return supplierService;
     }
 
 }

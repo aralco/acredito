@@ -3,6 +3,7 @@ package com.bo.acredito.ui.lists;
 import com.bo.acredito.domain.Product;
 import com.bo.acredito.domain.Supplier;
 import com.bo.acredito.ui.forms.ProductForm;
+import com.bo.acredito.ui.forms.SupplierForm;
 import com.bo.acredito.ui.util.GenericFilterDecorator;
 import com.bo.acredito.ui.util.GenericFilterGenerator;
 import com.bo.acredito.ui.util.ListTableUtil;
@@ -38,17 +39,17 @@ public class SupplierList extends RefreshableTabComponent {
         filterTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
             @Override
             public void itemClick(ItemClickEvent event) {
-                /*Product selectedProduct = ((JPAContainerItem<Product>)event.getItem()).getEntity();
-                ProductForm productForm = new ProductForm("Editar producto", selectedProduct.getId(), container);
-                getUI().addWindow(productForm);*/
+                Supplier selectedSupplier = ((JPAContainerItem<Supplier>)event.getItem()).getEntity();
+                SupplierForm supplierForm = new SupplierForm("Editar proveedor", selectedSupplier.getId(), container);
+                getUI().addWindow(supplierForm);
             }
         });
         addButton = new Button("Registrar nuevo proveedor",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        /*ProductForm productForm=new ProductForm("Nuevo proveedor", null, container);
-                        getUI().addWindow(productForm);*/
+                        SupplierForm supplierForm=new SupplierForm("Nuevo proveedor", null, container);
+                        getUI().addWindow(supplierForm);
                     }
                 }
         );
