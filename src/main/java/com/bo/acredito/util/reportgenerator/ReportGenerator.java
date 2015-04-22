@@ -27,13 +27,13 @@ public class ReportGenerator {
     public ReportGenerator() {
     }
 
-    public void executeReport(String templatePath, EntityManager em) throws JRException {
+    public void executeReport(String templatePath, EntityManager em, OutputStream outputStream) throws JRException {
 
         JasperDesign jasperDesign=loadTemplate(templatePath);
         setTempDirectory(templatePath);
         JasperReport jasperReport=compileReport(jasperDesign);
         JasperPrint jasperPrint=fillReport(jasperReport, em);
-        exportReportToPdf(jasperPrint);
+        exportReportToPdf(jasperPrint, outputStream);
     }
 
     /**
@@ -95,11 +95,11 @@ public class ReportGenerator {
      * @param jasperPrint The jasperPrint
      * @return The HTML text
      */
-    private void exportReportToPdf(JasperPrint jasperPrint) throws JRException {
+    private void exportReportToPdf(JasperPrint jasperPrint, OutputStream outputStream) throws JRException {
         JRPdfExporter exporter = new JRPdfExporter();
 
         exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("d:\\temp\\reporte.pdf"));
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
         exporter.exportReport();
     }
     /**
