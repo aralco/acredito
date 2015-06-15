@@ -5,22 +5,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Created by aralco on 3/29/15.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Company {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Basic
     @NotNull
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
     private String name;
     @Basic
     @Lob
     @Size(min = 1)
-    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 65535)
     private String description;
 
     public Company() {

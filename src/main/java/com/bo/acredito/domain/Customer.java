@@ -6,28 +6,28 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Version
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private Long version;
     @Basic
     @NotNull
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "code", nullable = false, insertable = true, updatable = true)
     private Long code;
     @Basic
     @NotNull
-    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100)
     private String firstName;
     @Basic
     @NotNull
-    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100)
     private String lastName;
     @Transient
     private String fullName;
@@ -35,31 +35,31 @@ public class Customer {
     private String codeName;
     @Basic
     @NotNull
-    @Column(name = "salutation", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "salutation", nullable = false, insertable = true, updatable = true, length = 45)
     private String salutation;
     @Basic
     @NotNull
-    @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
     @Enumerated(EnumType.STRING)
+    @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 100)
     private IdTypeEnum idType;
     @Basic
     @NotNull
-    @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45)
     private String idNumber;
     @Basic
     @NotNull
     @Temporal(TemporalType.DATE)
-    @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    @Column(name = "birthday", nullable = false, insertable = true, updatable = true)
     private Date birthday;
     @Basic
     @Lob
-    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true)
     private byte[] photo;
     @Basic
     @Lob
     @NotNull
     @Size(min = 1)
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 2147483647)
     private String notes;
 
     @ManyToOne

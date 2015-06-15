@@ -3,16 +3,16 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Occupation {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Basic
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
     private String name;
 
     public Long getId() {

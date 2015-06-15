@@ -4,37 +4,37 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Address {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Basic
     @NotNull
-    @Column(name = "address1", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
+    @Column(name = "address1", nullable = false, insertable = true, updatable = true, length = 250)
     private String address1;
     @Basic
     @NotNull
-    @Column(name = "address2", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
+    @Column(name = "address2", nullable = false, insertable = true, updatable = true, length = 250)
     private String address2;
     @Basic
     @NotNull
-    @Column(name = "province", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
-    private String province;
-    @Basic
-    @NotNull
-    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
-    private String phone;
-    @Basic
-    @NotNull
-    @Column(name = "mobile", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "mobile", nullable = false, insertable = true, updatable = true, length = 45)
     private String mobile;
     @Basic
     @NotNull
-    @Column(name = "workPhone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45)
+    private String phone;
+    @Basic
+    @NotNull
+    @Column(name = "province", nullable = false, insertable = true, updatable = true, length = 45)
+    private String province;
+    @Basic
+    @NotNull
+    @Column(name = "workPhone", nullable = false, insertable = true, updatable = true, length = 45)
     private String workPhone;
 
     @ManyToOne

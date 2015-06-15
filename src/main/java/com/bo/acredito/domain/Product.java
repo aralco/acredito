@@ -5,45 +5,50 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Version
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private Long version;
     @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "code", nullable = false, insertable = true, updatable = true)
     private Long code;
     @Basic
     @NotEmpty
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
     private String name;
     @Transient
     private String codeName;
     @Basic
     @NotNull
     @Digits(integer=10, fraction=2)
-    @Column(name = "price", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, precision = 0)
     private Double price;
     @Basic
-    @Column(name = "available", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
+    @Column(name = "available", nullable = false, insertable = true, updatable = true)
     private Boolean available;
     @Basic
     @Lob
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535)
     private String notes;
     @Basic
     @Lob
-    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535)
     private byte[] photo;
+    @Basic
+    @Column(name = "quantity", nullable = false, insertable = true, updatable = true)
+    private Integer quantity;
+    @Basic
+    @Column(name = "reservedQuantity", nullable = false, insertable = true, updatable = true)
+    private Integer reservedQuantity;
     @ManyToOne
     @NotNull
     @JoinColumn(name = "officeId", referencedColumnName = "id", nullable = false)
@@ -122,6 +127,22 @@ public class Product {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getReservedQuantity() {
+        return reservedQuantity;
+    }
+
+    public void setReservedQuantity(Integer reservedQuantity) {
+        this.reservedQuantity = reservedQuantity;
     }
 
     public Office getOffice() {

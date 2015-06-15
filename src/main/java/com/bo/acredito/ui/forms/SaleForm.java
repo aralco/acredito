@@ -55,7 +55,7 @@ public class SaleForm extends RefreshableTabComponent{
         productPriceTextField = new TextField("Monto $us:");
         discountedAmountTextField = new TextField("Descuento $us:");
         totalTextField = new TextField("Total $us:");
-        saleTypeComboBox = new ComboBox("Forma de pago:", Arrays.asList(SaleTypeEnum.values()));
+        saleTypeComboBox = new ComboBox("Forma de pago:", Arrays.asList(SaleType.values()));
         initialPaymentTextField = new TextField("Cuota inicial $us:");
         residualPaymentTextField = new TextField("Saldo a crédito $us:");
         notesTextArea = new TextArea("Observaciones: ");
@@ -150,11 +150,11 @@ public class SaleForm extends RefreshableTabComponent{
         leftFormLayout.addComponents(customersComboBox, productsComboBox, productPriceTextField, discountedAmountTextField, totalTextField, saleTypeComboBox, initialPaymentTextField, residualPaymentTextField, notesTextArea);
 
         saleTypeComboBox.setNullSelectionAllowed(false);
-        saleTypeComboBox.setValue(SaleTypeEnum.CASH);
+        saleTypeComboBox.setValue(SaleType.CASH);
         saleTypeComboBox.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                if (saleTypeComboBox.getValue().equals(SaleTypeEnum.CREDIT)) {
+                if (saleTypeComboBox.getValue().equals(SaleType.CREDIT)) {
                     initialPaymentTextField.setVisible(true);
                     residualPaymentTextField.setVisible(true);
                     paymentPlanLabel.setValue("Plan de pagos $us");
@@ -200,23 +200,23 @@ public class SaleForm extends RefreshableTabComponent{
         final JPAContainer container = JPAContainerFactory.makeBatchable(Payment.class, Constants.PERSISTENCE_UNIT);
         //paymentTable = new Table(null, container);
         paymentTable.setContainerDataSource(container);
-        Payment p1 = new Payment();
-        p1.setPaymentNumber(1);
-        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = Calendar.getInstance().getTime();
-        p1.setDueDate(date);
-        p1.setAmountDue(Double.valueOf(100));
-        container.addEntity(p1);
-        Payment p2 = new Payment();
-        p2.setPaymentNumber(2);
-        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        date = Calendar.getInstance().getTime();
-        p2.setDueDate(date);
-        p2.setAmountDue(Double.valueOf(1000));
-        container.addEntity(p2);
+//        Payment p1 = new Payment();
+//        p1.setPaymentNumber(1);
+//        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        Date date = Calendar.getInstance().getTime();
+//        p1.setDueDate(date);
+//        p1.setAmountDue(Double.valueOf(100));
+//        container.addEntity(p1);
+//        Payment p2 = new Payment();
+//        p2.setPaymentNumber(2);
+//        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        date = Calendar.getInstance().getTime();
+//        p2.setDueDate(date);
+//        p2.setAmountDue(Double.valueOf(1000));
+//        container.addEntity(p2);
         final List<Payment> paymentList = new ArrayList<Payment>(2);
-        paymentList.add(p1);
-        paymentList.add(p2);
+//        paymentList.add(p1);
+//        paymentList.add(p2);
 
         paymentTable.setSelectable(true);
         paymentTable.setVisibleColumns("paymentNumber", "dueDate", "amountDue");
@@ -242,10 +242,10 @@ public class SaleForm extends RefreshableTabComponent{
                 final Sale sale = new Sale();
                 sale.setCode(Long.valueOf(1));
                 sale.setDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
-                sale.setProductPrice(Double.valueOf(productPriceTextField.getValue()));
-                sale.setDiscountedAmount(Double.valueOf(discountedAmountTextField.getValue()));
-                sale.setTotal(Double.valueOf(totalTextField.getValue()));
-                sale.setSaleType((SaleTypeEnum) saleTypeComboBox.getValue());
+//                sale.setProductPrice(Double.valueOf(productPriceTextField.getValue()));
+//                sale.setDiscountedAmount(Double.valueOf(discountedAmountTextField.getValue()));
+//                sale.setTotal(Double.valueOf(totalTextField.getValue()));
+                sale.setSaleType((SaleType) saleTypeComboBox.getValue());
                 sale.setInitialPayment(Double.valueOf(initialPaymentTextField.getValue()));
                 sale.setResidualPayment(Double.valueOf(residualPaymentTextField.getValue()));
                 sale.setPaymentQuotes(Integer.valueOf(paymentQuotesTextField.getValue()));
@@ -254,7 +254,7 @@ public class SaleForm extends RefreshableTabComponent{
                 EntityItem<Employee> entityItem = employeeJPAContainer.getItem(Long.valueOf(1));
                 sale.setEmployee(entityItem.getEntity());
                 sale.setCustomer(customers.getItem(customersComboBox.getValue()).getEntity());
-                sale.setProduct(products.getItem(productsComboBox.getValue()).getEntity());
+//                sale.setProduct(products.getItem(productsComboBox.getValue()).getEntity());
                 saleService.saveSale(sale);
                 Notification.show("GUARDADO", "Venta registrada con éxito", Notification.Type.HUMANIZED_MESSAGE);
             }

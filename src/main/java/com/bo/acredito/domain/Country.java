@@ -3,22 +3,22 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Country {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 2, precision = 0)
+    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 2)
     private String code;
     @Basic
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 100)
     private String name;
     @Basic
-    @Column(name = "callCode", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    @Column(name = "callCode", nullable = false, insertable = true, updatable = true)
     private Integer callCode;
 
     public Long getId() {

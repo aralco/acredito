@@ -5,36 +5,36 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Created by aralco on 3/29/15.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Office {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
 
     @Basic
     @NotNull
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
     private String name;
 
     @Basic
     @Lob
     @Size(min = 1)
-    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 65535)
     private String description;
 
     @Basic
     @Lob
     @NotNull
     @Size(min = 1)
-    @Column(name = "address", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "address", nullable = false, insertable = true, updatable = true, length = 65535)
     private String address;
 
     @Basic
     @NotNull
-    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45)
     private String phone;
 
     @ManyToOne

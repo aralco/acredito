@@ -3,53 +3,50 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.util.Arrays;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Employee {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Version
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private Long version;
     @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "code", nullable = false, insertable = true, updatable = true)
     private Long code;
     @Basic
-    @Column(name = "active", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
+    @Column(name = "active", nullable = false, insertable = true, updatable = true)
     private Boolean active;
     @Basic
-    @Column(name = "username", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "username", nullable = false, insertable = true, updatable = true, length = 45)
     private String username;
     @Basic
-    @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 45)
     private String password;
     @Basic
-    @Column(name = "role", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
-    private String role;
-    @Basic
-    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    @Column(name = "firstName", nullable = false, insertable = true, updatable = true, length = 100)
     private String firstName;
     @Basic
-    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    @Column(name = "lastName", nullable = false, insertable = true, updatable = true, length = 100)
     private String lastName;
     @Basic
-    @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
-    private String idType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "idType", nullable = false, insertable = true, updatable = true, length = 100)
+    private IdTypeEnum idType;
     @Basic
-    @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "idNumber", nullable = false, insertable = true, updatable = true, length = 45)
     private String idNumber;
     @Basic
-    @Column(name = "birthday", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    @Column(name = "birthday", nullable = false, insertable = true, updatable = true)
     private Date birthday;
     @Basic
     @Lob
-    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535)
     private byte[] photo;
 
     @ManyToOne
@@ -109,14 +106,6 @@ public class Employee {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -133,11 +122,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getIdType() {
+    public IdTypeEnum getIdType() {
         return idType;
     }
 
-    public void setIdType(String idType) {
+    public void setIdType(IdTypeEnum idType) {
         this.idType = idType;
     }
 

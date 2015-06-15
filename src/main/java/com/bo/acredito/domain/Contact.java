@@ -4,21 +4,21 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Contact {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Basic
     @NotNull
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250, precision = 0)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
     private String name;
     @Basic
     @NotNull
-    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45, precision = 0)
+    @Column(name = "phone", nullable = false, insertable = true, updatable = true, length = 45)
     private String phone;
     @ManyToOne
     @NotNull

@@ -3,8 +3,8 @@ package com.bo.acredito.domain;
 /**
  * Created by aralco on 2/2/14.
  */
-public enum SaleTypeEnum {
-    CASH, CREDIT;
+public enum SaleType {
+    CASH, CREDIT, ADVANCE;
 
     @Override
     public String toString() {
@@ -15,6 +15,9 @@ public enum SaleTypeEnum {
                 break;
             case CREDIT:
                 label = "Crédito";
+                break;
+            case ADVANCE:
+                label = "Anticipo";
                 break;
         }
         return label;

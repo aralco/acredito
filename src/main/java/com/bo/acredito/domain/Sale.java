@@ -5,77 +5,80 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Sale {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Version
-    @Column(name = "version", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private Long version;
     @Basic
-    @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "code", nullable = false, insertable = true, updatable = true)
     private Long code;
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "date", nullable = false, insertable = true, updatable = true)
     private Date date;
     @Basic
-    @Column(name = "productPrice", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
-    private Double productPrice;
-    @Basic
-    @Column(name = "discountedAmount", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
-    private Double discountedAmount;
-    @Basic
-    @Column(name = "total", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
-    private Double total;
-    @Basic
-    @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Enumerated(EnumType.STRING)
-    private SaleTypeEnum saleType;
+    @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 7)
+    private SaleType saleType;
     @Basic
-    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
-    private Double initialPayment;
+    @Column(name = "saleStatus", nullable = false, insertable = true, updatable = true, length = 14)
+    private String saleStatus;
     @Basic
-    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
+    @Column(name = "partialAmount", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double partialAmount;
+    @Basic
+    @Column(name = "discount", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double discount;
+    @Basic
+    @Column(name = "totalAmount", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double totalAmount;
+    @Basic
+    @Column(name = "advanceAmount", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double advanceAmount;
+    @Basic
+    @Column(name = "residualPayment", nullable = false, insertable = true, updatable = true, precision = 0)
     private Double residualPayment;
     @Basic
-    @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    @Column(name = "initialPayment", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double initialPayment;
+    @Basic
+    @Column(name = "paymentQuotes", nullable = false, insertable = true, updatable = true)
     private Integer paymentQuotes;
     @Basic
-    @Lob
-    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535, precision = 0)
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535)
     private String notes;
+    @Basic
+    @Column(name = "delivered", nullable = false, insertable = true, updatable = true)
+    private Boolean delivered;
+    @ManyToOne
+    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
+    private Customer customer;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contactId1", referencedColumnName = "id")
+    private Contact contact1;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contactId2", referencedColumnName = "id")
+    private Contact contact2;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contactId3", referencedColumnName = "id")
+    private Contact contact3;
+    @ManyToOne
+    @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = false)
+    private Employee employee;
     @ManyToOne
     @NotNull
     @JoinColumn(name = "officeId", referencedColumnName = "id", nullable = false)
     private Office office;
     @ManyToOne
-    @JoinColumn(name = "employeeId", referencedColumnName = "id", nullable = false)
-    private Employee employee;
-    @ManyToOne
-    @JoinColumn(name = "customerId", referencedColumnName = "id", nullable = false)
-    private Customer customer;
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "id", nullable = false)
-    private Product product;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @NotNull
-    @JoinColumn(name = "contactId1", referencedColumnName = "id", nullable = false)
-    private Contact contact1=new Contact();
-    @ManyToOne(cascade = CascadeType.ALL)
-    @NotNull
-    @JoinColumn(name = "contactId2", referencedColumnName = "id", nullable = false)
-    private Contact contact2=new Contact();
-    @ManyToOne(cascade = CascadeType.ALL)
-    @NotNull
-    @JoinColumn(name = "contactId3", referencedColumnName = "id", nullable = false)
-    private Contact contact3=new Contact();
-
+    @JoinColumn(name = "paymentPlanId", referencedColumnName = "id")
+    private PaymentPlan paymentPlan;
 
     public Long getId() {
         return id;
@@ -109,44 +112,52 @@ public class Sale {
         this.date = date;
     }
 
-    public Double getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(Double productPrice) {
-        this.productPrice = productPrice;
-    }
-
-    public Double getDiscountedAmount() {
-        return discountedAmount;
-    }
-
-    public void setDiscountedAmount(Double discountedAmount) {
-        this.discountedAmount = discountedAmount;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public SaleTypeEnum getSaleType() {
+    public SaleType getSaleType() {
         return saleType;
     }
 
-    public void setSaleType(SaleTypeEnum saleType) {
+    public void setSaleType(SaleType saleType) {
         this.saleType = saleType;
     }
 
-    public Double getInitialPayment() {
-        return initialPayment;
+    public String getSaleStatus() {
+        return saleStatus;
     }
 
-    public void setInitialPayment(Double initialPayment) {
-        this.initialPayment = initialPayment;
+    public void setSaleStatus(String saleStatus) {
+        this.saleStatus = saleStatus;
+    }
+
+    public Double getPartialAmount() {
+        return partialAmount;
+    }
+
+    public void setPartialAmount(Double partialAmount) {
+        this.partialAmount = partialAmount;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public Double getAdvanceAmount() {
+        return advanceAmount;
+    }
+
+    public void setAdvanceAmount(Double advanceAmount) {
+        this.advanceAmount = advanceAmount;
     }
 
     public Double getResidualPayment() {
@@ -155,6 +166,14 @@ public class Sale {
 
     public void setResidualPayment(Double residualPayment) {
         this.residualPayment = residualPayment;
+    }
+
+    public Double getInitialPayment() {
+        return initialPayment;
+    }
+
+    public void setInitialPayment(Double initialPayment) {
+        this.initialPayment = initialPayment;
     }
 
     public Integer getPaymentQuotes() {
@@ -173,12 +192,20 @@ public class Sale {
         this.notes = notes;
     }
 
-    public Office getOffice() {
-        return office;
+    public Boolean getDelivered() {
+        return delivered;
     }
 
-    public void setOffice(Office office) {
-        this.office = office;
+    public void setDelivered(Boolean delivered) {
+        this.delivered = delivered;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Contact getContact1() {
@@ -213,19 +240,19 @@ public class Sale {
         this.employee = employee;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 
-    public Product getProduct() {
-        return product;
+    public PaymentPlan getPaymentPlan() {
+        return paymentPlan;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setPaymentPlan(PaymentPlan paymentPlan) {
+        this.paymentPlan = paymentPlan;
     }
 }

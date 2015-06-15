@@ -4,24 +4,39 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class Payment {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Basic
-    @Column(name = "paymentNumber", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-    private Integer paymentNumber;
+    @Column(name = "code", nullable = false, insertable = true, updatable = true)
+    private Long code;
     @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "dueDate", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-    private Date dueDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date", nullable = false, insertable = true, updatable = true)
+    private Date date;
     @Basic
-    @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, length = 18, precision = 18, scale = 2)
-    private Double amountDue;
+    @Column(name = "chargedAmount", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double chargedAmount;
+    @Basic
+    @Column(name = "disbursedAmount", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double disbursedAmount;
+    @Basic
+    @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 2147483647)
+    private String notes;
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false)
+    private Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "office_id", referencedColumnName = "id", nullable = false)
+    private Office office;
 
     public Long getId() {
         return id;
@@ -31,52 +46,67 @@ public class Payment {
         this.id = id;
     }
 
-    public Integer getPaymentNumber() {
-        return paymentNumber;
+    public Long getCode() {
+        return code;
     }
 
-    public void setPaymentNumber(Integer paymentNumber) {
-        this.paymentNumber = paymentNumber;
+    public void setCode(Long code) {
+        this.code = code;
     }
 
-    public Date getDueDate() {
-        return dueDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public Double getAmountDue() {
-        return amountDue;
+    public Double getChargedAmount() {
+        return chargedAmount;
     }
 
-    public void setAmountDue(Double amountDue) {
-        this.amountDue = amountDue;
+    public void setChargedAmount(Double chargedAmount) {
+        this.chargedAmount = chargedAmount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Payment payment = (Payment) o;
-
-        if (amountDue != null ? !amountDue.equals(payment.amountDue) : payment.amountDue != null) return false;
-        if (dueDate != null ? !dueDate.equals(payment.dueDate) : payment.dueDate != null) return false;
-        if (id != null ? !id.equals(payment.id) : payment.id != null) return false;
-        if (paymentNumber != null ? !paymentNumber.equals(payment.paymentNumber) : payment.paymentNumber != null)
-            return false;
-
-        return true;
+    public Double getDisbursedAmount() {
+        return disbursedAmount;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (paymentNumber != null ? paymentNumber.hashCode() : 0);
-        result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
-        result = 31 * result + (amountDue != null ? amountDue.hashCode() : 0);
-        return result;
+    public void setDisbursedAmount(Double disbursedAmount) {
+        this.disbursedAmount = disbursedAmount;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employeeByEmployeeId) {
+        this.employee = employeeByEmployeeId;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customerByCustomerId) {
+        this.customer = customerByCustomerId;
+    }
+
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office officeByOfficeId) {
+        this.office = officeByOfficeId;
     }
 }

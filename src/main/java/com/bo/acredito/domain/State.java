@@ -4,18 +4,17 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by aralco on 2/11/14.
+ * Created by aralco on 6/14/15.
  */
 @Entity
 public class State {
     @Id
-    @NotNull
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     private Long id;
     @Basic
     @NotNull
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 100)
     private String name;
     @ManyToOne
     @NotNull
@@ -36,26 +35,6 @@ public class State {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        State state = (State) o;
-
-        if (id != null ? !id.equals(state.id) : state.id != null) return false;
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
     }
 
     public Country getCountry() {
