@@ -19,7 +19,7 @@ public class SaleProduct {
     private Office officeByOfficeId;
 
     @Id
-    @Column(name = "saleId", nullable = false, insertable = true, updatable = true)
+    @Column(name = "saleId", nullable = false, insertable = false, updatable = false)
     public Long getSaleId() {
         return saleId;
     }
@@ -29,7 +29,7 @@ public class SaleProduct {
     }
 
     @Id
-    @Column(name = "productId", nullable = false, insertable = true, updatable = true)
+    @Column(name = "productId", nullable = false, insertable = false, updatable = false)
     public Long getProductId() {
         return productId;
     }

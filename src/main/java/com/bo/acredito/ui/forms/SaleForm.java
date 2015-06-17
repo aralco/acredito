@@ -197,7 +197,7 @@ public class SaleForm extends RefreshableTabComponent{
         gridLayout.addComponent(rightFormLayout,1,0);
 
 
-        final JPAContainer container = JPAContainerFactory.makeBatchable(Payment.class, Constants.PERSISTENCE_UNIT);
+        final JPAContainer container = JPAContainerFactory.makeBatchable(PaymentQuote.class, Constants.PERSISTENCE_UNIT);
         //paymentTable = new Table(null, container);
         paymentTable.setContainerDataSource(container);
 //        Payment p1 = new Payment();

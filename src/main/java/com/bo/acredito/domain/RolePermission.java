@@ -15,7 +15,7 @@ public class RolePermission {
     private Permission permissionByPermissionId;
 
     @Id
-    @Column(name = "ROLE_id", nullable = false, insertable = true, updatable = true)
+    @Column(name = "ROLE_id", nullable = false, insertable = false, updatable = false)
     public Long getRoleId() {
         return roleId;
     }
@@ -25,7 +25,7 @@ public class RolePermission {
     }
 
     @Id
-    @Column(name = "PERMISSION_id", nullable = false, insertable = true, updatable = true)
+    @Column(name = "PERMISSION_id", nullable = false, insertable = false, updatable = false)
     public Long getPermissionId() {
         return permissionId;
     }

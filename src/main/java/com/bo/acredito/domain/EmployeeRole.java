@@ -14,7 +14,7 @@ public class EmployeeRole {
     private Employee employeeByEmployeeId;
 
     @Id
-    @Column(name = "employeeId", nullable = false, insertable = true, updatable = true)
+    @Column(name = "employeeId", nullable = false, insertable = false, updatable = false)
     public Long getEmployeeId() {
         return employeeId;
     }
