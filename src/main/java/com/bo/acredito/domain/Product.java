@@ -37,6 +37,7 @@ public class Product {
     private Boolean available;
     @Basic
     @Lob
+    @NotNull
     @Column(name = "notes", nullable = false, insertable = true, updatable = true, length = 65535)
     private String notes;
     @Basic
@@ -44,6 +45,7 @@ public class Product {
     @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 65535)
     private byte[] photo;
     @Basic
+    @NotNull
     @Column(name = "quantity", nullable = false, insertable = true, updatable = true)
     private Integer quantity;
     @Basic
@@ -54,6 +56,7 @@ public class Product {
     @JoinColumn(name = "officeId", referencedColumnName = "id", nullable = false)
     private Office office;
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "supplierId", referencedColumnName = "id", nullable = false)
     private Supplier supplier;
 
