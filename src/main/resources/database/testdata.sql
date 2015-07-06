@@ -24,11 +24,11 @@ insert into Occupation(id, name) values(4,'Contador');
 
 #Customer
 insert into Customer(id ,birthday , code, firstName, idNumber, idType, lastName, notes, salutation, version, addressId, occupationId, officeId)
-values(1, '1980-02-02','2','Pepe','4323','CI','Grillo','hola','DR.',1,1,1,1);
+values(1, '1980-02-02','2','Pepe','4323','ID','Grillo','hola','DR.',1,1,1,1);
 
 #Employee
 INSERT INTO Employee(id, active, birthday, code, firstName, idNumber, idType, lastName, password, username, version, addressId, officeId, occupationId)
-VALUES (1, '1', '1979-12-12', '1', 'Miguel Angel', '4321234 CBA', 'CI', 'Mendez Perez', 'secret', 'mmendez', 1, 1, 1, 2);
+VALUES (1, '1', '1979-12-12', '1', 'Miguel Angel', '4321234 CBA', 'ID', 'Mendez Perez', 'secret', 'mmendez', 1, 1, 1, 2);
 
 #Supplier
 INSERT INTO Supplier(id, code, companyName, firstName, lastName, nit, version, addressId, officeId)

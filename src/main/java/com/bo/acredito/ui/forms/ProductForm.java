@@ -6,10 +6,11 @@ package com.bo.acredito.ui.forms;
  */
 
 import com.bo.acredito.MyVaadinUI;
-import com.bo.acredito.domain.*;
-import com.bo.acredito.service.CustomerService;
+import com.bo.acredito.domain.Office;
+import com.bo.acredito.domain.Product;
+import com.bo.acredito.domain.Supplier;
 import com.bo.acredito.service.ProductService;
-import com.bo.acredito.ui.customfields.*;
+import com.bo.acredito.ui.customfields.SupplierSelector;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
@@ -18,9 +19,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
-import org.eclipse.persistence.exceptions.OptimisticLockException;
-
-import java.util.Date;
 
 public class ProductForm extends Window {
     private JPAContainer<Product> productContainer;
@@ -81,6 +79,7 @@ public class ProductForm extends Window {
 
         formLayout.addComponent(fieldGroup.buildAndBind("Nombre: ", "name"));
         formLayout.addComponent(fieldGroup.buildAndBind("Costo: ","price"));
+        formLayout.addComponent(fieldGroup.buildAndBind("Cantidad: ","quantity"));
         formLayout.addComponent(fieldGroup.buildAndBind("Proveedor: ","supplier"));
         formLayout.addComponent(fieldGroup.buildAndBind("Disponible: ","available"));
 
@@ -99,6 +98,7 @@ public class ProductForm extends Window {
                     SupplierSelector supplierSelector= (SupplierSelector) fieldGroup.getField("supplier");
 
                     Product product = ((BeanItem<Product>) fieldGroup.getItemDataSource()).getBean();
+                    product.setReservedQuantity(1);
                     product.setSupplier(supplierSelector.getValue());
                     ProductService productService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getProductService();
                     Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();

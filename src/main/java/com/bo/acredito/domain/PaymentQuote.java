@@ -26,6 +26,9 @@ public class PaymentQuote {
     @Column(name = "mora", nullable = false, insertable = true, updatable = true, precision = 0)
     private Double mora;
     @Basic
+    @Column(name = "paymentDate", nullable = true, insertable = true, updatable = true)
+    private Date paymentDate;
+    @Basic
     @Column(name = "paymentCode", nullable = true, insertable = true, updatable = true)
     private Long paymentCode;
 
@@ -67,6 +70,14 @@ public class PaymentQuote {
 
     public void setMora(Double mora) {
         this.mora = mora;
+    }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
     public Long getPaymentCode() {

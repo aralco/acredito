@@ -365,6 +365,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`PAYMENT_QUOTE` (
   `dueDate` DATE NOT NULL,
   `paymentNumber` INT(11) NOT NULL,
   `mora` DOUBLE NOT NULL DEFAULT 0,
+  `paymentDate` DATE NULL DEFAULT NULL,
   `paymentCode` BIGINT(20) NULL,
   `sale_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
