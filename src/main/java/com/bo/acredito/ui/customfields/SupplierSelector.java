@@ -6,10 +6,8 @@ import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.converter.Converter;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomField;
+import com.vaadin.shared.ui.combobox.FilteringMode;
+import com.vaadin.ui.*;
 
 /**
  * This is a selector for supplier (updating supplier from product)
@@ -23,7 +21,8 @@ public class SupplierSelector extends CustomField<Supplier> {
         container = JPAContainerFactory.make(Supplier.class,
                 Constants.PERSISTENCE_UNIT);
         supplier.setContainerDataSource(container);
-        supplier.setItemCaptionPropertyId("fullName");
+        supplier.setItemCaptionMode(AbstractSelect.ItemCaptionMode.ITEM);
+        supplier.setFilteringMode(FilteringMode.CONTAINS);
         supplier.setImmediate(true);
         supplier.addValueChangeListener(new Property.ValueChangeListener() {
             @Override

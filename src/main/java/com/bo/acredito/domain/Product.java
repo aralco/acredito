@@ -25,8 +25,6 @@ public class Product {
     @NotEmpty
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
     private String name;
-    @Transient
-    private String codeName;
     @Basic
     @NotNull
     @Digits(integer=10, fraction=2)
@@ -91,15 +89,6 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getCodeName() {
-        return code+" - "+name;
-    }
-
-    public void setCodeName(String codeName) {
-        this.codeName = codeName;
-    }
-
     public Double getPrice() {
         return price;
     }
