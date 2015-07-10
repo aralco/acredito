@@ -17,16 +17,12 @@ public class SaleService {
     EntityManager entityManager = JPAContainerFactory.createEntityManagerForPersistenceUnit(Constants.PERSISTENCE_UNIT);
 
     public void savePayments(List<Payment> payments)    {
-        entityManager.getTransaction().begin();
         for(Payment p : payments)   {
             entityManager.persist(p);
         }
-        entityManager.getTransaction().commit();
     }
 
     public void saveSale(Sale sale) {
-        entityManager.getTransaction().begin();
         entityManager.persist(sale);
-        entityManager.getTransaction().commit();
     }
 }

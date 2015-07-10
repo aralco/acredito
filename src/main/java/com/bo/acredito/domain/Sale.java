@@ -25,11 +25,12 @@ public class Sale {
     private Date date;
     @Basic
     @Enumerated(EnumType.STRING)
-    @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 7)
+    @Column(name = "saleType", nullable = false, insertable = true, updatable = true, length = 50)
     private SaleType saleType;
     @Basic
-    @Column(name = "saleStatus", nullable = false, insertable = true, updatable = true, length = 14)
-    private String saleStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "saleStatus", nullable = false, insertable = true, updatable = true, length = 50)
+    private SaleStatus saleStatus;
     @Basic
     @Column(name = "partialAmount", nullable = false, insertable = true, updatable = true, precision = 0)
     private Double partialAmount;
@@ -120,11 +121,11 @@ public class Sale {
         this.saleType = saleType;
     }
 
-    public String getSaleStatus() {
+    public SaleStatus getSaleStatus() {
         return saleStatus;
     }
 
-    public void setSaleStatus(String saleStatus) {
+    public void setSaleStatus(SaleStatus saleStatus) {
         this.saleStatus = saleStatus;
     }
 

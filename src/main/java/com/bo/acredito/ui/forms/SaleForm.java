@@ -1,11 +1,11 @@
 package com.bo.acredito.ui.forms;
 
+import com.bo.acredito.MyVaadinUI;
 import com.bo.acredito.domain.*;
 import com.bo.acredito.service.SaleService;
 import com.bo.acredito.util.Constants;
 import com.bo.acredito.util.RefreshableTabComponent;
 import com.bo.acredito.web.JEE6VaadinServlet;
-import com.vaadin.addon.jpacontainer.EntityItem;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
@@ -65,8 +65,9 @@ public class SaleForm extends RefreshableTabComponent{
         paymentPlanLabel = new Label("Total a pagar: ");
         paymentPlanFormLayout = new HorizontalLayout();
         paymentQuotesTextField = new TextField("Número de cuotas: ");
-//        paymentQuotesTextField.setImmediate(true);
-//        totalTextField.setImmediate(true);
+        paymentQuotesTextField.setImmediate(true);
+        paymentQuotesTextField.setValue(String.valueOf((1)));
+        totalTextField.setImmediate(true);
         modifyPaymentPlanCheckBox = new CheckBox("Modificar plan de pagos");
         paymentTable = new Table(null);
         viewPaymentPlanButton = new Button("Ver");
@@ -124,7 +125,7 @@ public class SaleForm extends RefreshableTabComponent{
         discountedAmountTextField.addTextChangeListener(new FieldEvents.TextChangeListener() {
             @Override
             public void textChange(FieldEvents.TextChangeEvent textChangeEvent) {
-                if (productPriceTextField.getValue() != null && discountedAmountTextField.getValue()!=null) {
+                if (productPriceTextField.getValue() != null && discountedAmountTextField.getValue() != null) {
                     BigDecimal st = new BigDecimal(productPriceTextField.getValue());
                     BigDecimal da = new BigDecimal(textChangeEvent.getText());
                     totalTextField.setReadOnly(false);
@@ -143,7 +144,7 @@ public class SaleForm extends RefreshableTabComponent{
         initialPaymentTextField.addTextChangeListener(new FieldEvents.TextChangeListener() {
             @Override
             public void textChange(FieldEvents.TextChangeEvent textChangeEvent) {
-                if(initialPaymentTextField.getValue()!=null && totalTextField.getValue()!=null)   {
+                if (initialPaymentTextField.getValue() != null && totalTextField.getValue() != null) {
                     BigDecimal ip = new BigDecimal(textChangeEvent.getText());
                     BigDecimal ta = new BigDecimal(totalTextField.getValue());
                     residualPaymentTextField.setReadOnly(false);
@@ -173,7 +174,7 @@ public class SaleForm extends RefreshableTabComponent{
                     modifyPaymentPlanCheckBox.setVisible(false);
                     paymentPlanFormLayout.setVisible(false);
                 }
-                paymentQuotesTextField.setValue(String.valueOf((1)));
+
             }
         });
         saleTypeComboBox.setImmediate(true);
@@ -248,19 +249,31 @@ public class SaleForm extends RefreshableTabComponent{
                 final Sale sale = new Sale();
                 sale.setCode(Long.valueOf(1));
                 sale.setDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
-//                sale.setProductPrice(Double.valueOf(productPriceTextField.getValue()));
-//                sale.setDiscountedAmount(Double.valueOf(discountedAmountTextField.getValue()));
-//                sale.setTotal(Double.valueOf(totalTextField.getValue()));
-                sale.setSaleType((SaleType) saleTypeComboBox.getValue());
-                sale.setInitialPayment(Double.valueOf(initialPaymentTextField.getValue()));
+                //TODO check this issue
+//                sale.setSaleType(SaleType.valueOf(saleTypeComboBox.getValue().toString()));
+                sale.setSaleType(SaleType.CASH);
+                sale.setSaleStatus(SaleStatus.NOT_PAID);
+                sale.setPartialAmount(Double.valueOf(totalTextField.getValue()));
+                sale.setDiscount(Double.valueOf(discountedAmountTextField.getValue()));
+                sale.setTotalAmount(Double.valueOf(totalTextField.getValue()));
+                sale.setAdvanceAmount(0.0);
                 sale.setResidualPayment(Double.valueOf(residualPaymentTextField.getValue()));
-                sale.setPaymentQuotes(Integer.valueOf(paymentQuotesTextField.getValue()));
+                //not useful right now
+                //sale.setInitialPayment(Double.valueOf(initialPaymentTextField.getValue()));
+                sale.setInitialPayment(Double.valueOf(productPriceTextField.getValue()));
+                //TODO check why paymentQuotesTextField is null
+                //sale.setPaymentQuotes(Integer.valueOf(paymentQuotesTextField.getValue()));
+                sale.setPaymentQuotes(1);
                 sale.setNotes(notesTextArea.getValue());
-                JPAContainer<Employee> employeeJPAContainer= JPAContainerFactory.make(Employee.class, Constants.PERSISTENCE_UNIT);
-                EntityItem<Employee> entityItem = employeeJPAContainer.getItem(Long.valueOf(1));
-                sale.setEmployee(entityItem.getEntity());
+                sale.setDelivered(false);
+
+                //TODO Optional values are pending
                 sale.setCustomer(customers.getItem(customersComboBox.getValue()).getEntity());
-//                sale.setProduct(products.getItem(productsComboBox.getValue()).getEntity());
+                Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
+                sale.setOffice(office);
+                Employee employee = ((MyVaadinUI) UI.getCurrent()).getEmployee();
+                sale.setEmployee(employee);
+
                 saleService.saveSale(sale);
                 Notification.show("GUARDADO", "Venta registrada con éxito", Notification.Type.HUMANIZED_MESSAGE);
             }
