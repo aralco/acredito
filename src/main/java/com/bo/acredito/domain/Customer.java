@@ -185,10 +185,6 @@ public class Customer {
         this.address = address;
     }
 
-    public String toString() {
-        return firstName+" "+lastName;
-    }
-
     @Override
     public String toString() {
         return code+" - "+firstName+" "+lastName;
