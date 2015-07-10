@@ -188,4 +188,9 @@ public class Customer {
     public String toString() {
         return firstName+" "+lastName;
     }
+
+    @Override
+    public String toString() {
+        return code+" - "+firstName+" "+lastName;
+    }
 }

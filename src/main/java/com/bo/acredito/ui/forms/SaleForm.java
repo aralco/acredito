@@ -16,8 +16,10 @@ import com.vaadin.ui.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by aralco on 2/2/14.
@@ -89,12 +91,15 @@ public class SaleForm extends RefreshableTabComponent{
         final JPAContainer<Customer> customers = JPAContainerFactory.make(Customer.class, Constants.PERSISTENCE_UNIT);
         customersComboBox = new ComboBox("Cliente:", customers);
         customersComboBox.setImmediate(true);
-        customersComboBox.setItemCaptionMode(AbstractSelect.ItemCaptionMode.ITEM);
-        customersComboBox.setFilteringMode(FilteringMode.CONTAINS);
+//        customersComboBox.setItemCaptionPropertyId("codeName");
+        productsComboBox.setItemCaptionMode(AbstractSelect.ItemCaptionMode.ITEM);
+        productsComboBox.setFilteringMode(FilteringMode.CONTAINS);
+
         //Load products
         final JPAContainer<Product> products = JPAContainerFactory.make(Product.class, Constants.PERSISTENCE_UNIT);
         productsComboBox = new ComboBox("Producto:", products);
         productsComboBox.setImmediate(true);
+        //productsComboBox.setItemCaptionPropertyId("codeName");
         productsComboBox.setItemCaptionMode(AbstractSelect.ItemCaptionMode.ITEM);
         productsComboBox.setFilteringMode(FilteringMode.CONTAINS);
         productsComboBox.addValueChangeListener(new Property.ValueChangeListener() {
