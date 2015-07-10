@@ -184,4 +184,9 @@ public class Customer {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return code+" - "+firstName+" "+lastName;
+    }
 }

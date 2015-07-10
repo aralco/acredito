@@ -11,12 +11,15 @@ import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by aralco on 2/2/14.
@@ -88,12 +91,17 @@ public class SaleForm extends RefreshableTabComponent{
         final JPAContainer<Customer> customers = JPAContainerFactory.make(Customer.class, Constants.PERSISTENCE_UNIT);
         customersComboBox = new ComboBox("Cliente:", customers);
         customersComboBox.setImmediate(true);
-        customersComboBox.setItemCaptionPropertyId("codeName");
+//        customersComboBox.setItemCaptionPropertyId("codeName");
+        productsComboBox.setItemCaptionMode(AbstractSelect.ItemCaptionMode.ITEM);
+        productsComboBox.setFilteringMode(FilteringMode.CONTAINS);
+
         //Load products
         final JPAContainer<Product> products = JPAContainerFactory.make(Product.class, Constants.PERSISTENCE_UNIT);
         productsComboBox = new ComboBox("Producto:", products);
         productsComboBox.setImmediate(true);
-        productsComboBox.setItemCaptionPropertyId("codeName");
+        //productsComboBox.setItemCaptionPropertyId("codeName");
+        productsComboBox.setItemCaptionMode(AbstractSelect.ItemCaptionMode.ITEM);
+        productsComboBox.setFilteringMode(FilteringMode.CONTAINS);
         productsComboBox.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
