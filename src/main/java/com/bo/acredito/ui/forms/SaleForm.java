@@ -4,7 +4,6 @@ import com.bo.acredito.MyVaadinUI;
 import com.bo.acredito.domain.*;
 import com.bo.acredito.service.SaleService;
 import com.bo.acredito.util.Constants;
-import com.bo.acredito.util.RefreshableTabComponent;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
@@ -22,9 +21,10 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by aralco on 2/2/14.
+ * @author aralco
  */
-public class SaleForm extends RefreshableTabComponent{
+public class SaleForm extends Window {
+    private JPAContainer<Sale> saleJPAContainer;
 
     //left
     private ComboBox customersComboBox;
@@ -47,13 +47,10 @@ public class SaleForm extends RefreshableTabComponent{
     //layouts
     private HorizontalLayout paymentPlanFormLayout;
 
-
-    public SaleForm() {
-        paintComponent();
-    }
-
-    @Override
-    public void paintComponent() {
+    public SaleForm(String caption, Long saleId, JPAContainer<Sale> saleJPAContainer) {
+        super(caption);
+        this.saleJPAContainer = saleJPAContainer;
+        setModal(true);
         //initialize Fields
         productPriceTextField = new TextField("Monto $us:");
         discountedAmountTextField = new TextField("Descuento $us:");
@@ -75,13 +72,10 @@ public class SaleForm extends RefreshableTabComponent{
         cancelButton   = new Button("Cancelar");
         paymentTableHeaders = new String[]{"Número", "Fecha", "Monto $us"};
 
-
-        Panel salesPanel = new Panel("Registro de Venta");
-        salesPanel.setSizeFull();
-
         VerticalLayout mainLayout = new VerticalLayout();
-        mainLayout.setSizeFull();
         mainLayout.setMargin(true);
+        mainLayout.setSpacing(true);
+        mainLayout.setSizeUndefined();
 
         GridLayout gridLayout = new GridLayout(2,1);
         gridLayout.setSizeFull();
@@ -244,11 +238,11 @@ public class SaleForm extends RefreshableTabComponent{
         saveButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 //container.commit();
-                SaleService saleService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getSaleService();
+                SaleService saleService = ((JEE6VaadinServlet) VaadinServlet.getCurrent()).getSaleService();
                 //saleService.savePayments(paymentList);
                 final Sale sale = new Sale();
                 sale.setCode(Long.valueOf(1));
-                sale.setDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
+                sale.setDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
                 //TODO check this issue
 //                sale.setSaleType(SaleType.valueOf(saleTypeComboBox.getValue().toString()));
                 sale.setSaleType(SaleType.CASH);
@@ -281,20 +275,18 @@ public class SaleForm extends RefreshableTabComponent{
         horizontalLayout.addComponents(saveButton, cancelButton);
         horizontalLayout.setSpacing(true);
 
-//        verticalLayout.addComponent(gridLayout);
-//        verticalLayout.addComponent(horizontalLayout);
-//
-//        salesPanel.setContent(verticalLayout);
-
-//        setCompositionRoot(salesPanel);
-
         VerticalLayout formLayout = new VerticalLayout();
         formLayout.addComponents(gridLayout, horizontalLayout);
-        salesPanel.setContent(formLayout);
 
-        mainLayout.addComponent(salesPanel);
+        mainLayout.addComponent(formLayout);
+        setContent(mainLayout);
 
-        setCompositionRoot(mainLayout);
-        //setSizeFull();
     }
+
+    @Override
+    public void close() {
+        super.close();
+        saleJPAContainer.refresh();
+    }
+
 }

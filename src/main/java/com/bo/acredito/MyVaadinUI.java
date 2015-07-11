@@ -2,7 +2,6 @@ package com.bo.acredito;
 
 import com.bo.acredito.domain.Employee;
 import com.bo.acredito.ui.forms.LoginForm;
-import com.bo.acredito.ui.forms.SaleForm;
 import com.bo.acredito.ui.lists.*;
 import com.bo.acredito.util.Constants;
 import com.bo.acredito.util.RefreshableTabComponent;
@@ -67,8 +66,8 @@ public class MyVaadinUI extends UI {
         tabSheetMain.addTab(buildCatalogs(),CATALOGS);
 
         //Sales
-        SaleForm salesForm = new SaleForm();
-        tabSheetMain.addTab(salesForm, SALES, null);
+        SaleList saleList = new SaleList();
+        tabSheetMain.addTab(saleList, SALES, null);
 
         //Charges
         SalesForChargesList salesForChargesList = new SalesForChargesList();
