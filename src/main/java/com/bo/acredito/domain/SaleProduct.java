@@ -7,6 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SALE_PRODUCT", schema = "", catalog = "acredito")
+@NamedQuery(name = "SaleProduct.findBySaleId", query = "SELECT sp FROM SaleProduct sp WHERE SP.saleId=:saleId")
 @IdClass(SaleProductPK.class)
 public class SaleProduct {
     private Long saleId;
