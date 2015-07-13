@@ -26,6 +26,7 @@ public class MyVaadinUI extends UI {
     public static final String SUPPORT = "Soporte";
     public static final String ADMIN = "Administración";
     public static final String CATALOGS = "Catálogos";
+    public static final String PAYMENT_PLAN = "Plan de pagos";
 
     private Employee employee;
 
@@ -58,12 +59,13 @@ public class MyVaadinUI extends UI {
         CustomerList customerList=new CustomerList();
         tabSheetMain.addTab(customerList, CUSTOMERS, null);
 
+        //Suppliers
+        SupplierList supplierList = new SupplierList();
+        tabSheetMain.addTab(supplierList, SUPPLIER, null);
+
         //Products
         ProductList productList = new ProductList();
         tabSheetMain.addTab(productList, PRODUCTS, null);
-
-        //Catalogs
-        tabSheetMain.addTab(buildCatalogs(),CATALOGS);
 
         //Sales
         SaleList saleList = new SaleList();
@@ -85,6 +87,9 @@ public class MyVaadinUI extends UI {
         Label adminLabel = new Label(ADMIN+"... Not Yet Implemented");
         tabSheetMain.addTab(adminLabel, ADMIN, null);
 
+        //Catalogs
+        tabSheetMain.addTab(buildCatalogs(),CATALOGS);
+
         contentLayout.addComponent(tabSheetMain);
         tabSheetMain.addSelectedTabChangeListener(
                 new TabSheet.SelectedTabChangeListener() {
@@ -100,9 +105,8 @@ public class MyVaadinUI extends UI {
     }
     private TabSheet buildCatalogs(){
         TabSheet firstInner = new TabSheet();
-        SupplierList supplierList = new SupplierList();
-        firstInner.addTab(supplierList, SUPPLIER, null);
-        firstInner.addTab(new CssLayout(), "Tab 1.1");
+        PaymentPlanList paymentPlanList = new PaymentPlanList();
+        firstInner.addTab(paymentPlanList, PAYMENT_PLAN, null);
         firstInner.addTab(new CssLayout(), "Tab 1.2");
         firstInner.addTab(new CssLayout(), "Tab 1.3");
 

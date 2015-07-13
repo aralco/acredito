@@ -25,6 +25,9 @@ public class JEE6VaadinServlet extends VaadinServlet {
     @Inject
     private SupplierService supplierService;
 
+    @Inject
+    private PaymentPlanService paymentPlanService;
+
     public CustomerService getCustomerService() {
         return customerService;
     }
@@ -42,4 +45,7 @@ public class JEE6VaadinServlet extends VaadinServlet {
         return supplierService;
     }
 
+    public PaymentPlanService getPaymentPlanService() {
+        return paymentPlanService;
+    }
 }

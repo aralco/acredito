@@ -234,7 +234,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`PAYMENT_PLAN` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`PAYMENT_PLAN` (
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(250) NOT NULL,
   `defaultAmount` INT NOT NULL,
   `quotesNumber` INT NOT NULL,

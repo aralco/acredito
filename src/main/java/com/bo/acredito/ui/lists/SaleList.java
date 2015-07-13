@@ -43,7 +43,7 @@ public class SaleList extends RefreshableTabComponent {
 
         addButton = new Button("Registrar nueva venta");
         addButton.setDescription("Crea una nueva venta");
-        addButton.setStyleName(Reindeer.LABEL_H1);
+        addButton.setStyleName(Reindeer.BUTTON_SMALL);
         addButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {

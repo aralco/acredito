@@ -25,6 +25,11 @@ public class SaleService {
     }
 
     public void saveSale(Sale sale) {
+        Long code= (Long) entityManager.createQuery("SELECT MAX(sale.code)+1 FROM Sale sale").getSingleResult();
+        if(code==null){
+            code=1000L;
+        }
+        sale.setCode(code);
         entityManager.persist(sale);
     }
 

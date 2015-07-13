@@ -241,7 +241,6 @@ public class SaleForm extends Window {
                 SaleService saleService = ((JEE6VaadinServlet) VaadinServlet.getCurrent()).getSaleService();
                 //saleService.savePayments(paymentList);
                 final Sale sale = new Sale();
-                sale.setCode(Long.valueOf(1));
                 sale.setDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
                 //TODO check this issue
 //                sale.setSaleType(SaleType.valueOf(saleTypeComboBox.getValue().toString()));
