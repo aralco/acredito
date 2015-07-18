@@ -4,6 +4,7 @@ import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
+import org.tepi.filtertable.paged.PagedFilterControlConfig;
 import org.tepi.filtertable.paged.PagedFilterTable;
 
 /**
@@ -55,7 +56,7 @@ public class ListTableUtil {
         verticalLayout.setSpacing(true);
         verticalLayout.addComponent(addButton);
         verticalLayout.addComponent(filterTable);
-        verticalLayout.addComponent(filterTable.createControls());
+        verticalLayout.addComponent(filterTable.createControls(new PagedFilterControlConfig()));
         productListPanel.setContent(verticalLayout);
         mainLayout.addComponent(productListPanel);
         return mainLayout;

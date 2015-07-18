@@ -57,6 +57,8 @@ public class Product {
     @NotNull
     @JoinColumn(name = "supplierId", referencedColumnName = "id", nullable = false)
     private Supplier supplier;
+//    @OneToMany
+//    private Set<SaleProduct> saleProducts;
 
     public Long getId() {
         return id;
@@ -152,5 +154,14 @@ public class Product {
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }
+
+//    public Set<SaleProduct> getSaleProducts() {
+//        return saleProducts;
+//    }
+//
+//    public void setSaleProducts(Set<SaleProduct> saleProducts) {
+//        this.saleProducts = saleProducts;
+//    }
+
     public String toString(){return code+" "+name;}
 }

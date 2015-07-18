@@ -13,6 +13,7 @@ import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
+import org.tepi.filtertable.paged.PagedFilterControlConfig;
 import org.tepi.filtertable.paged.PagedFilterTable;
 
 /**
@@ -100,7 +101,7 @@ public class CustomerList extends RefreshableTabComponent {
         verticalLayout.setSpacing(true);
         verticalLayout.addComponent(addButton);
         verticalLayout.addComponent(filterTable);
-        verticalLayout.addComponent(filterTable.createControls());
+        verticalLayout.addComponent(filterTable.createControls(new PagedFilterControlConfig()));
         customerListPanel.setContent(verticalLayout);
 
         mainLayout.addComponent(customerListPanel);

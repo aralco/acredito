@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * Created by aralco on 6/14/15.
+ * @author aralco
  */
 @Entity
 public class Sale {
@@ -80,6 +80,8 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name = "paymentPlanId", referencedColumnName = "id")
     private PaymentPlan paymentPlan;
+//    @OneToMany
+//    private Set<SaleProduct> saleProducts;
 
     public Long getId() {
         return id;
@@ -256,4 +258,12 @@ public class Sale {
     public void setPaymentPlan(PaymentPlan paymentPlan) {
         this.paymentPlan = paymentPlan;
     }
+
+//    public Set<SaleProduct> getSaleProducts() {
+//        return saleProducts;
+//    }
+//
+//    public void setSaleProducts(Set<SaleProduct> saleProducts) {
+//        this.saleProducts = saleProducts;
+//    }
 }

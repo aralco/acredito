@@ -1,26 +1,42 @@
 package com.bo.acredito.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
- * Created by aralco on 6/14/15.
+ * @author aralco
  */
 @Entity
 @Table(name = "SALE_PRODUCT", schema = "", catalog = "acredito")
 @NamedQuery(name = "SaleProduct.findBySaleId", query = "SELECT sp FROM SaleProduct sp WHERE SP.saleId=:saleId")
 @IdClass(SaleProductPK.class)
 public class SaleProduct {
-    private Long saleId;
-    private Long productId;
-    private Integer quantity;
-    private Double unitPrice;
-    private Double partialAmount;
-    private Sale saleBySaleId;
-    private Product productByProductId;
-    private Office officeByOfficeId;
-
     @Id
     @Column(name = "saleId", nullable = false, insertable = false, updatable = false)
+    private Long saleId;
+    @Id
+    @Column(name = "productId", nullable = false, insertable = false, updatable = false)
+    private Long productId;
+    @Basic
+    @Column(name = "quantity", nullable = false, insertable = true, updatable = true)
+    private Integer quantity;
+    @Basic
+    @Column(name = "unitPrice", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double unitPrice;
+    @Basic
+    @Column(name = "partialAmount", nullable = false, insertable = true, updatable = true, precision = 0)
+    private Double partialAmount;
+    @ManyToOne
+    @JoinColumn(name = "saleId", referencedColumnName = "id", nullable = false)
+    private Sale sale;
+    @ManyToOne
+    @JoinColumn(name = "productId", referencedColumnName = "id", nullable = false)
+    private Product product;
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "office_id", referencedColumnName = "id", nullable = false)
+    private Office office;
+
     public Long getSaleId() {
         return saleId;
     }
@@ -29,8 +45,6 @@ public class SaleProduct {
         this.saleId = saleId;
     }
 
-    @Id
-    @Column(name = "productId", nullable = false, insertable = false, updatable = false)
     public Long getProductId() {
         return productId;
     }
@@ -39,8 +53,6 @@ public class SaleProduct {
         this.productId = productId;
     }
 
-    @Basic
-    @Column(name = "quantity", nullable = false, insertable = true, updatable = true)
     public Integer getQuantity() {
         return quantity;
     }
@@ -49,8 +61,6 @@ public class SaleProduct {
         this.quantity = quantity;
     }
 
-    @Basic
-    @Column(name = "unitPrice", nullable = false, insertable = true, updatable = true, precision = 0)
     public Double getUnitPrice() {
         return unitPrice;
     }
@@ -59,8 +69,6 @@ public class SaleProduct {
         this.unitPrice = unitPrice;
     }
 
-    @Basic
-    @Column(name = "partialAmount", nullable = false, insertable = true, updatable = true, precision = 0)
     public Double getPartialAmount() {
         return partialAmount;
     }
@@ -96,33 +104,27 @@ public class SaleProduct {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "saleId", referencedColumnName = "id", nullable = false)
-    public Sale getSaleBySaleId() {
-        return saleBySaleId;
+    public Sale getSale() {
+        return sale;
     }
 
-    public void setSaleBySaleId(Sale saleBySaleId) {
-        this.saleBySaleId = saleBySaleId;
+    public void setSale(Sale sale) {
+        this.sale = sale;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "id", nullable = false)
-    public Product getProductByProductId() {
-        return productByProductId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductByProductId(Product productByProductId) {
-        this.productByProductId = productByProductId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "office_id", referencedColumnName = "id", nullable = false)
-    public Office getOfficeByOfficeId() {
-        return officeByOfficeId;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setOfficeByOfficeId(Office officeByOfficeId) {
-        this.officeByOfficeId = officeByOfficeId;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 }

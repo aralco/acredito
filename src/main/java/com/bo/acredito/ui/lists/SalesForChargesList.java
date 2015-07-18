@@ -14,6 +14,7 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import org.tepi.filtertable.paged.PagedFilterControlConfig;
 import org.tepi.filtertable.paged.PagedFilterTable;
 
 /**
@@ -80,7 +81,7 @@ public class SalesForChargesList extends RefreshableTabComponent {
         VerticalLayout verticalLayout=new VerticalLayout();
         verticalLayout.setSpacing(true);
         verticalLayout.addComponent(filterTableCustomer);
-        verticalLayout.addComponent(filterTableCustomer.createControls());
+        verticalLayout.addComponent(filterTableCustomer.createControls(new PagedFilterControlConfig()));
         customerListPanel.setContent(verticalLayout);
 
         mainLayout.addComponent(customerListPanel);

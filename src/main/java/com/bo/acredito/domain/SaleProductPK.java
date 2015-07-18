@@ -5,14 +5,16 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by aralco on 6/14/15.
+ * @author aralco
  */
 public class SaleProductPK implements Serializable {
+    @Id
+    @Column(name = "saleId", nullable = false, insertable = true, updatable = true)
     private Long saleId;
+    @Id
+    @Column(name = "productId", nullable = false, insertable = true, updatable = true)
     private Long productId;
 
-    @Column(name = "saleId", nullable = false, insertable = true, updatable = true)
-    @Id
     public Long getSaleId() {
         return saleId;
     }
@@ -21,8 +23,6 @@ public class SaleProductPK implements Serializable {
         this.saleId = saleId;
     }
 
-    @Column(name = "productId", nullable = false, insertable = true, updatable = true)
-    @Id
     public Long getProductId() {
         return productId;
     }
