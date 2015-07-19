@@ -3,13 +3,14 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by aralco on 6/14/15.
  */
 @Entity
-public class Customer {
+public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)

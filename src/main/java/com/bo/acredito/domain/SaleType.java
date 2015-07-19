@@ -1,7 +1,7 @@
 package com.bo.acredito.domain;
 
 /**
- * Created by aralco on 2/2/14.
+ * @author aralco
  */
 public enum SaleType {
     CASH, CREDIT, ADVANCE;

@@ -8,6 +8,7 @@ import com.bo.acredito.util.Constants;
 import com.bo.acredito.util.RefreshableTabComponent;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
+import com.vaadin.addon.jpacontainer.JPAContainerItem;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.Button;
@@ -24,8 +25,8 @@ import org.tepi.filtertable.paged.PagedFilterTable;
 public class SaleList extends RefreshableTabComponent {
 
     PagedFilterTable<IndexedContainer> filterTable;
-    private String[] tablePropertyIds ={"code", "date", "saleType", "saleStatus"};
-    private String[] tableHeaders ={"Código", "Fecha", "Tipo", "Estado"};
+    private String[] tablePropertyIds ={"code", "customer.firstName","customer.lastName","customer.idNumber", "customer.address.address1", "date", "saleType", "saleStatus"};
+    private String[] tableHeaders ={"Código de venta", "Nombres","Apellidos","Identificación", "Dirección", "Fecha de venta", "Tipo de venta", "Estado de venta"};
     private Button addButton;
     private JPAContainer saleContainer;
 
@@ -57,17 +58,16 @@ public class SaleList extends RefreshableTabComponent {
         saleContainer.addNestedContainerProperty("customer.firstName");
         saleContainer.addNestedContainerProperty("customer.lastName");
         saleContainer.addNestedContainerProperty("customer.idNumber");
+        saleContainer.addNestedContainerProperty("customer.idType");
         saleContainer.addNestedContainerProperty("customer.address.state.name");
         saleContainer.addNestedContainerProperty("customer.address.address1");
-        saleContainer.addNestedContainerProperty("customer.address.province");
         filterTable =buildPagedTable(saleContainer);
         filterTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
             @Override
             public void itemClick(ItemClickEvent event) {
-                System.out.println("CLICK!!!!!!!!!!!!!!!!!!!!!!!!");
-                /*Customer selectedCustomer = ((JPAContainerItem<Customer>)event.getItem()).getEntity();
-                CustomerForm customerForm = new CustomerForm("Editar cliente", selectedCustomer.getId(), saleContainer);
-                getUI().addWindow(customerForm);*/
+                Sale selectedCustomer = ((JPAContainerItem<Sale>)event.getItem()).getEntity();
+                SaleForm saleForm = new SaleForm("Editar Venta", selectedCustomer.getId(), saleContainer);
+                getUI().addWindow(saleForm);
             }
         });
         VerticalLayout verticalLayout=new VerticalLayout();
