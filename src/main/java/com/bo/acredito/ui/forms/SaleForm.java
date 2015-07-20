@@ -1,27 +1,29 @@
 package com.bo.acredito.ui.forms;
 
-import com.bo.acredito.domain.Customer;
-import com.bo.acredito.domain.PaymentPlan;
-import com.bo.acredito.domain.Sale;
-import com.bo.acredito.domain.SaleType;
+import com.bo.acredito.MyVaadinUI;
+import com.bo.acredito.domain.*;
+import com.bo.acredito.service.SaleService;
 import com.bo.acredito.ui.customfields.CustomerSelector;
 import com.bo.acredito.ui.customfields.PaymentPlanSelector;
 import com.bo.acredito.ui.customfields.ProductSelector;
 import com.bo.acredito.ui.customfields.SaleTypeSelector;
+import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author aralco
  */
 public class SaleForm extends Window {
     private JPAContainer<Sale> saleJPAContainer;
-    @PropertyId("notes")
     private final TextArea notesTextArea = new TextArea("Observaciones");
     private final ProductSelector productSelector = new ProductSelector();
     private final PaymentPlanSelector paymentPlanSelector = new PaymentPlanSelector();
@@ -42,7 +44,7 @@ public class SaleForm extends Window {
             sale = saleJPAContainer.getItem(saleId).getEntity();
         } else  {
             sale = new Sale();
-            sale.setTotalAmount(100000.00);
+            sale.setDiscount(0.0);
         }
 
         final FieldGroup fieldGroup = new FieldGroup();
@@ -55,7 +57,7 @@ public class SaleForm extends Window {
                     return (T) new CustomerSelector();
                 } else if (SaleType.class.isAssignableFrom(type)) {
                     return (T) new SaleTypeSelector();
-                } else if(PaymentPlan.class.isAssignableFrom(type)) {
+                } else if (PaymentPlan.class.isAssignableFrom(type)) {
                     return (T) new PaymentPlanSelector();
                 }
 
@@ -78,6 +80,7 @@ public class SaleForm extends Window {
 
                 //other way
                 sale.setPartialAmount(productSelector.getValue().getPrice());
+                sale.setTotalAmount(sale.getPartialAmount() - sale.getDiscount());
                 fieldGroup.setItemDataSource(saleBeanItem);
                 fieldGroup.getField("partialAmount").setReadOnly(true);
                 fieldGroup.getField("totalAmount").setReadOnly(true);
@@ -95,6 +98,7 @@ public class SaleForm extends Window {
         formLayout.addComponent(fieldGroup.buildAndBind("Sub Total $us", "partialAmount"));
         formLayout.addComponent(fieldGroup.buildAndBind("Descuento $us", "discount"));
         formLayout.addComponent(fieldGroup.buildAndBind("Total", "totalAmount"));
+        fieldGroup.bind(notesTextArea, "notes");
         formLayout.addComponent(notesTextArea);
 
         fieldGroup.getField("partialAmount").setReadOnly(true);
@@ -104,8 +108,30 @@ public class SaleForm extends Window {
         saveButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                Notification.show("Guardar venta " + fieldGroup.getField("code"));
-                close();
+                try {
+                    fieldGroup.commit();
+                    sale.setAdvanceAmount(0.0);
+                    sale.setResidualPayment(0.0);
+                    sale.setInitialPayment(0.0);
+                    sale.setPaymentQuotes(0);
+                    Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
+                    sale.setOffice(office);
+                    Employee employee = ((MyVaadinUI) UI.getCurrent()).getEmployee();
+                    sale.setEmployee(employee);
+                    SaleService saleService = ((JEE6VaadinServlet) VaadinServlet.getCurrent()).getSaleService();
+                    List<Product> productList = new ArrayList<Product>(0);
+                    productList.add(productSelector.getValue());
+                    Sale storedSale = saleService.createSale(sale);
+                    saleService.createSaleProduct(storedSale, productList);
+                    Notification.show("GUARDADO", "Venta registrada con éxito", Notification.Type.HUMANIZED_MESSAGE);
+                    close();
+                    fieldGroup.discard();
+
+                } catch (Exception e)   {
+                    Notification.show("Problema al guardar la venta: "
+                                    + e.getMessage(),
+                            Notification.Type.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -113,7 +139,7 @@ public class SaleForm extends Window {
         cancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                Notification.show("Cancelar venta " + fieldGroup.getField("code"));
+                fieldGroup.discard();
                 close();
             }
         });
