@@ -5,8 +5,8 @@
 	<groupId>com.bo.acredito</groupId>
 	<artifactId>acredito</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>Vaadin Web Application</name>
+	<version>1.0</version>
+	<name>Acredito</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

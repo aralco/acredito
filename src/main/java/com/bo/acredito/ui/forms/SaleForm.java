@@ -121,8 +121,7 @@ public class SaleForm extends Window {
                     SaleService saleService = ((JEE6VaadinServlet) VaadinServlet.getCurrent()).getSaleService();
                     List<Product> productList = new ArrayList<Product>(0);
                     productList.add(productSelector.getValue());
-                    Sale storedSale = saleService.createSale(sale);
-                    saleService.createSaleProduct(storedSale, productList);
+                    saleService.createSale(sale, productList);
                     Notification.show("GUARDADO", "Venta registrada con éxito", Notification.Type.HUMANIZED_MESSAGE);
                     close();
                     fieldGroup.discard();

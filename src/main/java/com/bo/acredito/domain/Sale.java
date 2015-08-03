@@ -3,6 +3,8 @@ package com.bo.acredito.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author aralco
@@ -80,8 +82,8 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name = "paymentPlanId", referencedColumnName = "id")
     private PaymentPlan paymentPlan;
-//    @OneToMany
-//    private Set<SaleProduct> saleProducts;
+    @OneToMany(mappedBy = "sale")
+    private Set<SaleProduct> saleProducts = new HashSet<SaleProduct>(0);
 
     public Long getId() {
         return id;
@@ -259,11 +261,11 @@ public class Sale {
         this.paymentPlan = paymentPlan;
     }
 
-//    public Set<SaleProduct> getSaleProducts() {
-//        return saleProducts;
-//    }
-//
-//    public void setSaleProducts(Set<SaleProduct> saleProducts) {
-//        this.saleProducts = saleProducts;
-//    }
+    public Set<SaleProduct> getSaleProducts() {
+        return saleProducts;
+    }
+
+    public void setSaleProducts(Set<SaleProduct> saleProducts) {
+        this.saleProducts = saleProducts;
+    }
 }

@@ -3,7 +3,6 @@ package com.bo.acredito.ui.forms;
 import com.bo.acredito.MyVaadinUI;
 import com.bo.acredito.domain.*;
 import com.bo.acredito.service.CustomerService;
-import com.bo.acredito.service.SaleService;
 import com.bo.acredito.ui.customfields.AddressSelector2;
 import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
@@ -86,10 +85,9 @@ public class SimpleChargeForm extends Window {
         employeeTF.setReadOnly(true);
         formLayoutRight1.addComponent(employeeTF);
         //SaleProductTable
-        SaleService saleService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getSaleService();
         BeanItemContainer<SaleProduct> saleProductsContainer=new BeanItemContainer<SaleProduct>(
                 SaleProduct.class,
-                saleService.loadSaleProducts(sale.getId()));
+                sale.getSaleProducts());
         Table table1 = new Table("Products");
         table1.setContainerDataSource(saleProductsContainer);
         centerLayout.addComponent(table1);

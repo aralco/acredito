@@ -6,10 +6,9 @@ import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author aralco
@@ -24,7 +23,7 @@ public class SaleService {
         }
     }
 
-    public Sale createSale(Sale sale) {
+    public void createSale(Sale sale, List<Product> products) {
         Long code= (Long) entityManager.createQuery("SELECT MAX(sale.code)+1 FROM Sale sale").getSingleResult();
         if(code==null){
             code=1000L;
@@ -34,11 +33,7 @@ public class SaleService {
         sale.setSaleStatus(SaleStatus.NOT_PAID);
         sale.setDelivered(false);
         entityManager.persist(sale);
-        return sale;
-    }
 
-    public void createSaleProduct(Sale sale, List<Product> products) {
-        System.out.println(sale);
         for(Product product : products) {
             SaleProduct saleProduct = new SaleProduct();
             saleProduct.setQuantity(1);
@@ -47,14 +42,9 @@ public class SaleService {
             saleProduct.setSale(sale);
             saleProduct.setProduct(product);
             saleProduct.setOffice(sale.getOffice());
+            sale.getSaleProducts().add(saleProduct);
             entityManager.persist(saleProduct);
         }
-        entityManager.flush();
     }
 
-    public List<SaleProduct> loadSaleProducts(Long saleId){
-        TypedQuery<SaleProduct> query =
-                entityManager.createNamedQuery("SaleProduct.findBySaleId", SaleProduct.class);
-        return query.setParameter("saleId",saleId).getResultList();
-    }
 }

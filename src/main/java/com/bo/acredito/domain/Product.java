@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 /**
  * Created by aralco on 6/14/15.
@@ -57,8 +58,8 @@ public class Product {
     @NotNull
     @JoinColumn(name = "supplierId", referencedColumnName = "id", nullable = false)
     private Supplier supplier;
-//    @OneToMany
-//    private Set<SaleProduct> saleProducts;
+    @OneToMany
+    private Set<SaleProduct> saleProducts;
 
     public Long getId() {
         return id;
@@ -155,13 +156,13 @@ public class Product {
         this.supplier = supplier;
     }
 
-//    public Set<SaleProduct> getSaleProducts() {
-//        return saleProducts;
-//    }
-//
-//    public void setSaleProducts(Set<SaleProduct> saleProducts) {
-//        this.saleProducts = saleProducts;
-//    }
+    public Set<SaleProduct> getSaleProducts() {
+        return saleProducts;
+    }
+
+    public void setSaleProducts(Set<SaleProduct> saleProducts) {
+        this.saleProducts = saleProducts;
+    }
 
     public String toString(){return code+" "+name;}
 }

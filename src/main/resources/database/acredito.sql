@@ -365,7 +365,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`PAYMENT_QUOTE` (
   `dueDate` DATE NOT NULL,
   `paymentNumber` INT(11) NOT NULL,
   `mora` DOUBLE NOT NULL DEFAULT 0,
-  `paymentDate` DATE NULL DEFAULT NULL,
+  `paymentDate` DATE NULL,
   `paymentCode` BIGINT(20) NULL,
   `sale_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
@@ -449,16 +449,17 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`SALE_PRODUCT` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`SALE_PRODUCT` (
-  `saleId` BIGINT(20) NOT NULL,
-  `productId` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `quantity` INT NOT NULL,
   `unitPrice` DOUBLE NOT NULL,
   `partialAmount` DOUBLE NOT NULL,
-  `office_id` BIGINT(20) NOT NULL,
-  PRIMARY KEY (`saleId`, `productId`),
+  `saleId` BIGINT(20) NOT NULL,
+  `productId` BIGINT(20) NOT NULL,
+  `officeId` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`id`),
   INDEX `fk_SALE_has_PRODUCT_PRODUCT1_idx` (`productId` ASC),
   INDEX `fk_SALE_has_PRODUCT_SALE1_idx` (`saleId` ASC),
-  INDEX `fk_SALE_PRODUCT_OFFICE1_idx` (`office_id` ASC),
+  INDEX `fk_SALE_PRODUCT_OFFICE1_idx` (`officeId` ASC),
   CONSTRAINT `fk_SALE_has_PRODUCT_SALE1`
     FOREIGN KEY (`saleId`)
     REFERENCES `acredito`.`SALE` (`id`)
@@ -470,7 +471,7 @@ CREATE TABLE IF NOT EXISTS `acredito`.`SALE_PRODUCT` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_SALE_PRODUCT_OFFICE1`
-    FOREIGN KEY (`office_id`)
+    FOREIGN KEY (`officeId`)
     REFERENCES `acredito`.`OFFICE` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
