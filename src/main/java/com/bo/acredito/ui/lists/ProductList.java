@@ -1,16 +1,19 @@
 package com.bo.acredito.ui.lists;
 
 import com.bo.acredito.domain.Product;
+import com.bo.acredito.service.ProductService;
 import com.bo.acredito.ui.forms.ProductForm;
 import com.bo.acredito.ui.util.GenericFilterDecorator;
 import com.bo.acredito.ui.util.GenericFilterGenerator;
 import com.bo.acredito.util.Constants;
 import com.bo.acredito.util.RefreshableTabComponent;
+import com.bo.acredito.web.JEE6VaadinServlet;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.addon.jpacontainer.JPAContainerItem;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.Panel;
@@ -27,6 +30,7 @@ public class ProductList extends RefreshableTabComponent {
     private String[] tablePropertyIds={"code", "name", "price", "available"};
     private String[] tableHeaders={"Código", "Nombre", "Precio", "Disponible"};
     private Button addButton;
+    private Button addTestButton;
     private JPAContainer container;
 
     public ProductList() {
@@ -77,8 +81,17 @@ public class ProductList extends RefreshableTabComponent {
         addButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                ProductForm productForm=new ProductForm("Nuevo producto", null, container);
+                ProductForm productForm = new ProductForm("Nuevo producto", null, container);
                 getUI().addWindow(productForm);
+            }
+        });
+        addTestButton = new Button("Registrar Test");
+        addTestButton.setStyleName(Reindeer.BUTTON_SMALL);
+        addTestButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                ProductService productService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getProductService();
+                productService.saveTest();
             }
         });
 
@@ -95,6 +108,7 @@ public class ProductList extends RefreshableTabComponent {
         VerticalLayout verticalLayout=new VerticalLayout();
         verticalLayout.setSpacing(true);
         verticalLayout.addComponent(addButton);
+        verticalLayout.addComponent(addTestButton);
         verticalLayout.addComponent(filterTable);
         verticalLayout.addComponent(filterTable.createControls(new PagedFilterControlConfig()));
         productListPanel.setContent(verticalLayout);

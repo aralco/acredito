@@ -34,3 +34,7 @@ VALUES (1, '1', '1979-12-12', '1', 'Miguel Angel', '4321234 CBA', 'ID', 'Mendez 
 INSERT INTO SUPPLIER(id, code, companyName, firstName, lastName, nit, version, addressId, officeId)
 VALUES (1, '1', 'Panchito Import Export SRL', 'Francisco J.', 'Salvador Muriel', '502312011', 1, 1, 1);
 
+#Sequence
+#INSERT INTO SEQUENCE(SEQ_NAME, SEQ_COUNT)
+#VALUES ('TestEntity', 1);
+
