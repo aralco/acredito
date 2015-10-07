@@ -12,7 +12,7 @@ public class TestEntity {
     private String code;
 
     @Id
-    @GeneratedValue(generator = "prefix-custom")
+    @GeneratedValue(generator = "TestEntity")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public String getId() {
         return id;
