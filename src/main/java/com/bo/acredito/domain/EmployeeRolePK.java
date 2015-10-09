@@ -8,26 +8,26 @@ import java.io.Serializable;
  * Created by aralco on 6/14/15.
  */
 public class EmployeeRolePK implements Serializable {
-    private Long employeeId;
-    private Long roleId;
+    private String employeeId;
+    private String roleId;
 
     @Column(name = "employeeId", nullable = false, insertable = true, updatable = true)
     @Id
-    public Long getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
     @Column(name = "roleId", nullable = false, insertable = true, updatable = true)
     @Id
-    public Long getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 

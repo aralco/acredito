@@ -8,18 +8,18 @@ import javax.persistence.*;
 @Entity
 public class Occupation {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "Occupation")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Basic
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
     private String name;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

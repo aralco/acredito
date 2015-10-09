@@ -11,9 +11,9 @@ import javax.validation.constraints.NotNull;
 @NamedQuery(name = "SaleProduct.findBySaleId", query = "SELECT sp FROM SaleProduct sp WHERE sp.sale.id=:saleId")
 public class SaleProduct {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "SaleProduct")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Basic
     @Column(name = "quantity", nullable = false, insertable = true, updatable = true)
     private Integer quantity;
@@ -36,11 +36,11 @@ public class SaleProduct {
     @JoinColumn(name = "officeId", referencedColumnName = "id", nullable = false)
     private Office office;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

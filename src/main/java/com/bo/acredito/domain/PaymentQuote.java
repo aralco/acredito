@@ -10,9 +10,9 @@ import java.sql.Date;
 @Table(name = "PAYMENT_QUOTE", schema = "", catalog = "acredito")
 public class PaymentQuote {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "PaymentQuote")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Basic
     @Column(name = "amountDue", nullable = false, insertable = true, updatable = true, precision = 0)
     private Double amountDue;
@@ -32,11 +32,11 @@ public class PaymentQuote {
     @Column(name = "paymentCode", nullable = true, insertable = true, updatable = true)
     private Long paymentCode;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

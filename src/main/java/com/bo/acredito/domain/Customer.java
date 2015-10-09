@@ -12,9 +12,9 @@ import java.util.Date;
 @Entity
 public class Customer implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "Customer")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Version
     @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private Long version;
@@ -74,11 +74,11 @@ public class Customer implements Serializable {
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     private Address address=new Address();
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

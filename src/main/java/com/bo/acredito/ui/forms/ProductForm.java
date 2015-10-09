@@ -22,7 +22,7 @@ import com.vaadin.ui.*;
 
 public class ProductForm extends Window {
     private JPAContainer<Product> productContainer;
-    public ProductForm(String caption, Long productId, JPAContainer<Product> parentContainer) {
+    public ProductForm(String caption, String productId, JPAContainer<Product> parentContainer) {
         super(caption);
         productContainer =parentContainer;
         setModal(true);

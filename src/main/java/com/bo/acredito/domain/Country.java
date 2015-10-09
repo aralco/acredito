@@ -8,9 +8,8 @@ import javax.persistence.*;
 @Entity
 public class Country {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Basic
     @Column(name = "code", nullable = false, insertable = true, updatable = true, length = 2)
     private String code;
@@ -21,11 +20,11 @@ public class Country {
     @Column(name = "callCode", nullable = false, insertable = true, updatable = true)
     private Integer callCode;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

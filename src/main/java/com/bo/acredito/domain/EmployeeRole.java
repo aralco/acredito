@@ -9,27 +9,27 @@ import javax.persistence.*;
 @Table(name = "EMPLOYEE_ROLE", schema = "", catalog = "acredito")
 @IdClass(EmployeeRolePK.class)
 public class EmployeeRole {
-    private Long employeeId;
-    private Long roleId;
+    private String employeeId;
+    private String roleId;
     private Employee employeeByEmployeeId;
 
     @Id
     @Column(name = "employeeId", nullable = false, insertable = false, updatable = false)
-    public Long getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
     @Id
     @Column(name = "roleId", nullable = false, insertable = true, updatable = true)
-    public Long getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 

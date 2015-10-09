@@ -18,7 +18,7 @@ import com.vaadin.ui.*;
  */
 public class SimpleChargeForm extends Window {
     private JPAContainer<Sale> saleContainer;
-    public SimpleChargeForm(String caption, Long saleId, JPAContainer<Sale> parentContainer) {
+    public SimpleChargeForm(String caption, String saleId, JPAContainer<Sale> parentContainer) {
         super(caption);
         final Office office = ((MyVaadinUI) UI.getCurrent()).getEmployee().getOffice();
         Employee employee = ((MyVaadinUI) UI.getCurrent()).getEmployee();

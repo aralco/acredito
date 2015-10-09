@@ -12,9 +12,9 @@ import java.util.Set;
 @Entity
 public class Sale {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "Sale")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Version
     @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private Long version;
@@ -85,11 +85,11 @@ public class Sale {
     @OneToMany(mappedBy = "sale")
     private Set<SaleProduct> saleProducts = new HashSet<SaleProduct>(0);
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

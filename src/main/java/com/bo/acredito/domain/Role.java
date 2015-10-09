@@ -10,17 +10,17 @@ import javax.persistence.Id;
  */
 @Entity
 public class Role {
-    private Long id;
+    private String id;
     private String name;
     private String description;
 
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

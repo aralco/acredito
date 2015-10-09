@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class SupplierForm extends Window {
     private JPAContainer<Supplier> supplierContainer;
-    public SupplierForm(String caption, Long productId, JPAContainer<Supplier> parentContainer) {
+    public SupplierForm(String caption, String productId, JPAContainer<Supplier> parentContainer) {
         super(caption);
         supplierContainer =parentContainer;
         setModal(true);

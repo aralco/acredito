@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Supplier {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "Supplier")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Version
     @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private Long version;
@@ -43,11 +43,11 @@ public class Supplier {
     @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
     private Address address = new Address();
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

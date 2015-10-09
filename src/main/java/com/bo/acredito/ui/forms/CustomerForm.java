@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class CustomerForm extends Window {
     private JPAContainer<Customer> customerContainer;
-    public CustomerForm(String caption, Long customerId, JPAContainer<Customer> parentContainer) {
+    public CustomerForm(String caption, String customerId, JPAContainer<Customer> parentContainer) {
         super(caption);
         customerContainer =parentContainer;
         setModal(true);

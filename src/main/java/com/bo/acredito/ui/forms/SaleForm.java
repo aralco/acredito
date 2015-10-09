@@ -28,7 +28,7 @@ public class SaleForm extends Window {
     private final ProductSelector productSelector = new ProductSelector();
     private final PaymentPlanSelector paymentPlanSelector = new PaymentPlanSelector();
 
-    public SaleForm(String caption, Long saleId, JPAContainer<Sale> saleJPAContainer) {
+    public SaleForm(String caption, String saleId, JPAContainer<Sale> saleJPAContainer) {
         super(caption);
         this.saleJPAContainer = saleJPAContainer;
         setModal(true);

@@ -16,8 +16,8 @@ public class AuthService {
 
     public Employee authenticate(String username, String password) {
         Employee employee = null;
-        long employeeId = employeeService.exits(username, password);
-        if(employeeId!=0)  {
+        String employeeId = employeeService.exits(username, password);
+        if(employeeId!=null)  {
             employee = employeeService.findOne(employeeId);
         }
         return employee;

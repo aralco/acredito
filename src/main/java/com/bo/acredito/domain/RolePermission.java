@@ -9,28 +9,28 @@ import javax.persistence.*;
 @Table(name = "ROLE_PERMISSION", schema = "", catalog = "acredito")
 @IdClass(RolePermissionPK.class)
 public class RolePermission {
-    private Long roleId;
-    private Long permissionId;
+    private String roleId;
+    private String permissionId;
     private Role roleByRoleId;
     private Permission permissionByPermissionId;
 
     @Id
     @Column(name = "ROLE_id", nullable = false, insertable = false, updatable = false)
-    public Long getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 
     @Id
     @Column(name = "PERMISSION_id", nullable = false, insertable = false, updatable = false)
-    public Long getPermissionId() {
+    public String getPermissionId() {
         return permissionId;
     }
 
-    public void setPermissionId(Long permissionId) {
+    public void setPermissionId(String permissionId) {
         this.permissionId = permissionId;
     }
 

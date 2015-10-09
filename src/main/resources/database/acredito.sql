@@ -12,7 +12,7 @@ USE `acredito` ;
 DROP TABLE IF EXISTS `acredito`.`COUNTRY` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`COUNTRY` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `callCode` INT(11) NOT NULL,
   `code` VARCHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `name` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -29,9 +29,9 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`STATE` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`STATE` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `name` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
-  `countryId` BIGINT(20) NOT NULL,
+  `countryId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_STATE_countryId` (`countryId` ASC),
   CONSTRAINT `FK_STATE_countryId`
@@ -49,7 +49,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`COMPANY` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`COMPANY` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `description` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL,
   `name` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   PRIMARY KEY (`id`))
@@ -65,12 +65,12 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`OFFICE` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`OFFICE` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `address` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `description` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL,
   `name` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `phone` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
-  `companyId` BIGINT(20) NOT NULL,
+  `companyId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_OFFICE_companyId` (`companyId` ASC),
   CONSTRAINT `FK_OFFICE_companyId`
@@ -88,15 +88,15 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`ADDRESS` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`ADDRESS` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `address1` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `address2` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `mobile` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `phone` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `province` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `workPhone` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
-  `officeId` BIGINT(20) NOT NULL,
-  `stateId` BIGINT(20) NOT NULL,
+  `officeId` VARCHAR(50) NOT NULL,
+  `stateId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_ADDRESS_officeId` (`officeId` ASC),
   INDEX `FK_ADDRESS_stateId` (`stateId` ASC),
@@ -118,7 +118,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`OCCUPATION` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`OCCUPATION` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `name` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -133,7 +133,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`EMPLOYEE` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`EMPLOYEE` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `active` TINYINT(1) NOT NULL,
   `birthday` DATE NOT NULL,
   `code` BIGINT(20) NOT NULL,
@@ -145,9 +145,9 @@ CREATE TABLE IF NOT EXISTS `acredito`.`EMPLOYEE` (
   `photo` LONGBLOB NULL DEFAULT NULL,
   `username` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `version` BIGINT(20) NOT NULL,
-  `addressId` BIGINT(20) NOT NULL,
-  `officeId` BIGINT(20) NOT NULL,
-  `occupationId` BIGINT(20) NOT NULL,
+  `addressId` VARCHAR(50) NOT NULL,
+  `officeId` VARCHAR(50) NOT NULL,
+  `occupationId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_EMPLOYEE_addressId` (`addressId` ASC),
   INDEX `FK_EMPLOYEE_officeId` (`officeId` ASC),
@@ -175,7 +175,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`CUSTOMER` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`CUSTOMER` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `birthday` DATE NOT NULL,
   `code` BIGINT(20) NOT NULL,
   `firstName` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -186,9 +186,9 @@ CREATE TABLE IF NOT EXISTS `acredito`.`CUSTOMER` (
   `photo` LONGBLOB NULL DEFAULT NULL,
   `salutation` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `version` BIGINT(20) NOT NULL,
-  `addressId` BIGINT(20) NOT NULL,
-  `occupationId` BIGINT(20) NOT NULL,
-  `officeId` BIGINT(20) NOT NULL,
+  `addressId` VARCHAR(50) NOT NULL,
+  `occupationId` VARCHAR(50) NOT NULL,
+  `officeId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_CUSTOMER_addressId` (`addressId` ASC),
   INDEX `FK_CUSTOMER_occupationId` (`occupationId` ASC),
@@ -214,10 +214,10 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`CONTACT` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`CONTACT` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `name` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `phone` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
-  `officeId` BIGINT(20) NOT NULL,
+  `officeId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_CONTACT_officeId` (`officeId` ASC),
   CONSTRAINT `FK_CONTACT_officeId`
@@ -234,7 +234,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`PAYMENT_PLAN` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`PAYMENT_PLAN` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `name` VARCHAR(250) NOT NULL,
   `defaultAmount` INT NOT NULL,
   `quotesNumber` INT NOT NULL,
@@ -250,7 +250,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `acredito`.`SALE` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`SALE` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `version` BIGINT(20) NOT NULL,
   `code` BIGINT(20) NOT NULL,
   `date` DATETIME NOT NULL,
@@ -265,13 +265,13 @@ CREATE TABLE IF NOT EXISTS `acredito`.`SALE` (
   `paymentQuotes` INT(11) NOT NULL,
   `notes` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `delivered` TINYINT(1) NOT NULL,
-  `contactId1` BIGINT(20) NULL,
-  `contactId2` BIGINT(20) NULL,
-  `contactId3` BIGINT(20) NULL,
-  `paymentPlanId` BIGINT(20) NULL,
-  `customerId` BIGINT(20) NOT NULL,
-  `employeeId` BIGINT(20) NOT NULL,
-  `officeId` BIGINT(20) NOT NULL,
+  `contactId1` VARCHAR(50) NULL,
+  `contactId2` VARCHAR(50) NULL,
+  `contactId3` VARCHAR(50) NULL,
+  `paymentPlanId` VARCHAR(50) NULL,
+  `customerId` VARCHAR(50) NOT NULL,
+  `employeeId` VARCHAR(50) NOT NULL,
+  `officeId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_SALE_officeId` (`officeId` ASC),
   INDEX `FK_SALE_contactId2` (`contactId2` ASC),
@@ -314,16 +314,16 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`PAYMENT` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`PAYMENT` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `code` BIGINT(20) NOT NULL,
   `date` DATETIME NOT NULL,
   `chargedAmount` DOUBLE NOT NULL,
   `disbursedAmount` DOUBLE NOT NULL,
   `notes` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
-  `employee_id` BIGINT(20) NOT NULL,
-  `sale_id` BIGINT(20) NOT NULL,
-  `customer_id` BIGINT(20) NOT NULL,
-  `office_id` BIGINT(20) NOT NULL,
+  `employee_Id` VARCHAR(50) NOT NULL,
+  `sale_Id` VARCHAR(50) NOT NULL,
+  `customer_Id` VARCHAR(50) NOT NULL,
+  `office_Id` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_CHARGE_EMPLOYEE1_idx` (`employee_id` ASC),
   INDEX `fk_CHARGE_SALE1_idx` (`sale_id` ASC),
@@ -360,14 +360,14 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`PAYMENT_QUOTE` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`PAYMENT_QUOTE` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `amountDue` DOUBLE NOT NULL,
   `dueDate` DATE NOT NULL,
   `paymentNumber` INT(11) NOT NULL,
   `mora` DOUBLE NOT NULL DEFAULT 0,
   `paymentDate` DATE NULL,
   `paymentCode` BIGINT(20) NULL,
-  `sale_id` BIGINT(20) NOT NULL,
+  `sale_Id` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_PAYMENT_QUOTE_SALE1_idx` (`sale_id` ASC),
   CONSTRAINT `fk_PAYMENT_QUOTE_SALE1`
@@ -386,7 +386,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`SUPPLIER` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`SUPPLIER` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `code` BIGINT(20) NOT NULL,
   `companyName` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL,
   `firstName` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -394,8 +394,8 @@ CREATE TABLE IF NOT EXISTS `acredito`.`SUPPLIER` (
   `nit` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL,
   `description` LONGTEXT NULL,
   `version` BIGINT(20) NOT NULL,
-  `addressId` BIGINT(20) NOT NULL,
-  `officeId` BIGINT(20) NOT NULL,
+  `addressId` VARCHAR(50) NOT NULL,
+  `officeId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_SUPPLIER_officeId` (`officeId` ASC),
   INDEX `FK_SUPPLIER_addressId` (`addressId` ASC),
@@ -417,7 +417,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`PRODUCT` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`PRODUCT` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `available` TINYINT(1) NOT NULL,
   `code` BIGINT(20) NOT NULL,
   `name` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -427,8 +427,8 @@ CREATE TABLE IF NOT EXISTS `acredito`.`PRODUCT` (
   `quantity` INT NOT NULL,
   `reservedQuantity` INT NOT NULL DEFAULT 0,
   `version` BIGINT(20) NOT NULL,
-  `officeId` BIGINT(20) NOT NULL,
-  `supplierId` BIGINT(20) NOT NULL,
+  `officeId` VARCHAR(50) NOT NULL,
+  `supplierId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_PRODUCT_supplierId` (`supplierId` ASC),
   INDEX `FK_PRODUCT_officeId` (`officeId` ASC),
@@ -449,13 +449,13 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`SALE_PRODUCT` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`SALE_PRODUCT` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(50) NOT NULL,
   `quantity` INT NOT NULL,
   `unitPrice` DOUBLE NOT NULL,
   `partialAmount` DOUBLE NOT NULL,
-  `saleId` BIGINT(20) NOT NULL,
-  `productId` BIGINT(20) NOT NULL,
-  `officeId` BIGINT(20) NOT NULL,
+  `saleId` VARCHAR(50) NOT NULL,
+  `productId` VARCHAR(50) NOT NULL,
+  `officeId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_SALE_has_PRODUCT_PRODUCT1_idx` (`productId` ASC),
   INDEX `fk_SALE_has_PRODUCT_SALE1_idx` (`saleId` ASC),
@@ -486,7 +486,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`ROLE` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`ROLE` (
-  `id` BIGINT(20) NOT NULL,
+  `id` VARCHAR(20) NOT NULL,
   `name` VARCHAR(250) NOT NULL,
   `description` LONGTEXT NULL,
   PRIMARY KEY (`id`))
@@ -499,8 +499,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `acredito`.`EMPLOYEE_ROLE` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`EMPLOYEE_ROLE` (
-  `employeeId` BIGINT(20) NOT NULL,
-  `roleId` BIGINT(20) NOT NULL,
+  `employeeId` VARCHAR(50) NOT NULL,
+  `roleId` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`employeeId`, `roleId`),
   INDEX `fk_EMPLOYEE_has_ROLE_ROLE1_idx` (`roleId` ASC),
   INDEX `fk_EMPLOYEE_has_ROLE_EMPLOYEE1_idx` (`employeeId` ASC),
@@ -525,7 +525,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `acredito`.`PERMISSION` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`PERMISSION` (
-  `id` BIGINT(20) NOT NULL,
+  `id` VARCHAR(20) NOT NULL,
   `name` VARCHAR(250) NOT NULL,
   `description` LONGTEXT NULL,
   PRIMARY KEY (`id`))
@@ -538,8 +538,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `acredito`.`ROLE_PERMISSION` ;
 
 CREATE TABLE IF NOT EXISTS `acredito`.`ROLE_PERMISSION` (
-  `ROLE_id` BIGINT(20) NOT NULL,
-  `PERMISSION_id` BIGINT(20) NOT NULL,
+  `ROLE_id` VARCHAR(50) NOT NULL,
+  `PERMISSION_id` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`ROLE_id`, `PERMISSION_id`),
   INDEX `fk_ROLE_has_PERMISSION_PERMISSION1_idx` (`PERMISSION_id` ASC),
   INDEX `fk_ROLE_has_PERMISSION_ROLE1_idx` (`ROLE_id` ASC),
@@ -555,17 +555,12 @@ CREATE TABLE IF NOT EXISTS `acredito`.`ROLE_PERMISSION` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `acredito`.`TESTENTITY` (
-  `id` VARCHAR(200) NOT NULL,
-  `code` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`id`)
-)ENGINE = InnoDB;
 
-#CREATE TABLE IF NOT EXISTS `acredito`.`SEQUENCE` (
-#  `SEQ_NAME` VARCHAR(30) NOT NULL,
-#  `SEQ_COUNT` BIGINT(20) NOT NULL,
-#  PRIMARY KEY (`SEQ_NAME`)
-#)ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `acredito`.`SEQUENCE` (
+  `SEQ_NAME` VARCHAR(30) NOT NULL,
+  `SEQ_COUNT` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`SEQ_NAME`)
+)ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

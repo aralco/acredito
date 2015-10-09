@@ -28,7 +28,7 @@ public class PrefixCustomSequence extends TableSequence implements SessionCustom
         Vector vector=super.getGeneratedVector(accessor, writeSession, seqName, size);
         Vector newVector=new Vector();
         for (Object o : vector) {
-            newVector.add(prefix+"_"+String.valueOf(o));
+            newVector.add(prefix+String.valueOf(o));
         }
         return newVector;
     }

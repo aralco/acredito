@@ -8,26 +8,26 @@ import java.io.Serializable;
  * Created by aralco on 6/14/15.
  */
 public class RolePermissionPK implements Serializable {
-    private Long roleId;
-    private Long permissionId;
+    private String roleId;
+    private String permissionId;
 
     @Column(name = "ROLE_id", nullable = false, insertable = true, updatable = true)
     @Id
-    public Long getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 
     @Column(name = "PERMISSION_id", nullable = false, insertable = true, updatable = true)
     @Id
-    public Long getPermissionId() {
+    public String getPermissionId() {
         return permissionId;
     }
 
-    public void setPermissionId(Long permissionId) {
+    public void setPermissionId(String permissionId) {
         this.permissionId = permissionId;
     }
 

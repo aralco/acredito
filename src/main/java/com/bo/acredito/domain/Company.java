@@ -10,9 +10,8 @@ import javax.validation.constraints.Size;
 @Entity
 public class Company {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Basic
     @NotNull
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
@@ -31,11 +30,11 @@ public class Company {
         this.description = description;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

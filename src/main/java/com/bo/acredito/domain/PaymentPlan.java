@@ -11,9 +11,9 @@ import javax.validation.constraints.NotNull;
 @Table(name = "PAYMENT_PLAN", schema = "", catalog = "acredito")
 public class PaymentPlan {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "PaymentPlan")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Basic
     @NotNull
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
@@ -36,11 +36,11 @@ public class PaymentPlan {
     @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 65535)
     private String description;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -180,7 +180,7 @@ public class AddressSelector extends CustomField<Address>
         entity.setWorkPhone(workPhone.getValue());
 
         if(id.getValue()!=null){
-            entity.setId(new Long(id.getValue()));
+            entity.setId(id.getValue());
         }
         setValue(entity, false);
     }

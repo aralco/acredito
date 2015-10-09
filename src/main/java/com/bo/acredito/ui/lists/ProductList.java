@@ -30,7 +30,6 @@ public class ProductList extends RefreshableTabComponent {
     private String[] tablePropertyIds={"code", "name", "price", "available"};
     private String[] tableHeaders={"Código", "Nombre", "Precio", "Disponible"};
     private Button addButton;
-    private Button addTestButton;
     private JPAContainer container;
 
     public ProductList() {
@@ -85,16 +84,6 @@ public class ProductList extends RefreshableTabComponent {
                 getUI().addWindow(productForm);
             }
         });
-        addTestButton = new Button("Registrar Test");
-        addTestButton.setStyleName(Reindeer.BUTTON_SMALL);
-        addTestButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                ProductService productService=((JEE6VaadinServlet) VaadinServlet.getCurrent()).getProductService();
-                productService.saveTest();
-            }
-        });
-
         container = JPAContainerFactory.make(Product.class, Constants.PERSISTENCE_UNIT);
         filterTable=buildPagedTable(container);
         filterTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
@@ -108,7 +97,6 @@ public class ProductList extends RefreshableTabComponent {
         VerticalLayout verticalLayout=new VerticalLayout();
         verticalLayout.setSpacing(true);
         verticalLayout.addComponent(addButton);
-        verticalLayout.addComponent(addTestButton);
         verticalLayout.addComponent(filterTable);
         verticalLayout.addComponent(filterTable.createControls(new PagedFilterControlConfig()));
         productListPanel.setContent(verticalLayout);

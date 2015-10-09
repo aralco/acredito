@@ -1,13 +1,11 @@
 package com.bo.acredito.service;
 
 import com.bo.acredito.domain.Product;
-import com.bo.acredito.domain.TestEntity;
 import com.bo.acredito.util.Constants;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Date;
 
 /**
  * This class implements the persistence Business logic
@@ -25,11 +23,6 @@ public class ProductService {
         }
         product.setCode(code+1);
         em.persist(product);
-    }
-    public void saveTest(){
-        TestEntity te=new TestEntity();
-        te.setCode("ABC"+new Date().getTime());
-        em.persist(te);
     }
     public void updateProduct(Product product){
         em.merge(product);

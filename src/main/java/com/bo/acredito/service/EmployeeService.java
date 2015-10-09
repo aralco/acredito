@@ -16,12 +16,12 @@ public class EmployeeService {
     @PersistenceContext(unitName = Constants.PERSISTENCE_UNIT)
     private EntityManager entityManager;
 
-    public Employee findOne(long id)   {
+    public Employee findOne(String id)   {
         return entityManager.find(Employee.class, id);
     }
 
-    public long exits(String username, String password) {
-        Long id = (Long)entityManager.createQuery(
+    public String exits(String username, String password) {
+        String id = (String)entityManager.createQuery(
                 "SELECT employee.id " +
                 "FROM Employee employee " +
                 "WHERE employee.username = :username "+
@@ -29,8 +29,6 @@ public class EmployeeService {
                 .setParameter("username", username)
                 .setParameter("password", password)
                 .getSingleResult();
-        if(id==null)
-            id = 0L;
         return id;
     }
 }

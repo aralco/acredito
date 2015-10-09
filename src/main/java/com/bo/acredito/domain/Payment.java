@@ -9,9 +9,9 @@ import java.util.Date;
 @Entity
 public class Payment {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "Payment")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    private Long id;
+    private String id;
     @Basic
     @Column(name = "code", nullable = false, insertable = true, updatable = true)
     private Long code;
@@ -38,11 +38,11 @@ public class Payment {
     @JoinColumn(name = "office_id", referencedColumnName = "id", nullable = false)
     private Office office;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

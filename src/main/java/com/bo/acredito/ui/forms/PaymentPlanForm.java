@@ -17,7 +17,7 @@ import com.vaadin.ui.*;
 public class PaymentPlanForm extends Window {
     private JPAContainer<PaymentPlan> paymentPlanJPAContainer;
 
-    public PaymentPlanForm(String caption, Long paymentPlanId, JPAContainer<PaymentPlan> paymentPlanJPAContainer) {
+    public PaymentPlanForm(String caption, String paymentPlanId, JPAContainer<PaymentPlan> paymentPlanJPAContainer) {
         super(caption);
         this.paymentPlanJPAContainer = paymentPlanJPAContainer;
         setModal(true);
