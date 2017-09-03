@@ -4,6 +4,6 @@ Documents for Alligator: https://drive.google.com/folderview?id=0B-_ghfo7nJjZT2R
 
 ## Credits
 
-Ariel Alcocer
-Alvaro Sejas
+* Ariel Alcocer
+* Alvaro Sejas
 
